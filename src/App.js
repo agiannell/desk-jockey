@@ -1,9 +1,14 @@
 import './App.css';
+import routes from './routes'
+import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
 
 function App() {
   return (
     <div className="App">
-      Hello World
+      <Header />
+      {routes}
+      <Footer />
     </div>
   );
 }
