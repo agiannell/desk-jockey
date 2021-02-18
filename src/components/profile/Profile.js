@@ -1,8 +1,10 @@
+import profile from './defaultprofile.webp'
 
 const Profile = (props) => {
   return (
     <div>
-      Hello World! This is the Profile Page.
+      <img src={profile} alt='Default Profile Picture'/>
+      <h1></h1>
     </div>
   )
 }
