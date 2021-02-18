@@ -1,7 +1,7 @@
 {
   "name": "group-project",
   "version": "0.1.0",
-  "proxy": "http://localhost:4000",
+  "proxy": "http://localhost:4000/",
   "main": "server/index.js",
   "private": true,
   "dependencies": {
@@ -9,13 +9,21 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "massive": "^6.6.5",
+    "query-string": "^6.14.0",
+    "querystring": "^0.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
+    "react-spotify-api": "^3.0.0",
+    "redux": "^4.0.5",
+    "request": "^2.88.2",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
