@@ -8,11 +8,12 @@ const Dashboard = (props) => {
   const { setUser, setUserPlaylists } = props;
   const { user } = props;
   console.log(props);
+  const [isLoggedIn,setIsLoggedIn] = useState(false)
   
   useEffect(() => {
     let parsed = queryString.parse(window.location.search);
     let accessToken = parsed.access_token;
-    console.log(accessToken);
+    console.log(window.location);
 
     fetch("https://api.spotify.com/v1/me", {
       headers: { Authorization: "Bearer " + accessToken },
@@ -20,6 +21,7 @@ const Dashboard = (props) => {
       .then((response) => response.json())
       .then((data) => {
         setUser(data);
+        setIsLoggedIn(true)
       });
 
     fetch("https://api.spotify.com/v1/me/playlists", {
@@ -32,15 +34,17 @@ const Dashboard = (props) => {
       });
   }, []);
 
+ 
+
   return (
     <div>
       <div>Dashboard</div>
-      {/* {user 
+      {isLoggedIn 
       ? <div>
           <p> Hi {user?.display_name}!</p>
-          <img src={user.images[0]?.url} />
+          <img src={user?.images[0].url} />
         </div>
-      : null} */}
+      : null}
     </div>
   )
 }

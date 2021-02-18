@@ -6,9 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { SpotifyApiContext } from "react-spotify-api";
 import { Provider } from "react-redux";
 import store from "../src/ducks/Store";
-import { BrowserRouter, HashRouter } from "react-router-dom";
-const Router =
-  process.env.NODE_ENV === "development" ? HashRouter : BrowserRouter;
+import { BrowserRouter as Router } from "react-router-dom";
+
 
 ReactDOM.render(
   <React.StrictMode>

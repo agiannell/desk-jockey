@@ -55,7 +55,7 @@ app.get('/callback', function(req, res) {
   }
   request.post(authOptions, function(error, response, body) {
     var access_token = body.access_token
-    let uri = 'http://localhost:3000/#/Dash' || REDIRECT_URI
+    let uri = 'http://localhost:3000/Dash' || REDIRECT_URI
     res.redirect(uri + '?access_token=' + access_token)
   })
 })
