@@ -3,6 +3,8 @@ const cors = require('cors');
 const express = require('express');
 const massive = require('massive');
 const session = require('express-session');
+const querystring = require('querystring');
+const request = require('request');
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, CLIENT_ID, REDIRECT_URI, CLIENT_SECRET } = process.env;
 const app = express();
 
@@ -25,10 +27,35 @@ massive({
 })
 
 app.get('/login', function(req, res) {
-  var scopes = 'user-read-private user-read-email';
-  res.redirect('https://accounts.spotify.com/authorize' +
-    '?response_type=code' +
-    '&client_id=' + CLIENT_ID +
-    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-    '&redirect_uri=' + encodeURIComponent(REDIRECT_URI));
-  });
+  console.log('hit')
+  res.redirect('https://accounts.spotify.com/authorize?' +
+    querystring.stringify({
+      response_type: 'code',
+      client_id: CLIENT_ID,
+      scope: 'user-read-private user-read-email',
+      redirect_uri: REDIRECT_URI
+    }))
+})
+
+app.get('/callback', function(req, res) {
+  let code = req.query.code || null
+  let authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    form: {
+      code: code,
+      redirect_uri: REDIRECT_URI,
+      grant_type: 'authorization_code'
+    },
+    headers: {
+      'Authorization': 'Basic ' + (new Buffer.from(
+        CLIENT_ID + ':' + CLIENT_SECRET
+      ).toString('base64'))
+    },
+    json: true
+  }
+  request.post(authOptions, function(error, response, body) {
+    var access_token = body.access_token
+    let uri = 'http://localhost:3000/#/Dash' || REDIRECT_URI
+    res.redirect(uri + '?access_token=' + access_token)
+  })
+})

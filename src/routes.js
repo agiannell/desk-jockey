@@ -11,8 +11,8 @@ import Rooms from './components/rooms/Rooms';
 
 export default (
   <Switch>
-    <Route exact path='/' component={Dashboard} />
-    <Route path='/Auth' component={Auth} />
+    <Route exact path='/' component={Auth} />
+    <Route path='/Dash' component={Dashboard} />
     <Route path='/Chat' component={Chat} />
     <Route path='/Contact' component={Contact} />
     <Route path='/Profile' component={Profile} />

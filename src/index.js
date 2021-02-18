@@ -4,17 +4,21 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { SpotifyApiContext } from "react-spotify-api";
+import { Provider } from "react-redux";
+import store from "../src/ducks/Store";
 import { BrowserRouter, HashRouter } from "react-router-dom";
 const Router =
   process.env.NODE_ENV === "development" ? HashRouter : BrowserRouter;
 
 ReactDOM.render(
   <React.StrictMode>
-    <SpotifyApiContext.Provider>
+    <Provider store={store}>
       <Router>
+        {/* <SpotifyApiContext.Provider value={token}> */}
         <App />
+        {/* </SpotifyApiContext.Provider> */}
       </Router>
-    </SpotifyApiContext.Provider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

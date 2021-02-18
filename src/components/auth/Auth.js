@@ -2,7 +2,7 @@
 const Auth = (props) => {
   return (
     <div>
-      Hello World! This is the Auth Page.
+      <a href="http://localhost:4000/login">Login to Spotify</a>
     </div>
   )
 }
