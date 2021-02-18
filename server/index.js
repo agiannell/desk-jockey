@@ -9,7 +9,7 @@ const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, CLIENT_ID, REDIRECT_URI,
 const app = express();
 
 app.use(express.json());
-app.use(cors({origin: true, credentials: true}));
+app.use(cors({ origin: true, credentials: true }));
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -26,7 +26,7 @@ massive({
   app.listen(SERVER_PORT, () => console.log(`Listening on Port: ${SERVER_PORT}`))
 })
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
   console.log('hit')
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -37,7 +37,7 @@ app.get('/login', function(req, res) {
     }))
 })
 
-app.get('/callback', function(req, res) {
+app.get('/callback', function (req, res) {
   let code = req.query.code || null
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
@@ -53,9 +53,10 @@ app.get('/callback', function(req, res) {
     },
     json: true
   }
-  request.post(authOptions, function(error, response, body) {
+  request.post(authOptions, function (error, response, body) {
     var access_token = body.access_token
     let uri = 'http://localhost:3000/Dash' || REDIRECT_URI
     res.redirect(uri + '?access_token=' + access_token)
   })
 })
+

@@ -8,8 +8,8 @@ const Dashboard = (props) => {
   const { setUser, setUserPlaylists } = props;
   const { user } = props;
   console.log(props);
-  const [isLoggedIn,setIsLoggedIn] = useState(false)
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   useEffect(() => {
     let parsed = queryString.parse(window.location.search);
     let accessToken = parsed.access_token;
@@ -34,17 +34,17 @@ const Dashboard = (props) => {
       });
   }, []);
 
- 
+
 
   return (
     <div>
       <div>Dashboard</div>
-      {isLoggedIn 
-      ? <div>
+      {isLoggedIn
+        ? <div>
           <p> Hi {user?.display_name}!</p>
-          <img src={user?.images[0].url} />
+          <img src={user?.images[0]?.url} />
         </div>
-      : null}
+        : null}
     </div>
   )
 }
