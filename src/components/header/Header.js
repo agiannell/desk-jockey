@@ -1,8 +1,11 @@
+import react from 'react';
+import { Link } from "react-router-dom";
+
 
 const Header = (props) => {
   return (
     <div>
-      Hello World! This is the Header Page.
+      <p></p>
     </div>
   )
 }
