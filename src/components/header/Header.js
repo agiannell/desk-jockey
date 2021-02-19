@@ -8,26 +8,26 @@ import profile from '../profile/defaultprofile.webp'
 
 const Header = (props) => {
 
-  const { user } = props
-  const { display_name } = user
-  const { url } = user.images[0]
+  const { localUser } = props
 
-  console.log(props.user)
+  console.log(localUser)
   return (
     <div>
       <p>header</p>
-      {user ? (
+      {localUser ? (
         <div className='nav-links'>
           <Link to='/Dash' >Dashboard</Link>
           <Link to='/Chat' >Chat</Link>
           <Link to='/Contact' >Contact</Link>
-          <Link to='/Profile' >Profile</Link>
           <Link to='/Room' >Room</Link>
           <Link to='/Rooms' >Rooms</Link>
-          <div className='profile'>
-            <img className='profile-pic' src={profile} alt='profile' />
-            <h6>{display_name}</h6>
-          </div>
+          <Link to='/Profile' >
+            <div className='profile'>
+              <img className='profile-pic' src={`${localUser.profile_pic}`} alt='profile' />
+              <h6>{localUser.display_name}</h6>
+            </div>
+          </Link>
+
         </div>
       ) : null}
 
@@ -38,7 +38,8 @@ const Header = (props) => {
 const mapStateToProps = (reduxState) => {
   return {
     user: reduxState.userReducer.user,
-    accessToken: reduxState.userReducer.accessToken
+    accessToken: reduxState.userReducer.accessToken,
+    localUser: reduxState.userReducer.localUser
   };
 };
 

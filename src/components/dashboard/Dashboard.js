@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Rooms from "../rooms/Rooms";
-import { setUser, setUserPlaylists, setAccessToken } from "../../ducks/reducer/userReducer";
+import { setUser, setUserPlaylists, setAccessToken, setLocalUser } from "../../ducks/reducer/userReducer";
 import axios from "axios";
 import Header from '../header/Header'
 
 const Dashboard = (props) => {
-  const { setUser, setUserPlaylists, setAccessToken } = props;
+  const { setUser, setUserPlaylists, setAccessToken, setLocalUser } = props;
   const { user, accessToken } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [publicRooms, setPublicRooms] = useState([]);
@@ -34,8 +34,10 @@ const Dashboard = (props) => {
         .then((data) => {
           setUser(data);
           axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
-            if (foundUser.data[0]) {
-              return console.log("user exists");
+            // console.log(foundUser.data)
+            if (foundUser.data) {
+              setLocalUser(foundUser.data)
+              // return console.log("user exists");
             }
 
             axios
@@ -63,7 +65,7 @@ const Dashboard = (props) => {
       <button onClick={handleSession}>Hit Me</button>
       {accessToken ? (
         <div>
-          <p> Hi {user?.display_name}!</p>
+          <h3>NAV-BAR</h3>
           { publicRooms.map(e => (
             <Rooms
               key={e.room_id}
@@ -89,5 +91,6 @@ const mapStateToProps = (reduxState) => {
 export default connect(mapStateToProps, {
   setUser,
   setUserPlaylists,
-  setAccessToken
+  setAccessToken,
+  setLocalUser
 })(Dashboard);
