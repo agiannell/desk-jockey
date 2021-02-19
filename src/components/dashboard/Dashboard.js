@@ -5,6 +5,7 @@ import Rooms from "../rooms/Rooms";
 import { setUser, setUserPlaylists, setAccessToken, setLocalUser } from "../../ducks/reducer/userReducer";
 import axios from "axios";
 import Header from '../header/Header'
+import './Dashboard.css'
 
 const Dashboard = (props) => {
   const { setUser, setUserPlaylists, setAccessToken, setLocalUser } = props;
@@ -34,7 +35,7 @@ const Dashboard = (props) => {
         .then((data) => {
           setUser(data);
           axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
-            // console.log(foundUser.data)
+            console.log(foundUser.data)
             if (foundUser.data) {
               setLocalUser(foundUser.data)
               // return console.log("user exists");
@@ -66,17 +67,17 @@ const Dashboard = (props) => {
       {accessToken ? (
         <div>
           <h3>NAV-BAR</h3>
+          <section className="rooms-map">
           { publicRooms.map(e => (
-            <Rooms
-              key={e.room_id}
-              roomId={e.room_id}
-              name={e.room_name}
-              roomPic={e.room_pic} />
+              <Rooms
+                key={e.room_id}
+                roomId={e.room_id}
+                name={e.room_name}
+                roomPic={e.room_pic} />
           ))}
-          <div></div>
+          </section>
         </div>
       ) : null}
-      <Rooms />
     </div>
   );
 };

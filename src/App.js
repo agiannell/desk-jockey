@@ -1,3 +1,4 @@
+import './reset.css'
 import "./App.css";
 import react from "react";
 import routes from "./routes";
