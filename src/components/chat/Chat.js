@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+
 
 const Chat = (props) => {
   return (
