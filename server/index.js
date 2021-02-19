@@ -72,6 +72,7 @@ app.get('/pizza', (req, res) => {
 
 // User Endpoints
 app.get('/api/check-user/:email', userCtrl.checkUser);
+
 app.post('/api/user', userCtrl.createUser);
 
 // Room Endpoints
