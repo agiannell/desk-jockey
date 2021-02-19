@@ -54,9 +54,17 @@ app.get('/callback', function (req, res) {
     json: true
   }
   request.post(authOptions, function (error, response, body) {
+    // console.log(body)
     var access_token = body.access_token
+    req.session.token = access_token
     let uri = 'http://localhost:3000/Dash' || REDIRECT_URI
-    res.redirect(uri + '?access_token=' + access_token)
+    res.redirect(uri)
   })
+  // console.log(req.session.token)
+})
+
+app.get('/pizza', (req, res) => {
+  // console.log(req.session.token)
+  res.status(200).send(req.session.token)
 })
 
