@@ -1,79 +1,91 @@
 // import react from 'react';
 import { useState, useEffect } from "react";
-import queryString from "query-string";
 import { connect } from "react-redux";
-import Rooms from "../rooms/Rooms"
+import Rooms from "../rooms/Rooms";
 import { setUser, setUserPlaylists, setAccessToken } from "../../ducks/reducer/userReducer";
 import axios from "axios";
 
 const Dashboard = (props) => {
   const { setUser, setUserPlaylists, setAccessToken } = props;
   const { user, accessToken } = props;
-  // console.log(props);
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [publicRooms, setPublicRooms] = useState([]);
 
   useEffect(() => {
+    axios.get("/pizza").then((res) => {
+      setAccessToken(res.data);
+      setIsLoggedIn(true);
+    });
 
-    axios.get('/pizza')
-      .then((res) => {
-        // console.log(res.data)
-        setAccessToken(res.data)
-        setIsLoggedIn(true)
+    axios.get('/api/rooms')
+      .then(res => {
+        setPublicRooms(res.data)
       })
-
-  }, [])
-
-  // console.log(accessToken)
+      .catch(err => console.log(err));
+  }, []);
 
   useEffect(() => {
+    if (accessToken) {
+      fetch("https://api.spotify.com/v1/me", {
+        headers: { Authorization: "Bearer " + accessToken },
+      })
+        .then((results) => results.json())
+        .then((data) => {
+          setUser(data);
+          axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
+            if (foundUser.data[0]) {
+              return console.log("user exists");
+            }
 
-    fetch("https://api.spotify.com/v1/me", {
-      headers: { Authorization: "Bearer " + accessToken },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-
-      });
-
-    fetch("https://api.spotify.com/v1/me/playlists", {
-      headers: { Authorization: "Bearer " + accessToken },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserPlaylists(data);
-        // console.log(data);
-      });
-    ;
-  }, [isLoggedIn])
+            axios
+              .post("/api/user", {
+                displayName: data.display_name,
+                email: data.email,
+                profilePic: data.images[0].url,
+              })
+              .then()
+              .catch((err) => console.log(err));
+          });
+        });
+    }
+  }, [accessToken]);
 
   const handleSession = () => {
-    axios.get('/pizza')
-      .then(res => console.log(res.data))
-  }
+    axios.get("/pizza").then((res) => console.log(res.data));
+  };
 
-  console.log('props:', props)
+  // console.log('props:', props)
   return (
     <div>
       <div>Dashboard</div>
-      <button onClick={handleSession} >Hit Me</button>
-      {isLoggedIn ?
-        (<div>
+      <button onClick={handleSession}>Hit Me</button>
+      {accessToken ? (
+        <div>
           <p> Hi {user?.display_name}!</p>
-          <img src={user?.images[0].url} />
+          { publicRooms.map(e => (
+            <Rooms 
+              key={ e.room_id }
+              roomId={ e.room_id }
+              name={ e.room_name }
+              roomPic={ e.room_pic } />
+          )) }
           <div></div>
-        </div>) : null
-      }
+        </div>
+      ) : null}
       <Rooms />
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = (reduxState) => {
   return {
     user: reduxState.userReducer.user,
-    accessToken: reduxState.userReducer.accessToken
+    accessToken: reduxState.userReducer.accessToken,
   };
 };
 
-export default connect(mapStateToProps, { setUser, setUserPlaylists, setAccessToken })(Dashboard);
+export default connect(mapStateToProps, {
+  setUser,
+  setUserPlaylists,
+  setAccessToken
+})(Dashboard);

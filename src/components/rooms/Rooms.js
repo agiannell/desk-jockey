@@ -1,8 +1,10 @@
 
 const Rooms = (props) => {
+  const { roomId, name, roomPic } = props
   return (
     <div>
-      Hello World! This is the Rooms Page.
+      <h1>{ name }</h1>
+      <img src={ roomPic } alt={ name } />
     </div>
   )
 }
