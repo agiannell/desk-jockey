@@ -5,6 +5,8 @@ const massive = require('massive');
 const session = require('express-session');
 const querystring = require('querystring');
 const request = require('request');
+const userCtrl = require('./controllers/userController');
+const roomCtrl = require('./controllers/roomController');
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, CLIENT_ID, REDIRECT_URI, CLIENT_SECRET } = process.env;
 const app = express();
 
@@ -68,3 +70,9 @@ app.get('/pizza', (req, res) => {
   res.status(200).send(req.session.token)
 })
 
+// User Endpoints
+app.get('/api/check-user/:email', userCtrl.checkUser);
+app.post('/api/user', userCtrl.createUser);
+
+// Room Endpoints
+app.get('/api/rooms', roomCtrl.getPublicRooms);
