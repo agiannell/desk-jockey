@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Rooms from "../rooms/Rooms";
 import { setUser, setUserPlaylists, setAccessToken } from "../../ducks/reducer/userReducer";
 import axios from "axios";
+import Header from '../header/Header'
 
 const Dashboard = (props) => {
   const { setUser, setUserPlaylists, setAccessToken } = props;
@@ -57,18 +58,19 @@ const Dashboard = (props) => {
   // console.log('props:', props)
   return (
     <div>
+      <Header />
       <div>Dashboard</div>
       <button onClick={handleSession}>Hit Me</button>
       {accessToken ? (
         <div>
           <p> Hi {user?.display_name}!</p>
           { publicRooms.map(e => (
-            <Rooms 
-              key={ e.room_id }
-              roomId={ e.room_id }
-              name={ e.room_name }
-              roomPic={ e.room_pic } />
-          )) }
+            <Rooms
+              key={e.room_id}
+              roomId={e.room_id}
+              name={e.room_name}
+              roomPic={e.room_pic} />
+          ))}
           <div></div>
         </div>
       ) : null}

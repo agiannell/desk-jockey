@@ -7,14 +7,14 @@ import Footer from "./components/footer/Footer";
 
 
 function App(props) {
-   
+
 
   return (
     <div className="App">
-      <Header />
       {routes}
-      <div></div>
-      <Footer />
+      <div className='footer-component'>
+        <Footer />
+      </div>
     </div>
   );
 }
