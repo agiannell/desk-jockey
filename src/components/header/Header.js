@@ -10,7 +10,7 @@ const Header = (props) => {
 
   const { localUser } = props
 
-  console.log(localUser)
+  console.log(props)
   return (
     <div>
       <p>header</p>
