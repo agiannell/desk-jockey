@@ -1,33 +1,49 @@
 import react from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import './Header.css'
 import { connect } from 'react-redux'
+import { clearUser, clearLocalUser, clearAccessToken } from '../../ducks/reducer/userReducer';
 import axios from 'axios';
 import profile from '../profile/defaultprofile.webp'
 
 
 const Header = (props) => {
+  const { localUser, clearUser, clearLocalUser } = props
 
-  const { user } = props
-  const { display_name } = user
-  const { url } = user.images[0]
+  const handleLogout = () => {
+    const url = 'https://www.spotify.com/logout'                                                                   
+    const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
+    setTimeout(() => spotifyLogoutWindow.close(), 2000)
+    axios.get('/api/logout')
+      .then(() => {
+        clearLocalUser()
+        clearUser()
+        clearAccessToken()
+      })
+      .catch(err => console.log(err));
 
-  console.log(props.user)
+    props.history.push('/')
+  }
+
+  console.log(localUser)
   return (
     <div>
       <p>header</p>
-      {user ? (
+      {localUser ? (
         <div className='nav-links'>
           <Link to='/Dash' >Dashboard</Link>
           <Link to='/Chat' >Chat</Link>
           <Link to='/Contact' >Contact</Link>
-          <Link to='/Profile' >Profile</Link>
           <Link to='/Room' >Room</Link>
           <Link to='/Rooms' >Rooms</Link>
-          <div className='profile'>
-            <img className='profile-pic' src={profile} alt='profile' />
-            <h6>{display_name}</h6>
-          </div>
+          <Link to='/Profile' >
+            <div className='profile'>
+              <img className='profile-pic' src={`${localUser.profile_pic}`} alt='profile' />
+              <h6>{localUser.display_name}</h6>
+            </div>
+          </Link>
+          <button onClick={handleLogout}>Logout</button>
+
         </div>
       ) : null}
 
@@ -38,8 +54,9 @@ const Header = (props) => {
 const mapStateToProps = (reduxState) => {
   return {
     user: reduxState.userReducer.user,
-    accessToken: reduxState.userReducer.accessToken
+    accessToken: reduxState.userReducer.accessToken,
+    localUser: reduxState.userReducer.localUser
   };
 };
 
-export default connect(mapStateToProps, {})(Header);
+export default withRouter(connect(mapStateToProps, { clearUser, clearLocalUser })(Header));

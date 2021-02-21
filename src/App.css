@@ -1,7 +1,8 @@
 .App {
   text-align: center;
 }
+
 .footer-component {
-  position: absolute;
+  position: relative;
   bottom: 10px;
 }
