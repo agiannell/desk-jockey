@@ -1,5 +1,4 @@
-import './reset.css'
-import "./App.css";
+import './styles/App.css';
 import react from "react";
 import routes from "./routes";
 import Header from "./components/header/Header";

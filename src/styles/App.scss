@@ -1,0 +1,12 @@
+@import './scss/config';
+@import './scss/header';
+@import './scss/dashboard';
+
+.App {
+    text-align: center;
+  }
+  
+  .footer-component {
+    position: relative;
+    bottom: 10px;
+  }
