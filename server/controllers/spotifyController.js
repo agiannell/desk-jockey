@@ -1,6 +1,6 @@
 module.exports = {
     app.get('/login', function(req, res) {
-        var scopes = 'user-read-private user-read-email';
+        var scopes = 'streaming user-read-private user-read-email';
         res.redirect('https://accounts.spotify.com/authorize' +
           '?response_type=code' +
           '&client_id=' + my_client_id +
