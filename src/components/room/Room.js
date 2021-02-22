@@ -5,6 +5,7 @@ import {setUserPlaylists} from '../../ducks/reducer/userReducer';
 
 const Room = (props) => {
   const {accessToken, setUserPlaylists, user} = props;
+
 useEffect(() => {
   fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
     headers: { Authorization: "Bearer " + accessToken },
@@ -18,12 +19,21 @@ useEffect(() => {
 }, []); 
 
   return (
-    <div>
-      <section>
+    <div className='page-parent'>
+      <section className='player-section'>
         <SpotifyPlayer
+          className='player'
           token={accessToken}
           uris={['spotify:playlist:5f03s8ZslD2guGAXaPNCSg']}
-          />;
+          styles={{
+            bgColor: '#160F29',
+            sliderColor: '#246A73',
+            color: '#F3DFC1',
+            trackNameColor: '#F3DFC1',
+            loaderColor: '#246A73',
+            activeColor: 'red'
+          }}
+          />
       </section>
     </div>
   )
