@@ -36,8 +36,7 @@ const Dashboard = (props) => {
           axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
             console.log(foundUser.data)
             if (foundUser.data) {
-              setLocalUser(foundUser.data)
-              // return console.log("user exists");
+              return setLocalUser(foundUser.data)
             }
 
             axios
