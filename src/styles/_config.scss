@@ -1,0 +1,57 @@
+$primary-color: #160F29;
+$secondary-color: #246A73;
+$btn-color: #368F8B;
+$text-color: #F3DFC1;
+
+@import url("https://use.typekit.net/zor0egj.css");
+    // font-family: 'canada-type-gibson', sans-serif;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@mixin flex($justify, $direction) {
+    display: flex;
+    align-items: center;
+    justify-content: $justify;
+    flex-direction: $direction;
+}
+
+@mixin border($color) {
+    border: 2px dotted $color;
+}
+
+@keyframes fly-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fly-left {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fly-right {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

@@ -5,7 +5,6 @@ import Rooms from "../rooms/Rooms";
 import { setUser, setUserPlaylists, setAccessToken, setLocalUser } from "../../ducks/reducer/userReducer";
 import axios from "axios";
 import Header from '../header/Header'
-import './Dashboard.css'
 
 const Dashboard = (props) => {
   const { setUser, setUserPlaylists, setAccessToken, setLocalUser } = props;
