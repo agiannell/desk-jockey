@@ -1,8 +1,15 @@
+import { Link } from 'react-router-dom';
 
 const Rooms = (props) => {
+  const { roomId, name, roomPic } = props
   return (
     <div>
-      Hello World! This is the Rooms Page.
+      <Link to={ `/room/${ roomId }` }>
+        <div className='room'>
+          <h1>{ name }</h1>
+          <img src={ roomPic } alt={ name } />
+        </div>
+      </Link>
     </div>
   )
 }
