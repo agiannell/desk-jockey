@@ -10,7 +10,7 @@ module.exports = {
       querystring.stringify({
         response_type: 'code',
         client_id: CLIENT_ID,
-        scope: 'user-read-private user-read-email',
+        scope: 'streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-library-modify playlist-read-private',
         redirect_uri: REDIRECT_URI
       }))
   },
