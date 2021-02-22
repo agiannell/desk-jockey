@@ -1,4 +1,5 @@
 import react from 'react';
+import {useEffect} from 'react'
 import { Link, withRouter } from "react-router-dom";
 import './Header.css'
 import { connect } from 'react-redux'
@@ -9,6 +10,10 @@ import profile from '../profile/defaultprofile.webp'
 
 const Header = (props) => {
   const { localUser, clearUser, clearLocalUser } = props
+
+  useEffect(() => {
+    
+  }, [localUser])
 
   const handleLogout = () => {
     const url = 'https://www.spotify.com/logout'
@@ -38,7 +43,7 @@ const Header = (props) => {
           <Link to='/Rooms' >Rooms</Link>
           <Link to='/Profile' >
             <div className='profile'>
-              <img className='profile-pic' src={`${localUser.profile_pic}`} alt='profile' />
+              <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />
               <h6>{localUser.display_name}</h6>
             </div>
           </Link>

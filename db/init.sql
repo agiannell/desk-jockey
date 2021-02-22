@@ -1,11 +1,12 @@
 drop TABLE if exists room_junction, users, room;
 
-CREATE TABLE users(
+CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     display_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     profile_pic TEXT NOT NULL,
-    date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (email)
 );
 
 CREATE TABLE room(
