@@ -44,7 +44,7 @@ const Dashboard = (props) => {
               .post("/api/user", {
                 displayName: data.display_name,
                 email: data.email,
-                profilePic: data.images[0].url,
+                // profilePic: data.images[0].url,
               })
               .then()
               .catch((err) => console.log(err));
