@@ -2,7 +2,7 @@ let accessToken
 
 module.exports = {
     createUser: async (req, res) => {
-        const { displayName, email, profilePic } = req.body,
+        let { displayName, email, profilePic } = req.body,
             db = req.app.get('db');
 
         !profilePic ? profilePic = 'https://unlocked-default-pic.s3-us-west-1.amazonaws.com/default-profile-pic.svg' : null

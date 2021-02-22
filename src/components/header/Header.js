@@ -11,7 +11,7 @@ const Header = (props) => {
   const { localUser, clearUser, clearLocalUser } = props
 
   const handleLogout = () => {
-    const url = 'https://www.spotify.com/logout'                                                                   
+    const url = 'https://www.spotify.com/logout'
     const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
     setTimeout(() => spotifyLogoutWindow.close(), 2000)
     axios.get('/api/logout')
@@ -25,7 +25,7 @@ const Header = (props) => {
     props.history.push('/')
   }
 
-  console.log(localUser)
+  // console.log(localUser)
   return (
     <div>
       <p>header</p>

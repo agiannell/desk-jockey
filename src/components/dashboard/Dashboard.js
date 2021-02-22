@@ -34,7 +34,7 @@ const Dashboard = (props) => {
         .then((data) => {
           setUser(data);
           axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
-            console.log(foundUser.data)
+            // console.log(foundUser.data)
             if (foundUser.data) {
               setLocalUser(foundUser.data)
               // return console.log("user exists");
@@ -57,7 +57,7 @@ const Dashboard = (props) => {
     axios.get("/pizza").then((res) => console.log(res.data));
   };
 
-  // console.log('props:', props)
+  console.log('props:', props)
   return (
     <div>
       <Header />
@@ -67,13 +67,13 @@ const Dashboard = (props) => {
         <div>
           <h3>NAV-BAR</h3>
           <section className="rooms-map">
-          { publicRooms.map(e => (
+            {publicRooms.map(e => (
               <Rooms
                 key={e.room_id}
                 roomId={e.room_id}
                 name={e.room_name}
                 roomPic={e.room_pic} />
-          ))}
+            ))}
           </section>
         </div>
       ) : null}
