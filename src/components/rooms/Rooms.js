@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import './Rooms.css'
 
 const Rooms = (props) => {
   const { roomId, name, roomPic } = props

@@ -1,9 +1,24 @@
+import stackedLogo from '../../assets/img/logos/logo-stacked-white.svg';
+import { FaSpotify } from 'react-icons/fa';
 
-const Auth = (props) => {
+const Auth = props => {
   return (
-    <div>
-      <a href="http://localhost:4000/login">Login to Spotify</a>
-    </div>
+    <section>
+      <section className="auth-main">
+        <section className="auth-img">
+          <section className="auth-login">
+            <img src={ stackedLogo } alt='logo' />
+            <a href="http://localhost:4000/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+          </section>
+        </section>
+      </section>
+      <section className="auth-section">Section 1 Content</section>
+      <section className="auth-section lighten">Section 2 Content</section>
+      <section className="auth-section">Section 3 Content</section>
+      <section className="auth-section lighten">
+        <a href="http://localhost:4000/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+      </section>
+    </section>
   )
 }
 
