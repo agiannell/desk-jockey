@@ -1,0 +1,13 @@
+.footer-component {
+    @include flex(center, row);
+    background-color: $secondary-color;
+    padding: 10px 20px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+
+    p {
+        margin: 0 10px;
+    }
+  }

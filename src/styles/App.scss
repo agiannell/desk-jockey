@@ -1,0 +1,26 @@
+@import './config';
+@import './auth';
+@import './header';
+@import './dashboard';
+@import './rooms';
+@import './footer';
+
+.App {
+    text-align: center;
+    color: $text-color;
+    font-family: 'canada-type-gibson', sans-serif;
+    background: linear-gradient(to bottom, $primary-color, $secondary-color);
+
+    a {
+        text-decoration: none;
+        color: $text-color;
+    }
+  }
+
+  .lighten {
+      background: lighten($primary-color, 5%);
+  }
+
+  .hidden {
+      display: none;
+  }

@@ -1,9 +1,10 @@
 
-const Footer = (props) => {
+const Footer = props => {
   return (
-    <div>
-      This app was built by Students of DevMountain. Specifically Dj Tiwari, Anthony Gianell, Kepler Ridge, and Jase Lawson.
-    </div>
+    <section className='footer-component'>
+      <p>&copy;2021</p>
+      <p>This app was built by Students of DevMountain. Specifically Dj Tiwari, Anthony Giannell, Kepler Ridge, and Jase Lawson.</p>
+    </section>
   )
 }
 
