@@ -1,3 +1,5 @@
+let accessToken
+
 module.exports = {
     createUser: async (req, res) => {
         const { displayName, email, profilePic } = req.body,
@@ -20,6 +22,11 @@ module.exports = {
 
         const [user] = await db.users.check_user(email)
         // console.log(user)
-        res.status(200).send(user)
+        req.session.user = user
+        res.status(200).send(req.session.user)
+    },
+    logout: (req, res) => {
+        req.session.destroy()
+        res.sendStatus(200);
     }
 }

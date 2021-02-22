@@ -6,7 +6,6 @@ import Contact from './components/contact/Contact';
 import Dashboard from './components/dashboard/Dashboard';
 import Profile from './components/profile/Profile';
 import Room from './components/room/Room';
-import Rooms from './components/rooms/Rooms';
 
 
 export default (
@@ -16,7 +15,6 @@ export default (
     <Route path='/Chat' component={Chat} />
     <Route path='/Contact' component={Contact} />
     <Route path='/Profile' component={Profile} />
-    <Route path='/Room' component={Room} />
-    <Route path='/Rooms' component={Rooms} />
+    <Route path='/Room/:id' component={Room} />
   </Switch>
 )
