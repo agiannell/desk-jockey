@@ -51,7 +51,7 @@ const Dashboard = (props) => {
               method: "POST",
               body: JSON.stringify({
                 name: "Desktop-Dj",
-                description: "New playlist description",
+                description: "This is the playlist where the songs you're listening to with friends will show up. Don't delete this playlist or we will have to make a new one for you to listen through!",
                 public: false,
               }),
               scope: "playlist-modify-public playlist-modify-private",
