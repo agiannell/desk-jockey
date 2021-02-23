@@ -33,7 +33,7 @@ const Header = (props) => {
   // console.log(localUser)
   return (
     <div>
-      <p>header</p>
+      {/* <p>header</p> */}
       {localUser ? (
         <div className='nav-links'>
           <Link to='/Dash' >Dashboard</Link>
