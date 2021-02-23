@@ -21,9 +21,8 @@ const Room = (props) => {
       });
   }, [])
 
-
   const handleAddTrack = (uri) => {
-    let djPlaylistId = playlist_uri.substr(17,)
+    let djPlaylistId = playlist_uri.substr(17)
     fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}/tracks`, {
       headers: {
         Authorization: "Bearer " + accessToken,
@@ -38,10 +37,13 @@ const Room = (props) => {
     console.log('hit')
   }
 
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div>
       <Header />
-      <button onClick={handleAddTrack} >Hit Me</button>
       <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
       {showPlaylists ? (
         <div>
