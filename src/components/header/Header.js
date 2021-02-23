@@ -1,5 +1,5 @@
 import react from 'react';
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { Link, withRouter } from "react-router-dom";
 import './Header.css'
 import { connect } from 'react-redux'
@@ -12,11 +12,11 @@ const Header = (props) => {
   const { localUser, clearUser, clearLocalUser } = props
 
   useEffect(() => {
-    
+
   }, [localUser])
 
   const handleLogout = () => {
-    const url = 'https://www.spotify.com/logout'                                                                   
+    const url = 'https://www.spotify.com/logout'
     const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
     setTimeout(() => spotifyLogoutWindow.close(), 2000)
     axios.get('/api/logout')
@@ -30,10 +30,10 @@ const Header = (props) => {
     props.history.push('/')
   }
 
-  console.log(localUser)
+  // console.log(localUser)
   return (
     <div>
-      <p>header</p>
+      {/* <p>header</p> */}
       {localUser ? (
         <div className='nav-links'>
           <Link to='/Dash' >Dashboard</Link>
