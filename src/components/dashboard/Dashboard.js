@@ -63,7 +63,7 @@ const Dashboard = (props) => {
                   .post("/api/user", {
                     displayName: data.display_name,
                     email: data.email,
-                    profilePic: data.images[0].url,
+                    // profilePic: data.images[0].url,
                     playlist_uri: info.uri,
                   })
                   .then((response) => {
