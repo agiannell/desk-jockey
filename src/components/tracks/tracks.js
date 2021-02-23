@@ -1,12 +1,12 @@
 
 
 const Tracks = (props) => {
-    const {trId,trName} = props
+    const { trUri, trName } = props
 
-    
+
     return (
         <div>
-           <h3>{trName}</h3> 
+            <h3 onDoubleClick={() => { props.addTrack(trUri) }}>{trName}</h3>
         </div>
     )
 }
