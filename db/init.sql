@@ -6,6 +6,7 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL,
     profile_pic TEXT NOT NULL,
     date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    playlist_uri text,
     UNIQUE (email)
 );
 
