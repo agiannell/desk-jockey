@@ -1,9 +1,11 @@
 import profile from './defaultprofile.webp'
+import Header from '../header/Header'
 
 const Profile = (props) => {
   return (
     <div>
-      <img src={profile} alt='Default Profile Picture'/>
+      <Header />
+      <img src={profile} alt='Default Profile Picture' />
       <h1></h1>
     </div>
   )

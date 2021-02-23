@@ -1,10 +1,12 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Tracks from '../tracks/tracks';
 
 const Playlist = (props) => {
   const { name, id, accessToken } = props;
-  const [tracks,setTracks] = useState([]);
-  const [showTracks,setShowTracks] = useState(false);
+  const [tracks, setTracks] = useState([]);
+  const [showTracks, setShowTracks] = useState(false);
+
+
 
   useEffect(() => {
     fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
@@ -13,25 +15,27 @@ const Playlist = (props) => {
       .then((tracks) => tracks.json())
       .then((data) => {
         setTracks(data)
-        console.log(data)
+        // console.log(data)
       });
-  },[]);
+  }, []);
 
   return (
     <div>
       <h1 onClick={() => setShowTracks(!showTracks)}>{name}</h1>
       {showTracks ? (
-          <div>
-              {tracks.items.map(tracks => (
-                  <Tracks 
-                    trId={tracks.track.id}
-                    trName={tracks.track.name}
-                  />
-              ))}
-          </div>
+        <div>
+          {tracks.items.map(tracks => (
+            <Tracks
+              trId={tracks.track.id}
+              trName={tracks.track.name}
+              addTrack={props.addTrack}
+              trUri={tracks.track.uri}
+            />
+          ))}
+        </div>
       )
 
-      :null}
+        : null}
     </div>
   );
 };
