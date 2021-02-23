@@ -26,10 +26,6 @@ const Room = (props) => {
   }
 
   return (
-<<<<<<< HEAD
-    <div className='page-parent'>
-      <section className='player-section'>
-=======
     <div>
       <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
       {showPlaylists ? (
@@ -44,12 +40,10 @@ const Room = (props) => {
         </div>
       ): null}
       <section>
->>>>>>> d809af912fbbe1655983e63961138bb7573e7b30
         <SpotifyPlayer
           className='player'
           token={accessToken}
           uris={['spotify:playlist:5f03s8ZslD2guGAXaPNCSg']}
-<<<<<<< HEAD
           styles={{
             bgColor: '#160F29',
             sliderColor: '#246A73',
@@ -58,8 +52,6 @@ const Room = (props) => {
             loaderColor: '#246A73',
             activeColor: 'red'
           }}
-=======
->>>>>>> d809af912fbbe1655983e63961138bb7573e7b30
           />
       </section>
     </div>
