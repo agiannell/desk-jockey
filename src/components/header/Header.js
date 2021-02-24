@@ -5,11 +5,12 @@ import './Header.css'
 import { connect } from 'react-redux'
 import { clearUser, clearLocalUser, clearAccessToken, setAccessToken, setLocalUser } from '../../ducks/reducer/userReducer';
 import axios from 'axios';
-import profile from '../profile/defaultprofile.webp'
+
+
 
 
 const Header = (props) => {
-  const { localUser, clearUser, clearLocalUser } = props
+  const { localUser, clearUser, clearLocalUser, setLocalUser } = props;
 
   useEffect(() => {
     axios.get("/pizza")
@@ -21,7 +22,7 @@ const Header = (props) => {
     axios.get('/api/user')
       .then(res => {
         setLocalUser(res.data);
-      });
+      }).catch(err => console.log(err));
 
   }, [])
 
@@ -56,6 +57,7 @@ const Header = (props) => {
               <h6>{localUser.display_name}</h6>
             </div>
           </Link>
+          <Link to='/' >Sign In</Link>
           <button onClick={handleLogout}>Logout</button>
 
         </div>
