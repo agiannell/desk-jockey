@@ -1,10 +1,12 @@
-
+import axios from 'axios'
 
 const NewRoom = (props) => {
 
 
   const handleCreateRoom = () => {
+    axios.post('/api/room', {
 
+    }).then()
   }
 
   return (
@@ -20,7 +22,7 @@ const NewRoom = (props) => {
       <p>Invite your friends to listen!</p>
       <input placeholder='Enter email address' />
       <button>Add</button>
-      <button>Create Room</button>
+      <button onClick={handleCreateRoom}>Create Room</button>
     </div>
   )
 }
