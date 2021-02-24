@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 
 const Player = props => {
   const { accessToken, desktopDjPL } = props
-  const uriArr = desktopDjPL.map(e => e.track.uri)
-
+  
   return (
     <section>
       <SpotifyPlayer
         className='player'
         token={accessToken}
-        uris={ desktopDjPL.map(e => e.track.uri) }
+        uris={desktopDjPL.map(e => e.track.uri)}
         styles={{
           bgColor: '#160F29',
           sliderColor: '#246A73',
