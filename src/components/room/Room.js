@@ -79,7 +79,6 @@ const Room = (props) => {
     return (
       <div>
       <Header />
-      <button onClick={handleAddTrack} >Hit Me</button>
       <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
       {showPlaylists ? (
         <div>
