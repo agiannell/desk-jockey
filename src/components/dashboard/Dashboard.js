@@ -12,7 +12,7 @@ import Header from "../header/Header";
 
 const Dashboard = (props) => {
   const { setUser, setAccessToken, setLocalUser } = props;
-  const { user, accessToken } = props;
+  const { user, accessToken, localUser } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [publicRooms, setPublicRooms] = useState([]);
 
@@ -39,7 +39,7 @@ const Dashboard = (props) => {
         .then((data) => {
           setUser(data);
           axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
-            console.log(foundUser.data);
+            // console.log(foundUser.data);
             if (foundUser.data) {
               return setLocalUser(foundUser.data);
             }
@@ -51,7 +51,7 @@ const Dashboard = (props) => {
               method: "POST",
               body: JSON.stringify({
                 name: "Desktop-Dj",
-                description: "New playlist description",
+                description: "This is the playlist where the songs you're listening to with friends will show up. Don't delete this playlist or we will have to make a new one for you to listen through!",
                 public: false,
               }),
               scope: "playlist-modify-public playlist-modify-private",
@@ -104,6 +104,7 @@ const mapStateToProps = (reduxState) => {
   return {
     user: reduxState.userReducer.user,
     accessToken: reduxState.userReducer.accessToken,
+    localUser: reduxState.userReducer.localUser
   };
 };
 
