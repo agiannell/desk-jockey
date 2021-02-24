@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { connect } from "react-redux";
-import SpotifyPlayer from 'react-spotify-web-playback';
+import Player from '../player/Player';
 import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
 
@@ -8,38 +8,76 @@ const Room = (props) => {
   const { accessToken, user } = props;
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [showPlaylists, setShowPlaylists] = useState(false);
+  const [desktopDjPL, setDesktopDjPL] = useState([]);
   const { playlist_uri } = props.localUser
 
-  useEffect(() => {
-    fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
-      headers: { Authorization: "Bearer " + accessToken },
-    })
-      .then((playList) => playList.json())
-      .then((data) => {
-        setUserPlaylists(data);
-        // console.log(userPlaylists);
-      });
-  }, [])
+  const getUserPlaylists = () => {
+      fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
+        headers: { Authorization: "Bearer " + accessToken },
+      })
+        .then((playList) => playList.json())
+        .then((data) => {
+          // console.log(data)
+          setUserPlaylists(data);
+          // console.log(userPlaylists);
+        });
+  };
 
-
-  const handleAddTrack = (uri) => {
+  const getDesktopDj = () => {
     let djPlaylistId = playlist_uri.substr(17,)
     fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}/tracks`, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify({
-        "uris": [uri]
-      }),
-      scope: "playlist-modify-public playlist-modify-private"
+      headers: { Authorization: "Bearer " + accessToken },
     })
-    console.log('hit')
-  }
-
-  return (
-    <div>
+      .then((tracks) => tracks.json())
+      .then((data) => {
+        console.log(data)
+        // data.items.map(e => {
+        //   return setDesktopDjPL([...desktopDjPL, e.track.uri])
+        // })
+        setDesktopDjPL(data.items)
+      });
+    }
+    
+    useEffect(() => {
+      if(user.hasOwnProperty('id')) {
+        getUserPlaylists();
+        getDesktopDj();
+      }
+      
+    }, [user])
+    
+    const handleAddTrack = (uri, trId) => {
+      let djPlaylistId = playlist_uri.substr(17,)
+      fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}/tracks`, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+          "uris": [uri]
+        }),
+        scope: "playlist-modify-public playlist-modify-private"
+      })
+      .then(() => {
+        console.log('hit')
+        fetch(`https://api.spotify.com/v1/tracks/${trId}`, {
+          headers: {
+            Authorization: 'Bearer ' + accessToken
+          }
+        })
+        .then(track => track.json())
+        .then(data => {
+          console.log('add track data', data)
+        })
+      })
+      .catch(err => console.log(err))
+    }
+    
+    console.log('dj songs', desktopDjPL)
+    console.log(desktopDjPL)
+    return (
+      <div>
       <Header />
       <button onClick={handleAddTrack} >Hit Me</button>
       <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
@@ -55,21 +93,11 @@ const Room = (props) => {
           ))}
         </div>
       ) : null}
-      <section>
-        <SpotifyPlayer
-          className='player'
-          token={accessToken}
-          uris={playlist_uri}
-          styles={{
-            bgColor: '#160F29',
-            sliderColor: '#246A73',
-            color: '#F3DFC1',
-            trackNameColor: '#F3DFC1',
-            loaderColor: '#246A73',
-            activeColor: 'red'
-          }}
-        />
-      </section>
+      { desktopDjPL[0] ? (
+        <section>
+          <Player desktopDjPL={ desktopDjPL } />
+        </section>
+      ) : null }
     </div>
   )
 }
