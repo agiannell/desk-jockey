@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Player from '../player/Player';
 import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
+import { get } from 'request';
 
 const Room = (props) => {
   const { accessToken, user } = props;
@@ -30,9 +31,9 @@ const Room = (props) => {
     })
       .then((tracks) => tracks.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         // data.items.map(e => {
-        //   return setDesktopDjPL([...desktopDjPL, e.track.uri])
+        //   return setDesktopDjPL(uri => [...desktopDjPL, e.track.uri])
         // })
         setDesktopDjPL(data.items)
       });
@@ -60,16 +61,20 @@ const Room = (props) => {
         scope: "playlist-modify-public playlist-modify-private"
       })
       .then(() => {
-        console.log('hit')
-        fetch(`https://api.spotify.com/v1/tracks/${trId}`, {
-          headers: {
-            Authorization: 'Bearer ' + accessToken
-          }
-        })
-        .then(track => track.json())
-        .then(data => {
-          console.log('add track data', data)
-        })
+        getDesktopDj()
+        // console.log('hit')
+        // fetch(`https://api.spotify.com/v1/tracks/${trId}`, {
+        //   headers: {
+        //     Authorization: 'Bearer ' + accessToken
+        //   }
+        // })
+        // .then(track => track.json())
+        // .then(data => {
+        //   console.log('add track data', data)
+        //   setDesktopDjPL((uri) =>[...desktopDjPL,{track: {
+        //     uri: data.uri
+        //   }}])
+        // })
       })
       .catch(err => console.log(err))
     }

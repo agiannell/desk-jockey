@@ -24,7 +24,23 @@ massive({
 }).then(db => {
   app.set('db', db)
   console.log('DB is Connected')
-  app.listen(SERVER_PORT, () => console.log(`Listening on Port: ${SERVER_PORT}`))
+  const io = require('socket.io')(app.listen(SERVER_PORT, () => console.log(`Listening on Port: ${SERVER_PORT}`)),{cors:{origin: true}})
+  app.set('io', io)
+  io.on('connection',(socket) => {
+    console.log(`Socket ${socket.id} connected`)
+    socket.on('disconnect',() => {
+      console.log(`Socket ${socket.id} disconnected`)
+    })
+    socket.on('message',(data) => {
+      console.log(data)
+    })
+    socket.on('join-room',({roomId , username}) => {
+      socket.join(roomId)
+      console.log(socket.rooms)
+      io.in(roomId).emit('user-joined',{username})
+    })
+  })
+
 })
 
 //Spotify Endpoints
@@ -40,3 +56,4 @@ app.get('/api/user', userCtrl.getUser);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);
+
