@@ -12,7 +12,7 @@ import Header from "../header/Header";
 
 const Dashboard = (props) => {
   const { setUser, setAccessToken, setLocalUser } = props;
-  const { user, accessToken, localUser } = props;
+  const { user, accessToken } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [publicRooms, setPublicRooms] = useState([]);
 
@@ -104,7 +104,6 @@ const mapStateToProps = (reduxState) => {
   return {
     user: reduxState.userReducer.user,
     accessToken: reduxState.userReducer.accessToken,
-    localUser: reduxState.userReducer.localUser
   };
 };
 

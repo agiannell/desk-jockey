@@ -11,11 +11,21 @@ module.exports = {
 
     newRoom: async (req, res) => {
         const db = req.app.get('db')
-        const { name, password, is_private, is_collaborative, genre, description, created_by } = req.body
+        const { roomName, password, pic, isPrivate, isCollaborative, genre, createdBy } = req.body
 
-        const [newRoom] = await db.rooms.add_room([name, password, is_private, is_collaborative, genre, description, created_by])
+        const [newRoom] = await db.rooms.add_room([roomName, password, pic, isPrivate, isCollaborative, genre, createdBy])
 
         res.status(201).send(newRoom)
 
+    },
+
+    checkAdmin: async (req, res) => {
+        const db = req.app.get('db')
+
+        const { room_id } = req.params
+
+        const [created_by] = await db.rooms.check_admin(room_id)
+
+        res.status(200).send(created_by)
     }
 }
