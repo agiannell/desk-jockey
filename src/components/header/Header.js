@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { Link, withRouter } from "react-router-dom";
 import './Header.css'
 import { connect } from 'react-redux'
-import { clearUser, clearLocalUser, clearAccessToken } from '../../ducks/reducer/userReducer';
+import { clearUser, clearLocalUser, clearAccessToken, setAccessToken, setLocalUser } from '../../ducks/reducer/userReducer';
 import axios from 'axios';
 import profile from '../profile/defaultprofile.webp'
 
@@ -12,8 +12,18 @@ const Header = (props) => {
   const { localUser, clearUser, clearLocalUser } = props
 
   useEffect(() => {
+    axios.get("/pizza")
+      .then((res) => {
+        // console.log(res.data);
+        setAccessToken(res.data);
+      });
+    
+    axios.get('/api/user')
+      .then(res => {
+        setLocalUser(res.data);
+      });
 
-  }, [localUser])
+  }, [])
 
   const handleLogout = () => {
     const url = 'https://www.spotify.com/logout'
@@ -64,4 +74,4 @@ const mapStateToProps = (reduxState) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, { clearUser, clearLocalUser })(Header));
+export default withRouter(connect(mapStateToProps, { clearUser, clearLocalUser, setAccessToken, setLocalUser })(Header));
