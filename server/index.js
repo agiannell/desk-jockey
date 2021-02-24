@@ -37,6 +37,7 @@ app.get('/pizza', spotifyCtrl.pizza)
 app.get('/api/check-user/:email', userCtrl.checkUser);
 app.post('/api/user', userCtrl.createUser);
 app.get('/api/logout', userCtrl.logout);
+app.get('/api/user', userCtrl.getUser);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);

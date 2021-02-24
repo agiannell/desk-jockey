@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Rooms = (props) => {
   const { roomId, name, roomPic } = props
+  // console.log(roomId);
   return (
     <div>
       <Link to={ `/room/${ roomId }` }>
