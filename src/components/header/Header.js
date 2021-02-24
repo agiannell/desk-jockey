@@ -17,7 +17,7 @@ const Header = (props) => {
         // console.log(res.data);
         setAccessToken(res.data);
       });
-    
+
     axios.get('/api/user')
       .then(res => {
         setLocalUser(res.data);
@@ -46,11 +46,10 @@ const Header = (props) => {
       {/* <p>header</p> */}
       {localUser ? (
         <div className='nav-links'>
+          <Link to='/NewRoom' >+ Create Room</Link>
           <Link to='/Dash' >Dashboard</Link>
           <Link to='/Chat' >Chat</Link>
           <Link to='/Contact' >Contact</Link>
-          <Link to='/Room' >Room</Link>
-          <Link to='/Rooms' >Rooms</Link>
           <Link to='/Profile' >
             <div className='profile'>
               <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />

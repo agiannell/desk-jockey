@@ -6,6 +6,7 @@ const session = require('express-session');
 const userCtrl = require('./controllers/userController');
 const roomCtrl = require('./controllers/roomController');
 const spotifyCtrl = require('./controllers/spotifyController');
+const emailCtrl = require('./controllers/emailController');
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 const app = express();
 
@@ -56,4 +57,11 @@ app.get('/api/user', userCtrl.getUser);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);
+<<<<<<< HEAD
 
+=======
+app.post('/api/room', roomCtrl.newRoom);
+
+//Email endpoint
+app.post('/api/email', emailCtrl.sendEmail);
+>>>>>>> main
