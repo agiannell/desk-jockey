@@ -101,9 +101,10 @@ app.get("/api/logout", userCtrl.logout);
 app.get("/api/user", userCtrl.getUser);
 
 // Room Endpoints
-app.get("/api/rooms", roomCtrl.getPublicRooms);
-app.get("/api/room/:room_id", roomCtrl.getRoomInfo);
-app.post("/api/room", roomCtrl.newRoom);
+app.get('/api/rooms', roomCtrl.getPublicRooms);
+app.get('/api/room/:room_id', roomCtrl.getRoomInfo);
+app.post('/api/room', roomCtrl.newRoom);
+app.delete('/api/room/:room_id', roomCtrl.delete);
 
 //Email endpoint
 app.post("/api/email", emailCtrl.sendEmail);
