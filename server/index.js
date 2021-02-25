@@ -57,11 +57,7 @@ app.get('/api/user', userCtrl.getUser);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);
-<<<<<<< HEAD
-
-=======
 app.post('/api/room', roomCtrl.newRoom);
 
 //Email endpoint
 app.post('/api/email', emailCtrl.sendEmail);
->>>>>>> main
