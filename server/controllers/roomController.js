@@ -19,13 +19,12 @@ module.exports = {
 
     },
 
-    checkAdmin: async (req, res) => {
-        const db = req.app.get('db')
+    getRoomInfo: async (req, res) => {
+        const { room_id } = req.params,
+              db = req.app.get('db');
 
-        const { room_id } = req.params
+        const [room] = await db.rooms.get_room_info(room_id)
 
-        const [created_by] = await db.rooms.check_admin(room_id)
-
-        res.status(200).send(created_by)
+        res.status(200).send(room)
     }
 }

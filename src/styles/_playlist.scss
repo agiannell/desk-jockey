@@ -1,0 +1,22 @@
+.playlist-render {
+    width: 100%;
+    height: 75px;
+    @include flex(flex-start, row);
+    border-bottom: 2px solid darken($secondary-color, 15%);
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover {
+        transform: scale(1.1);
+        background-color: $btn-color;
+    }
+
+    img {
+        height: 100%;
+        margin-right: 10px;
+    }
+}
+
+.playlist-info {
+    text-align: left;
+}

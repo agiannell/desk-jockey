@@ -5,6 +5,8 @@
 @import './rooms';
 @import './footer';
 @import './room';
+@import './playlist';
+@import './tracks';
 
 .App {
     text-align: center;
@@ -24,4 +26,29 @@
 
   .hidden {
       display: none;
+  }
+
+  button {
+      background-color: $secondary-color;
+      border: none;
+      color: $text-color;
+      font-weight: 700;
+      padding: .5rem;
+      border-radius: 5px;
+      transition: .2s;
+
+      &:hover {
+          background-color: $btn-color;
+      }
+  }
+
+  h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      letter-spacing: .1rem;
+  }
+
+  h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
   }

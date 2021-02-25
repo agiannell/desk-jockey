@@ -8,15 +8,18 @@ const Player = props => {
     <section>
       <SpotifyPlayer
         className='player'
+        name='Desktop DJ Player'
         token={accessToken}
         uris={desktopDjPL.map(e => e.track.uri)}
         styles={{
-          bgColor: '#160F29',
+          bgColor: '#246A73',
           sliderColor: '#246A73',
           color: '#F3DFC1',
           trackNameColor: '#F3DFC1',
           loaderColor: '#246A73',
-          activeColor: 'red'
+          activeColor: 'red',
+          sliderHandleColor: '#F3DFC1',
+          sliderColor: '#F3DFC1'
         }} />
     </section>
   )

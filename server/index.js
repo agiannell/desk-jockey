@@ -57,7 +57,7 @@ app.get('/api/user', userCtrl.getUser);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);
-app.get('/api/room/:room_id', roomCtrl.checkAdmin);
+app.get('/api/room/:room_id', roomCtrl.getRoomInfo);
 app.post('/api/room', roomCtrl.newRoom);
 
 //Email endpoint
