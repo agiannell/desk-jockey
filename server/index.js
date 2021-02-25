@@ -47,8 +47,8 @@ massive({
     socket.on("disconnect", () => {
       console.log(`Socket ${socket.id} disconnected`);
     });
-    socket.on("message", (data) => {
-      console.log(data);
+    socket.on("message", ({ message, roomId, username }) => {
+      io.in(roomId).emit("message", { message, username })
     });
     socket.on("join-room", ({ roomId, username }) => {
       socket.join(roomId);

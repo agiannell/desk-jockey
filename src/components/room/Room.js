@@ -4,6 +4,7 @@ import Player from '../player/Player';
 import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
 import axios from 'axios'
+import Chat from '../chat/Chat'
 
 const Room = (props) => {
   const [userPlaylists, setUserPlaylists] = useState([]);
@@ -11,7 +12,7 @@ const Room = (props) => {
   const [desktopDjPL, setDesktopDjPL] = useState([]);
   const [roomInfo, setRoomInfo] = useState({});
   const [isRoomAdmin, setIsRoomAdmin] = useState(false);
-  const { user_id, playlist_uri } = props.localUser;
+  const { user_id, playlist_uri, display_name } = props.localUser;
   const { id: room_id } = props.match.params;
   const { accessToken, user } = props;
 
@@ -96,7 +97,7 @@ const Room = (props) => {
       })
       .catch(err => console.log(err))
   }
-
+  // console.log(props)
   return (
     <div>
       <Header />
@@ -130,6 +131,7 @@ const Room = (props) => {
               <Player desktopDjPL={desktopDjPL} />
             </section>
           ) : null}
+          <Chat username={display_name} />
         </section>
         <section className='room-column outer'>
         </section>

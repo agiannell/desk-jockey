@@ -27,3 +27,9 @@ create table room_junction (
     room_id int references room(room_id) on delete cascade,
     user_id int references users(user_id) on delete cascade
 );
+
+create table chat (
+    chat_id serial primary key,
+    content varchar(255),
+    room_id int references room(room_id) on delete cascade
+);
