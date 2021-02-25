@@ -21,10 +21,18 @@ module.exports = {
 
     getRoomInfo: async (req, res) => {
         const { room_id } = req.params,
-              db = req.app.get('db');
+            db = req.app.get('db');
 
         const [room] = await db.rooms.get_room_info(room_id)
 
         res.status(200).send(room)
+    },
+
+    delete: (req, res) => {
+        const db = req.app.get('db'),
+            { room_id } = req.params;
+
+        db.rooms.delete_room(room_id)
+        res.sendStatus(200)
     }
 }
