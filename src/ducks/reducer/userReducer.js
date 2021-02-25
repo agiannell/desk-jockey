@@ -1,7 +1,7 @@
 const initialState = {
     user: {},
     accessToken: null,
-    localUser: {}
+    localUser: {},
 }
 
 const SET_USER = 'SET_USER';
@@ -10,6 +10,7 @@ const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 const CLEAR_ACCESS_TOKEN = 'CLEAR_ACCESS_TOKEN';
 const SET_LOCAL_USER = 'SET_LOCAL_USER';
 const CLEAR_LOCAL_USER = 'CLEAR_LOCAL_USER';
+
 
 export function setUser(userObj) {
     return {

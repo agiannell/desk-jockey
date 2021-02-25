@@ -1,0 +1,17 @@
+.track-render {
+    background: $btn-color;
+    @include flex(space-between, row);
+    padding-right: 1rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $secondary-color;
+    }
+
+    p {
+        margin: 5px 0;
+        margin-left: 25px;
+        text-align: left;
+        font-size: .85rem;
+    }
+}
