@@ -1,10 +1,10 @@
 insert into room (
     room_name,
     password,
+    room_pic,
     is_private,
     is_collaborative,
     genre,
-    description,
     created_by
 )
 values (
@@ -14,6 +14,5 @@ values (
     $4,
     $5,
     $6,
-    $7,
-    $8
+    $7
 )

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Player from '../player/Player';
 import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
-import { get } from 'request';
+import axios from 'axios'
 
 const Room = (props) => {
   const { accessToken, user } = props;
@@ -11,17 +11,29 @@ const Room = (props) => {
   const [showPlaylists, setShowPlaylists] = useState(false);
   const [desktopDjPL, setDesktopDjPL] = useState([]);
   const { playlist_uri } = props.localUser
+  const [isRoomAdmin, setIsRoomAdmin] = useState(false);
+  const { user_id } = props.localUser
+  const { id: room_id } = props.match.params
+
+  useEffect(() => {
+    axios.get(`/api/room/${room_id}`)
+      .then((res) => {
+        if (user_id === res.data.created_by) {
+          setIsRoomAdmin(true)
+        }
+      })
+  }, [])
 
   const getUserPlaylists = () => {
-      fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
-        headers: { Authorization: "Bearer " + accessToken },
-      })
-        .then((playList) => playList.json())
-        .then((data) => {
-          // console.log(data)
-          setUserPlaylists(data);
-          // console.log(userPlaylists);
-        });
+    fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
+      headers: { Authorization: "Bearer " + accessToken },
+    })
+      .then((playList) => playList.json())
+      .then((data) => {
+        // console.log(data)
+        setUserPlaylists(data);
+        // console.log(userPlaylists);
+      });
   };
 
   const getDesktopDj = () => {
@@ -37,29 +49,29 @@ const Room = (props) => {
         // })
         setDesktopDjPL(data.items)
       });
+  }
+
+  useEffect(() => {
+    if (user.hasOwnProperty('id')) {
+      getUserPlaylists();
+      getDesktopDj();
     }
-    
-    useEffect(() => {
-      if(user.hasOwnProperty('id')) {
-        getUserPlaylists();
-        getDesktopDj();
-      }
-      
-    }, [user])
-    
-    const handleAddTrack = (uri, trId) => {
-      let djPlaylistId = playlist_uri.substr(17,)
-      fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}/tracks`, {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify({
-          "uris": [uri]
-        }),
-        scope: "playlist-modify-public playlist-modify-private"
-      })
+
+  }, [user])
+
+  const handleAddTrack = (uri, trId) => {
+    let djPlaylistId = playlist_uri.substr(17,)
+    fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}/tracks`, {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({
+        "uris": [uri]
+      }),
+      scope: "playlist-modify-public playlist-modify-private"
+    })
       .then(() => {
         getDesktopDj()
         // console.log('hit')
@@ -77,32 +89,59 @@ const Room = (props) => {
         // })
       })
       .catch(err => console.log(err))
-    }
-    
-    console.log('dj songs', desktopDjPL)
-    console.log(desktopDjPL)
-    return (
-      <div>
-      <Header />
-      <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
-      {showPlaylists ? (
+  }
+
+  // console.log('dj songs', desktopDjPL)
+  // console.log(desktopDjPL)
+  return (
+    <div>
+      {(isRoomAdmin === true) ? (
         <div>
-          {userPlaylists.items.map(playlist => (
-            <Playlist
-              id={playlist.id}
-              name={playlist.name}
-              accessToken={accessToken}
-              addTrack={handleAddTrack}
-            />
-          ))}
+          <Header />
+          <button>Delete Room</button>
+          <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
+          {showPlaylists ? (
+            <div>
+              {userPlaylists.items.map(playlist => (
+                <Playlist
+                  id={playlist.id}
+                  name={playlist.name}
+                  accessToken={accessToken}
+                  addTrack={handleAddTrack}
+                />
+              ))}
+            </div>
+          ) : null}
+          { desktopDjPL[0] ? (
+            <section>
+              <Player desktopDjPL={desktopDjPL} />
+            </section>
+          ) : null}
         </div>
-      ) : null}
-      { desktopDjPL[0] ? (
-        <section>
-          <Player desktopDjPL={ desktopDjPL } />
-        </section>
-      ) : null }
-    </div>
+      ) : (
+          <div>
+            <Header />
+            <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
+            {showPlaylists ? (
+              <div>
+                {userPlaylists.items.map(playlist => (
+                  <Playlist
+                    id={playlist.id}
+                    name={playlist.name}
+                    accessToken={accessToken}
+                    addTrack={handleAddTrack}
+                  />
+                ))}
+              </div>
+            ) : null}
+            { desktopDjPL[0] ? (
+              <section>
+                <Player desktopDjPL={desktopDjPL} />
+              </section>
+            ) : null}
+          </div>)
+      }
+    </div >
   )
 }
 

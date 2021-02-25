@@ -25,20 +25,20 @@ massive({
 }).then(db => {
   app.set('db', db)
   console.log('DB is Connected')
-  const io = require('socket.io')(app.listen(SERVER_PORT, () => console.log(`Listening on Port: ${SERVER_PORT}`)),{cors:{origin: true}})
+  const io = require('socket.io')(app.listen(SERVER_PORT, () => console.log(`Listening on Port: ${SERVER_PORT}`)), { cors: { origin: true } })
   app.set('io', io)
-  io.on('connection',(socket) => {
+  io.on('connection', (socket) => {
     console.log(`Socket ${socket.id} connected`)
-    socket.on('disconnect',() => {
+    socket.on('disconnect', () => {
       console.log(`Socket ${socket.id} disconnected`)
     })
-    socket.on('message',(data) => {
+    socket.on('message', (data) => {
       console.log(data)
     })
-    socket.on('join-room',({roomId , username}) => {
+    socket.on('join-room', ({ roomId, username }) => {
       socket.join(roomId)
       console.log(socket.rooms)
-      io.in(roomId).emit('user-joined',{username})
+      io.in(roomId).emit('user-joined', { username })
     })
   })
 
@@ -57,11 +57,8 @@ app.get('/api/user', userCtrl.getUser);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);
-<<<<<<< HEAD
-
-=======
+app.get('/api/room/:room_id', roomCtrl.checkAdmin);
 app.post('/api/room', roomCtrl.newRoom);
 
 //Email endpoint
 app.post('/api/email', emailCtrl.sendEmail);
->>>>>>> main
