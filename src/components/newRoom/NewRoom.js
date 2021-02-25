@@ -25,7 +25,6 @@ const NewRoom = (props) => {
     })
   }
 
-  console.log(props)
   return (
     <div>
       <Header />

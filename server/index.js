@@ -59,6 +59,7 @@ app.get('/api/user', userCtrl.getUser);
 app.get('/api/rooms', roomCtrl.getPublicRooms);
 app.get('/api/room/:room_id', roomCtrl.getRoomInfo);
 app.post('/api/room', roomCtrl.newRoom);
+app.delete('/api/room/:room_id', roomCtrl.delete);
 
 //Email endpoint
 app.post('/api/email', emailCtrl.sendEmail);

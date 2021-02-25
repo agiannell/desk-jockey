@@ -354,6 +354,16 @@
   overflow: scroll;
   margin: 1rem 0;
   border-radius: 5px;
+  overflow-x: hidden;
+}
+
+.room-item-list::-webkit-scrollbar {
+  width: 3px;
+  background: transparent;
+}
+
+.room-item-list::-webkit-scrollbar-thumb {
+  background: #246A73;
 }
 
 .outer {

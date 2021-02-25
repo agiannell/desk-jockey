@@ -25,15 +25,21 @@ const Room = (props) => {
       })
   }, [])
 
+  const handleDeleteRoom = () => {
+    axios.delete(`/api/room/${room_id}`)
+      .then(() => {
+        props.history.push('/Dash')
+      })
+      .catch(err => console.log(err))
+  }
+
   const getUserPlaylists = () => {
     fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
       headers: { Authorization: "Bearer " + accessToken },
     })
       .then((playList) => playList.json())
       .then((data) => {
-        // console.log(data)
         setUserPlaylists(data);
-        // console.log(userPlaylists);
       });
   };
 
@@ -44,7 +50,6 @@ const Room = (props) => {
     })
       .then((tracks) => tracks.json())
       .then((data) => {
-        // console.log(data)
         // data.items.map(e => {
         //   return setDesktopDjPL(uri => [...desktopDjPL, e.track.uri])
         // })
@@ -92,16 +97,12 @@ const Room = (props) => {
       .catch(err => console.log(err))
   }
 
-  console.log('user playlists:', userPlaylists);
-  console.log('room info:', roomInfo);
-  // console.log('dj songs', desktopDjPL)
-  // console.log(desktopDjPL)
   return (
     <div>
       <Header />
       <section className='room-title'>
-        <h1>{ roomInfo.room_name }</h1>
-        {isRoomAdmin ? <button>Delete Room</button> : null}
+        <h1>{roomInfo.room_name}</h1>
+        {isRoomAdmin ? <button onClick={handleDeleteRoom}>Delete Room</button> : null}
         {/* <button className='delete'>Delete Room</button> */}
       </section>
       <section className='room-main'>
@@ -111,20 +112,20 @@ const Room = (props) => {
             <div className='room-item-list'>
               {userPlaylists.items.map(playlist => (
                 <Playlist
-                key={ playlist.id }
-                id={playlist.id}
-                name={playlist.name}
-                image={playlist.images[0]}
-                trackCount={playlist.tracks.total}
-                accessToken={accessToken}
-                addTrack={handleAddTrack}
+                  key={playlist.id}
+                  id={playlist.id}
+                  name={playlist.name}
+                  image={playlist.images[0]}
+                  trackCount={playlist.tracks.total}
+                  accessToken={accessToken}
+                  addTrack={handleAddTrack}
                 />
-                ))}
+              ))}
             </div>
           ) : null}
         </section>
         <section className='room-column inner'>
-          { desktopDjPL[0] ? (
+          {desktopDjPL[0] ? (
             <section className='room-player'>
               <Player desktopDjPL={desktopDjPL} />
             </section>
