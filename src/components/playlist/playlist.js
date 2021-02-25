@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Tracks from '../tracks/tracks';
 
 const Playlist = (props) => {
-  const { name, id, accessToken } = props;
+  const { id, name, image, trackCount, accessToken } = props;
   const [tracks, setTracks] = useState([]);
   const [showTracks, setShowTracks] = useState(false);
 
@@ -21,7 +21,13 @@ const Playlist = (props) => {
 
   return (
     <div>
-      <h1 onClick={() => setShowTracks(!showTracks)}>{name}</h1>
+      <section className='playlist-render' onClick={() => setShowTracks(!showTracks)}>
+        <img src={ image?.url } alt={ name } />
+        <section className='playlist-info'>
+          <h3>{ name }</h3>
+          <p>{ trackCount } tracks</p>
+        </section>
+      </section>
       {showTracks ? (
         <div>
           {tracks.items.map(tracks => (

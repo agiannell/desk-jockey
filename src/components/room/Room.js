@@ -6,18 +6,19 @@ import Header from '../header/Header'
 import axios from 'axios'
 
 const Room = (props) => {
-  const { accessToken, user } = props;
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [showPlaylists, setShowPlaylists] = useState(false);
   const [desktopDjPL, setDesktopDjPL] = useState([]);
-  const { playlist_uri } = props.localUser
+  const [roomInfo, setRoomInfo] = useState({});
   const [isRoomAdmin, setIsRoomAdmin] = useState(false);
-  const { user_id } = props.localUser
-  const { id: room_id } = props.match.params
+  const { user_id, playlist_uri } = props.localUser;
+  const { id: room_id } = props.match.params;
+  const { accessToken, user } = props;
 
   useEffect(() => {
     axios.get(`/api/room/${room_id}`)
       .then((res) => {
+        setRoomInfo(res.data)
         if (user_id === res.data.created_by) {
           setIsRoomAdmin(true)
         }
@@ -91,56 +92,47 @@ const Room = (props) => {
       .catch(err => console.log(err))
   }
 
+  console.log('user playlists:', userPlaylists);
+  console.log('room info:', roomInfo);
   // console.log('dj songs', desktopDjPL)
   // console.log(desktopDjPL)
   return (
     <div>
-      {(isRoomAdmin === true) ? (
-        <div>
-          <Header />
-          <button>Delete Room</button>
-          <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
+      <Header />
+      <section className='room-title'>
+        <h1>{ roomInfo.room_name }</h1>
+        {isRoomAdmin ? <button>Delete Room</button> : null}
+        {/* <button className='delete'>Delete Room</button> */}
+      </section>
+      <section className='room-main'>
+        <section className='room-column outer'>
+          <button onClick={() => setShowPlaylists(!showPlaylists)}>Show Playlists</button>
           {showPlaylists ? (
-            <div>
+            <div className='room-item-list'>
               {userPlaylists.items.map(playlist => (
                 <Playlist
-                  id={playlist.id}
-                  name={playlist.name}
-                  accessToken={accessToken}
-                  addTrack={handleAddTrack}
+                key={ playlist.id }
+                id={playlist.id}
+                name={playlist.name}
+                image={playlist.images[0]}
+                trackCount={playlist.tracks.total}
+                accessToken={accessToken}
+                addTrack={handleAddTrack}
                 />
-              ))}
+                ))}
             </div>
           ) : null}
+        </section>
+        <section className='room-column inner'>
           { desktopDjPL[0] ? (
-            <section>
+            <section className='room-player'>
               <Player desktopDjPL={desktopDjPL} />
             </section>
           ) : null}
-        </div>
-      ) : (
-          <div>
-            <Header />
-            <button onClick={() => setShowPlaylists(!showPlaylists)}>Playlists</button>
-            {showPlaylists ? (
-              <div>
-                {userPlaylists.items.map(playlist => (
-                  <Playlist
-                    id={playlist.id}
-                    name={playlist.name}
-                    accessToken={accessToken}
-                    addTrack={handleAddTrack}
-                  />
-                ))}
-              </div>
-            ) : null}
-            { desktopDjPL[0] ? (
-              <section>
-                <Player desktopDjPL={desktopDjPL} />
-              </section>
-            ) : null}
-          </div>)
-      }
+        </section>
+        <section className='room-column outer'>
+        </section>
+      </section>
     </div >
   )
 }

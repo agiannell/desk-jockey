@@ -1,12 +1,13 @@
-
+import { MdPlaylistAdd } from 'react-icons/md';
 
 const Tracks = (props) => {
     const { trUri, trName, trId } = props
 
 
     return (
-        <div>
-            <h3 onDoubleClick={() => { props.addTrack(trUri, trId) }}>{trName}</h3>
+        <div className='track-render'>
+            <p>{trName}</p>
+            <MdPlaylistAdd onDoubleClick={() => { props.addTrack(trUri, trId) }} />
         </div>
     )
 }
