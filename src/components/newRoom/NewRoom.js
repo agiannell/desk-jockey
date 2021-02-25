@@ -57,6 +57,7 @@ const NewRoom = (props) => {
       .put(signedRequest, file, options)
       .then((res) => {
         setIsUploading(false);
+        setImgUrl(url)
       })
       .catch((err) => {
         setIsUploading(false);
@@ -75,7 +76,7 @@ const NewRoom = (props) => {
       .post("/api/room", {
         roomName,
         password,
-        pic,
+        imgUrl,
         isPrivate,
         isCollaborative,
         genre,
@@ -123,7 +124,7 @@ const NewRoom = (props) => {
       />
       <input
         placeholder="Room Image Url"
-        value={pic}
+        value={imgUrl}
         onChange={(e) => setPic(e.target.value)}
       />
       <form>
@@ -177,8 +178,8 @@ const NewRoom = (props) => {
             {isUploading ? (
               <GridLoader />
             ) : (
-              <p>Drop files here, or click to select files</p>
-            )}
+                <p>Drop files here, or click to select files</p>
+              )}
           </div>
         )}
       </Dropzone>

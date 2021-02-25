@@ -79,6 +79,11 @@ const Dashboard = (props) => {
   return (
     <div>
       <Header />
+      <nav>
+        <button>All Rooms</button>
+        <button>My Rooms</button>
+        <button>Private Rooms</button>
+      </nav>
       {/* <div>Dashboard</div> */}
       {/* <button onClick={testApi}>Hit Me</button> */}
       {accessToken ? (

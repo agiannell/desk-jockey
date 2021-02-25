@@ -11,9 +11,9 @@ module.exports = {
 
     newRoom: async (req, res) => {
         const db = req.app.get('db')
-        const { roomName, password, pic, isPrivate, isCollaborative, genre, createdBy } = req.body
+        const { roomName, password, imgUrl, isPrivate, isCollaborative, genre, createdBy } = req.body
 
-        const [newRoom] = await db.rooms.add_room([roomName, password, pic, isPrivate, isCollaborative, genre, createdBy])
+        const [newRoom] = await db.rooms.add_room([roomName, password, imgUrl, isPrivate, isCollaborative, genre, createdBy])
 
         res.status(201).send(newRoom)
 
