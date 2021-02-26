@@ -47,8 +47,8 @@ massive({
     socket.on("disconnect", () => {
       console.log(`Socket ${socket.id} disconnected`);
     });
-    socket.on("message", (data) => {
-      console.log(data);
+    socket.on("message", ({ message, roomId, username }) => {
+      io.in(roomId).emit("message", { message, username })
     });
     socket.on("join-room", ({ roomId, username }) => {
       socket.join(roomId);
@@ -102,7 +102,10 @@ app.get("/api/user", userCtrl.getUser);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);
+app.get('/api/privaterooms', roomCtrl.getPrivateRooms);
+app.get('/api/myrooms/:user_id', roomCtrl.getMyRooms);
 app.get('/api/room/:room_id', roomCtrl.getRoomInfo);
+app.post('/api/joinroom', roomCtrl.joinRoom);
 app.post('/api/room', roomCtrl.newRoom);
 app.delete('/api/room/:room_id', roomCtrl.delete);
 

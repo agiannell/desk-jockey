@@ -57,6 +57,7 @@ const NewRoom = (props) => {
       .put(signedRequest, file, options)
       .then((res) => {
         setIsUploading(false);
+        setImgUrl(url)
       })
       .catch((err) => {
         setIsUploading(false);
@@ -75,14 +76,21 @@ const NewRoom = (props) => {
       .post("/api/room", {
         roomName,
         password,
-        pic,
+        imgUrl,
         isPrivate,
         isCollaborative,
         genre,
         createdBy,
       })
-      .then(() => {
-        props.history.push("/Dash");
+      .then((res) => {
+        const {room_id} = res.data;
+        
+        axios.post('/api/joinroom', {room_id})
+        .then(() => {
+          props.history.push("/Dash");
+        })
+        .catch((err) => console.log(err));
+        
       });
   };
 
@@ -101,7 +109,7 @@ const NewRoom = (props) => {
           type="radio"
           id="public"
           name="room type"
-          value="False"
+          value='false'
           onChange={(e) => setIsPrivate(e.target.value)}
         />
         <label for="public">Public</label>
@@ -110,7 +118,7 @@ const NewRoom = (props) => {
           type="radio"
           id="private"
           name="room type"
-          value="True"
+          value='true'
           onChange={(e) => setIsPrivate(e.target.value)}
         />
         <label for="private">Private</label>
@@ -123,7 +131,7 @@ const NewRoom = (props) => {
       />
       <input
         placeholder="Room Image Url"
-        value={pic}
+        value={imgUrl}
         onChange={(e) => setPic(e.target.value)}
       />
       <form>
@@ -177,8 +185,8 @@ const NewRoom = (props) => {
             {isUploading ? (
               <GridLoader />
             ) : (
-              <p>Drop files here, or click to select files</p>
-            )}
+                <p>Drop files here, or click to select files</p>
+              )}
           </div>
         )}
       </Dropzone>

@@ -16,3 +16,4 @@ values (
     $6,
     $7
 )
+RETURNING room_id;
