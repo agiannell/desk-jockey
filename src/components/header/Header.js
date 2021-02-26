@@ -41,7 +41,7 @@ const Header = (props) => {
     props.history.push('/')
   }
 
-  // console.log(localUser)
+  // console.log(props)
   return (
     <div>
       {/* <p>header</p> */}

@@ -87,17 +87,17 @@ const Dashboard = (props) => {
     }
   }, [accessToken]);
 
-useEffect(() => {
-  axios
-  .get(`/api/myrooms/${props.localUser.user_id}`)
-  .then((res) => {
-    setMyRooms(res.data);
-  })
-  .catch((err) => console.log(err));
-}, [props.localUser])
+  useEffect(() => {
+    axios
+      .get(`/api/myrooms/${props.localUser.user_id}`)
+      .then((res) => {
+        setMyRooms(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [props.localUser])
 
-  console.log(props.localUser.user_id);
-console.log(myRooms);
+  // console.log(props.localUser.user_id);
+  // console.log(myRooms);
   return (
     <div>
       <Header />
