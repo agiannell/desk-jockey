@@ -82,8 +82,15 @@ const NewRoom = (props) => {
         genre,
         createdBy,
       })
-      .then(() => {
-        props.history.push("/Dash");
+      .then((res) => {
+        const {room_id} = res.data;
+        
+        axios.post('/api/joinroom', {room_id})
+        .then(() => {
+          props.history.push("/Dash");
+        })
+        .catch((err) => console.log(err));
+        
       });
   };
 
@@ -102,7 +109,7 @@ const NewRoom = (props) => {
           type="radio"
           id="public"
           name="room type"
-          value="False"
+          value='false'
           onChange={(e) => setIsPrivate(e.target.value)}
         />
         <label for="public">Public</label>
@@ -111,7 +118,7 @@ const NewRoom = (props) => {
           type="radio"
           id="private"
           name="room type"
-          value="True"
+          value='true'
           onChange={(e) => setIsPrivate(e.target.value)}
         />
         <label for="private">Private</label>

@@ -24,6 +24,11 @@ const Room = (props) => {
           setIsRoomAdmin(true)
         }
       })
+      .catch(err => console.log(err));
+
+    axios.post(`/api/joinroom/`, {room_id})
+      .then()
+      .catch((err) => console.log(err));
   }, [])
 
   const handleDeleteRoom = () => {

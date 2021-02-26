@@ -14,7 +14,10 @@ const Dashboard = (props) => {
   const { setUser, setAccessToken, setLocalUser } = props;
   const { user, accessToken } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [roomView, setRoomView] = useState("allrooms");
   const [publicRooms, setPublicRooms] = useState([]);
+  const [privateRooms, setPrivateRooms] = useState([]);
+  const [myRooms, setMyRooms] = useState([]);
 
   useEffect(() => {
     axios.get("/pizza").then((res) => {
@@ -26,6 +29,13 @@ const Dashboard = (props) => {
       .get("/api/rooms")
       .then((res) => {
         setPublicRooms(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("/api/privaterooms")
+      .then((res) => {
+        setPrivateRooms(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -51,7 +61,8 @@ const Dashboard = (props) => {
               method: "POST",
               body: JSON.stringify({
                 name: "Desktop-Dj",
-                description: "This is the playlist where the songs you're listening to with friends will show up. Don't delete this playlist or we will have to make a new one for you to listen through!",
+                description:
+                  "This is the playlist where the songs you're listening to with friends will show up. Don't delete this playlist or we will have to make a new one for you to listen through!",
                 public: false,
               }),
               scope: "playlist-modify-public playlist-modify-private",
@@ -76,28 +87,64 @@ const Dashboard = (props) => {
     }
   }, [accessToken]);
 
+useEffect(() => {
+  axios
+  .get(`/api/myrooms/${props.localUser.user_id}`)
+  .then((res) => {
+    setMyRooms(res.data);
+  })
+  .catch((err) => console.log(err));
+}, [props.localUser])
+
+  console.log(props.localUser.user_id);
+console.log(myRooms);
   return (
     <div>
       <Header />
       <nav>
-        <button>All Rooms</button>
-        <button>My Rooms</button>
-        <button>Private Rooms</button>
+        <button onClick={() => setRoomView("allrooms")}>All Rooms</button>
+        <button onClick={() => setRoomView("myrooms")}>My Rooms</button>
+        <button onClick={() => setRoomView("privaterooms")}>Private Rooms</button>
       </nav>
       {/* <div>Dashboard</div> */}
       {/* <button onClick={testApi}>Hit Me</button> */}
       {accessToken ? (
         <div>
-          <h3>NAV-BAR</h3>
           <section className="rooms-map">
-            {publicRooms.map((e) => (
-              <Rooms
-                key={e.room_id}
-                roomId={e.room_id}
-                name={e.room_name}
-                roomPic={e.room_pic}
-              />
-            ))}
+            {roomView === "allrooms" ? (
+              <>
+                {publicRooms.map((e) => (
+                  <Rooms
+                    key={e.room_id}
+                    roomId={e.room_id}
+                    name={e.room_name}
+                    roomPic={e.room_pic}
+                  />
+                ))}
+              </>
+            ) : roomView === "myrooms" ? (
+              <>
+                {myRooms.map((e) => (
+                  <Rooms
+                    key={e.room_id}
+                    roomId={e.room_id}
+                    name={e.room_name}
+                    roomPic={e.room_pic}
+                  />
+                ))}
+              </>
+            ) : roomView === "privaterooms" ? (
+              <>
+                {privateRooms.map((e) => (
+                  <Rooms
+                    key={e.room_id}
+                    roomId={e.room_id}
+                    name={e.room_name}
+                    roomPic={e.room_pic}
+                  />
+                ))}
+              </>
+            ) : null}
           </section>
         </div>
       ) : null}
@@ -109,6 +156,7 @@ const mapStateToProps = (reduxState) => {
   return {
     user: reduxState.userReducer.user,
     accessToken: reduxState.userReducer.accessToken,
+    localUser: reduxState.userReducer.localUser
   };
 };
 

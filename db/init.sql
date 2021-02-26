@@ -22,6 +22,8 @@ CREATE TABLE room(
     created_by int references users(user_id) on delete cascade
 );
 
+alter table room_junction add constraint room_junction_uq unique (room_id,user_id);
+
 create table room_junction (
     junction_id SERIAL PRIMARY KEY,
     room_id int references room(room_id) on delete cascade,
