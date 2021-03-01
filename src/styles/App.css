@@ -213,6 +213,10 @@
           align-items: center;
 }
 
+.nav-links p {
+  cursor: pointer;
+}
+
 .profile {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -234,7 +238,6 @@
 }
 
 .rooms-map {
-  /* border: 2px dotted red; */
   width: 80%;
   margin: 0 auto;
   display: -webkit-box;
@@ -258,6 +261,8 @@
 .room {
   background: -webkit-gradient(linear, left top, left bottom, from(#160F29), to(#246A73));
   background: linear-gradient(to bottom, #160F29, #246A73);
+  height: 300px;
+  width: 270px;
   padding: 10px;
   margin: 20px 5px;
   -webkit-box-sizing: border-box;
@@ -273,6 +278,7 @@
 }
 
 .room h1 {
+  font-size: 2rem;
   text-decoration: none;
 }
 
@@ -446,6 +452,339 @@
   font-size: .85rem;
 }
 
+.chat-container {
+  border: 1px solid #246A73;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: 90%;
+  margin: 15px 0;
+}
+
+.chat-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  border-top: 1px solid #246A73;
+  padding: 20px;
+}
+
+.chat-container form input {
+  border: none;
+  border-bottom: 2px solid #246A73;
+  background-color: transparent;
+  margin-right: 10px;
+  color: #F3DFC1;
+  outline: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: .5rem 0;
+  width: 100%;
+}
+
+.chat-container form input::-webkit-input-placeholder {
+  color: #18464c;
+}
+
+.chat-container form input:-ms-input-placeholder {
+  color: #18464c;
+}
+
+.chat-container form input::-ms-input-placeholder {
+  color: #18464c;
+}
+
+.chat-container form input::placeholder {
+  color: #18464c;
+}
+
+.chat-container form button {
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.messages-container {
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow: scroll;
+}
+
+.chat-message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  padding: 0 20px;
+  margin: 20px 0;
+}
+
+.chat-message h3 {
+  width: initial;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #246A73;
+}
+
+.chat-message p {
+  font-size: .7rem;
+  color: #368F8B;
+  margin: 0 10px;
+}
+
+.local-user {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.local-user h3 {
+  background-color: #246A73;
+  border: none;
+}
+
+.new-room-container {
+  background-color: rgba(36, 106, 115, 0.98);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-animation: fly-down .5s ease-in-out;
+          animation: fly-down .5s ease-in-out;
+}
+
+.new-room-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #160F29;
+  width: 600px;
+  height: 520px;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.new-room-form h2 {
+  margin-bottom: 25px;
+}
+
+.new-room-close {
+  cursor: pointer;
+  position: relative;
+  left: 275px;
+  bottom: 80px;
+  font-size: 1.2rem;
+}
+
+.new-room-line {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 90%;
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.new-room-line input {
+  width: 100%;
+}
+
+.new-room-line #private {
+  width: initial;
+  margin-right: 10px;
+}
+
+.new-room-line label {
+  margin-right: 25px;
+}
+
+.new-room-radio {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 90%;
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.new-room-radio input {
+  margin-right: 10px;
+}
+
+.new-room-radio label {
+  margin-right: 50px;
+}
+
+.new-room-upload {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-top: 15px;
+  width: 90%;
+}
+
+.new-room-upload img {
+  height: 100px;
+  margin-right: 25px;
+}
+
+.dropzone {
+  padding: 40px 20px;
+  width: 90%;
+  border: 2px dashed #368F8B;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#create-room-btn {
+  background-color: #160F29;
+  width: 600px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#create-room-btn:hover {
+  background-color: rgba(22, 15, 41, 0.8);
+}
+
+#invite-input {
+  margin-right: 10px;
+  width: 520px;
+}
+
+#invite-btn {
+  background-color: #160F29;
+  width: 60px;
+  margin: 15px 0;
+  margin-left: 10px;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#invite-btn:hover {
+  background-color: rgba(22, 15, 41, 0.8);
+}
+
+.loading-container {
+  background-color: #160F29;
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: fixed;
+  z-index: 2;
+}
+
+.loading-container h1 {
+  font-size: 4rem;
+  margin-top: 30px;
+}
+
 .App {
   text-align: center;
   color: #F3DFC1;
@@ -488,8 +827,41 @@ h1 {
   letter-spacing: .1rem;
 }
 
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: .1rem;
+}
+
 h3 {
   font-size: 1.2rem;
   font-weight: 500;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #F3DFC1;
+  font-size: 1.2rem;
+  padding: 5px 0;
+  outline: none;
+  color: #F3DFC1;
+  font-weight: 700;
+}
+
+input::-webkit-input-placeholder {
+  color: rgba(243, 223, 193, 0.5);
+}
+
+input:-ms-input-placeholder {
+  color: rgba(243, 223, 193, 0.5);
+}
+
+input::-ms-input-placeholder {
+  color: rgba(243, 223, 193, 0.5);
+}
+
+input::placeholder {
+  color: rgba(243, 223, 193, 0.5);
 }
 /*# sourceMappingURL=App.css.map */

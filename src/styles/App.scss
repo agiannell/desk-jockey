@@ -7,6 +7,9 @@
 @import './room';
 @import './playlist';
 @import './tracks';
+@import './chat';
+@import './newRoom';
+@import './loading';
 
 .App {
     text-align: center;
@@ -20,35 +23,56 @@
     }
   }
 
-  .lighten {
-      background: lighten($primary-color, 5%);
-  }
+.lighten {
+    background: lighten($primary-color, 5%);
+}
 
-  .hidden {
-      display: none;
-  }
+.hidden {
+    display: none;
+}
 
-  button {
-      background-color: $secondary-color;
-      border: none;
-      color: $text-color;
-      font-weight: 700;
-      padding: .5rem;
-      border-radius: 5px;
-      transition: .2s;
+button {
+    background-color: $secondary-color;
+    border: none;
+    color: $text-color;
+    font-weight: 700;
+    padding: .5rem;
+    border-radius: 5px;
+    transition: .2s;
 
-      &:hover {
-          background-color: $btn-color;
-      }
-  }
+    &:hover {
+        background-color: $btn-color;
+    }
+}
 
-  h1 {
-      font-size: 2.5rem;
-      font-weight: 600;
-      letter-spacing: .1rem;
-  }
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: .1rem;
+}
 
-  h3 {
-      font-size: 1.2rem;
-      font-weight: 500;
-  }
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: .1rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid $text-color;
+    font-size: 1.2rem;
+    padding: 5px 0;
+    outline: none;
+    color: $text-color;
+    font-weight: 700;
+
+    &::placeholder {
+        color: rgba($text-color, .5);
+    }
+}

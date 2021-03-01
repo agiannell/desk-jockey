@@ -1,5 +1,7 @@
 .room {
     background: linear-gradient(to bottom, $primary-color, $secondary-color);
+    height: 300px;
+    width: 270px;
     padding: 10px;
     margin: 20px 5px;
     box-sizing: border-box;
@@ -13,5 +15,6 @@
 }
 
 .room h1 {
+    font-size: 2rem;
     text-decoration: none;
 }

@@ -139,7 +139,9 @@ const Room = (props) => {
                   <Player desktopDjPL={desktopDjPL} playlistUri={playlist_uri} getDesktopDjFn={getDesktopDj}/>
                 </section>
               ) : null}
-              <Chat username={display_name} />
+              <Chat 
+                username={display_name}
+                userId={ user_id } />
             </section>
             <section className='room-column outer'>
             </section>
