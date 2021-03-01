@@ -22,10 +22,10 @@ const Playlist = (props) => {
   return (
     <div>
       <section className='playlist-render' onClick={() => setShowTracks(!showTracks)}>
-        <img src={ image?.url } alt={ name } />
+        <img src={image?.url} alt={name} />
         <section className='playlist-info'>
-          <h3>{ name }</h3>
-          <p>{ trackCount } tracks</p>
+          <h3>{name}</h3>
+          <p>{trackCount} tracks</p>
         </section>
       </section>
       {showTracks ? (

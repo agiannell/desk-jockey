@@ -6,9 +6,13 @@ var s = new Spotify();
 
 const Player = (props) => {
   const { accessToken, desktopDjPL, playlistUri, getDesktopDjFn } = props;
-  const [playerUri,setPlayerUri] = useState(playlistUri)
+  const [playerUri, setPlayerUri] = useState(playlistUri)
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (accessToken) {
+      s.setAccessToken(accessToken)
+    }
+  }, [accessToken]);
 
   return (
     <section>
@@ -22,6 +26,7 @@ const Player = (props) => {
             })
               .then((playList) => playList.json())
               .then((data) => {
+                console.log(data)
                 setPlayerUri(data.uri);
               });
           }

@@ -37,6 +37,7 @@ const Room = (props) => {
     })
       .then((playList) => playList.json())
       .then((data) => {
+        // console.log('playlist:', data)
         setUserPlaylists(data);
       });
   };
@@ -51,7 +52,7 @@ const Room = (props) => {
       })
       .catch(err => console.log(err));
 
-    axios.post(`/api/joinroom/`, {room_id})
+    axios.post(`/api/joinroom/`, { room_id })
       .then()
       .catch((err) => console.log(err));
   }, [])
@@ -68,7 +69,7 @@ const Room = (props) => {
     if (localUser.hasOwnProperty('user_id')) {
       getUserPlaylists();
       getDesktopDj();
-    }  
+    }
 
   }, [localUser])
 
@@ -103,7 +104,12 @@ const Room = (props) => {
       })
       .catch(err => console.log(err))
   }
-  console.log('dj state pl:', desktopDjPL)
+
+  // useEffect(() => {
+  //   getDesktopDj()
+  // }, [getDesktopDj])
+
+  // console.log('dj state pl:', desktopDjPL)
   return (
     <div>
       {accessToken ? (
@@ -136,18 +142,31 @@ const Room = (props) => {
             <section className='room-column inner'>
               {desktopDjPL ? (
                 <section className='room-player'>
-                  <Player desktopDjPL={desktopDjPL} playlistUri={playlist_uri} getDesktopDjFn={getDesktopDj}/>
+                  <Player desktopDjPL={desktopDjPL} playlistUri={playlist_uri} getDesktopDjFn={getDesktopDj} />
                 </section>
               ) : null}
-              <Chat 
+              <Chat
                 username={display_name}
-                userId={ user_id } />
+                userId={user_id} />
             </section>
             <section className='room-column outer'>
+              <h3>QUEUE</h3>
+              {desktopDjPL ? (desktopDjPL.map(playlist => (
+                <div key={playlist.id} className='temp_name'>
+                  <img src={playlist.track.album.images[0].url} height='40' />
+                  <section>
+                    <h5>{playlist.track.name}</h5>
+                    <h6>{playlist.track.album.artists[0].name}</h6>
+                  </section>
+                </div>
+
+
+              ))) : null}
             </section>
           </section>
         </>
-      ) : props.history.push('/')}
+      ) : props.history.push('/')
+      }
     </div >
   )
 }
