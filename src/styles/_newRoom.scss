@@ -3,6 +3,7 @@
     height: 100vh;
     width: 100vw;
     position: fixed;
+    z-index: 1;
     @include flex(center, column);
     animation: fly-down .5s ease-in-out;
 }
