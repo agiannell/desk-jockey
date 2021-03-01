@@ -2,26 +2,26 @@ import { useEffect } from 'react'
 import { Link, withRouter } from "react-router-dom";
 import './Header.css'
 import { connect } from 'react-redux';
-import { 
-  clearUser, 
-  clearLocalUser, 
-  clearAccessToken, 
-  setAccessToken, 
-  setLocalUser, 
-  setUser 
+import {
+  clearUser,
+  clearLocalUser,
+  clearAccessToken,
+  setAccessToken,
+  setLocalUser,
+  setUser
 } from '../../ducks/reducer/userReducer';
 import axios from 'axios';
 
 const Header = (props) => {
-  const { 
-    localUser, 
-    clearUser, 
-    clearLocalUser, 
-    setLocalUser, 
+  const {
+    localUser,
+    clearUser,
+    clearLocalUser,
+    setLocalUser,
     setAccessToken,
-    accessToken, 
+    accessToken,
     setUser,
-    setIsCreating 
+    setIsCreating
   } = props;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Header = (props) => {
       .then((res) => {
         // console.log('axios-token', res.data);
         setAccessToken(res.data);
-    });
+      });
   }, [])
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const Header = (props) => {
         setLocalUser(res.data);
       }).catch(err => console.log(err));
   }, [])
-  
+
   const handleLogout = () => {
     const url = 'https://www.spotify.com/logout'
     const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
@@ -107,24 +107,24 @@ const Header = (props) => {
   // console.log('accessToken:', accessToken)
   // console.log('header-props:', props)
   return (
-      <div className='header-container'>
-        {localUser ? (
-          <div className='nav-links'>
-            <p onClick={ () => setIsCreating(true) }>+ Create Room</p>
-            <Link to='/Dash' >Dashboard</Link>
-            <Link to='/Contact' >Contact</Link>
-            <Link to='/Profile' >
-              <div className='profile'>
-                <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />
-                <h6>{localUser.display_name}</h6>
-              </div>
-            </Link>
-            <Link to='/' >Sign In</Link>
-            <button onClick={handleLogout}>Logout</button>
-  
-          </div>
-        ) : null}
-      </div>
+    <div className='header-container'>
+      {localUser ? (
+        <div className='nav-links'>
+          <p onClick={() => setIsCreating(true)}>+ Create Room</p>
+          <Link to='/Dash' >Dashboard</Link>
+          <Link to='/Contact' >Contact</Link>
+          <Link to='/Profile' >
+            <div className='profile'>
+              <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />
+              <h6>{localUser.display_name}</h6>
+            </div>
+          </Link>
+          <Link to='/' >Sign In</Link>
+          <button onClick={handleLogout}>Logout</button>
+
+        </div>
+      ) : null}
+    </div>
   )
 }
 
@@ -136,11 +136,11 @@ const mapStateToProps = (reduxState) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, { 
-  clearUser, 
-  clearLocalUser, 
-  clearAccessToken, 
-  setAccessToken, 
-  setLocalUser, 
-  setUser 
+export default withRouter(connect(mapStateToProps, {
+  clearUser,
+  clearLocalUser,
+  clearAccessToken,
+  setAccessToken,
+  setLocalUser,
+  setUser
 })(Header));

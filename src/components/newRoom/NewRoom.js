@@ -19,7 +19,7 @@ const NewRoom = (props) => {
   // const [name, setName] = useState('');
   // const [description, setDescription] = useState('');
   const [isUploading, setIsUploading] = useState(false);
-  const [imgUrl, setImgUrl] = useState(albumDefault);
+  const [imgUrl, setImgUrl] = useState('');
   const { setIsCreating, setIsLoading } = props;
 
   useEffect(() => {
@@ -40,7 +40,6 @@ const NewRoom = (props) => {
       })
       .then((res) => {
         const { signedRequest, url } = res.data;
-        setImgUrl(url);
         uploadFile(file, signedRequest, url);
       })
       .catch((err) => {
@@ -87,15 +86,15 @@ const NewRoom = (props) => {
         createdBy,
       })
       .then((res) => {
-        const {room_id} = res.data;
-        
-        axios.post('/api/joinroom', {room_id})
-        .then(() => {
-          props.history.push("/Dash");
-          setIsLoading(false);
-        })
-        .catch((err) => console.log(err));
-        
+        const { room_id } = res.data;
+
+        axios.post('/api/joinroom', { room_id })
+          .then(() => {
+            props.history.push("/Dash");
+            setIsLoading(false);
+          })
+          .catch((err) => console.log(err));
+
       });
   };
 
@@ -104,27 +103,27 @@ const NewRoom = (props) => {
     <div className='new-room-container'>
       <form>
         <section className='new-room-form'>
-            <h2>Create a Room</h2>
-            <MdClose className='new-room-close' onClick={ () => setIsCreating(false) } />
+          <h2>Create a Room</h2>
+          <MdClose className='new-room-close' onClick={() => setIsCreating(false)} />
           <section className='new-room-line'>
             <input
               placeholder="Room Name"
               name="roomName"
               value={roomName}
               onChange={(e) => setRoomName(e.target.value)}
-              />
+            />
           </section>
           <section className='new-room-line'>
             <input
               type="checkbox"
               id="private"
               name='isPrivate'
-              defaultChecked={ isPrivate }
-              value={ true }
+              defaultChecked={isPrivate}
+              value={true}
               onChange={() => setIsPrivate(!isPrivate)} />
             <label htmlFor="private">Private</label>
             <input
-              className={ !isPrivate ? 'hidden' : null }
+              className={!isPrivate ? 'hidden' : null}
               placeholder="Code Word"
               value={password}
               onChange={(e) => setPassword(e.target.value)} />
@@ -134,35 +133,36 @@ const NewRoom = (props) => {
               type="radio"
               id="collaborative"
               name="room type"
-              value={ true }
+              value={true}
               onChange={(e) => setIsCollaborative(e.target.value)} />
             <label htmlFor="collaborative">Collaborative</label>
             <input
               type="radio"
               id="exclusive"
               name="room type"
-              value={ false }
+              value={false}
               defaultChecked
               onChange={(e) => setIsCollaborative(e.target.value)} />
             <label htmlFor="exclusive">Non-Collaborative</label>
           </section>
           <section className="new-room-line">
-          <input
-            placeholder="Genre"
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)} />
+            <input
+              placeholder="Genre"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)} />
           </section>
           <section className="new-room-upload">
-            <img src={ imgUrl } alt='album art' />
+            <img src={imgUrl ? imgUrl : albumDefault} alt='album art' />
             <Dropzone
               onDropAccepted={(file) => getSignedRequest(file)}
               accept="image/*"
               multiple={false}>
+
               {({ getRootProps, getInputProps }) => (
                 <div className='dropzone'
-                {...getRootProps()}>
+                  {...getRootProps()}>
                   <input {...getInputProps()} />
-                  { isUploading ? <ScaleLoader color='#246A73' /> : <p>Drop room image here, or click to select a file</p> }
+                  { isUploading ? <ScaleLoader color='#246A73' /> : <p>Drop room image here, or click to select a file</p>}
                 </div>
               )}
             </Dropzone>
@@ -172,7 +172,7 @@ const NewRoom = (props) => {
       </form>
       <section className='new-room-invite'>
         <h2>Invite your friends to listen!</h2>
-        <input id='invite-input'placeholder="Enter email address" />
+        <input id='invite-input' placeholder="Enter email address" />
         <button id='invite-btn'>Add</button>
       </section>
     </div>

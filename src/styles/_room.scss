@@ -55,3 +55,12 @@
 .delete {
     margin-left: 1rem;
 }
+
+.temp_name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
