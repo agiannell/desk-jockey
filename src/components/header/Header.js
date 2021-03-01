@@ -20,13 +20,14 @@ const Header = (props) => {
     setLocalUser, 
     setAccessToken,
     accessToken, 
-    setUser 
+    setUser,
+    setIsCreating 
   } = props;
 
   useEffect(() => {
     axios.get("/pizza")
       .then((res) => {
-        console.log('axios-token', res.data);
+        // console.log('axios-token', res.data);
         setAccessToken(res.data);
     });
   }, [])
@@ -38,12 +39,12 @@ const Header = (props) => {
       })
         .then((results) => results.json())
         .then((data) => {
-          console.log('axios-spotify-user', data)
+          // console.log('axios-spotify-user', data)
           setUser(data);
           axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
             // console.log(foundUser.data);
             if (foundUser.data) {
-              console.log('axios-session-user', foundUser.data)
+              // console.log('axios-session-user', foundUser.data)
               return setLocalUser(foundUser.data);
             }
             fetch(`https://api.spotify.com/v1/users/${data.id}/playlists`, {
@@ -62,7 +63,7 @@ const Header = (props) => {
             })
               .then((res) => res.json())
               .then((info) => {
-                console.log(info);
+                // console.log(info);
                 axios
                   .post("/api/user", {
                     displayName: data.display_name,
@@ -104,12 +105,12 @@ const Header = (props) => {
   }
 
   // console.log('accessToken:', accessToken)
-  console.log('header-props:', props)
+  // console.log('header-props:', props)
   return (
-      <div>
+      <div className='header-container'>
         {localUser ? (
           <div className='nav-links'>
-            <Link to='/NewRoom' >+ Create Room</Link>
+            <p onClick={ () => setIsCreating(true) }>+ Create Room</p>
             <Link to='/Dash' >Dashboard</Link>
             <Link to='/Contact' >Contact</Link>
             <Link to='/Profile' >

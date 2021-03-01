@@ -1,0 +1,122 @@
+.new-room-container {
+    background-color: rgba($secondary-color, .98);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    @include flex(center, column);
+    animation: fly-down .5s ease-in-out;
+}
+
+.new-room-form {
+    @include flex(flex-start, column);
+    background-color: $primary-color;
+    width: 600px;
+    height: 520px;
+    padding: 30px;
+    border-radius: 10px;
+
+    h2 {
+        margin-bottom: 25px;
+    }
+
+}
+
+.new-room-close {
+    cursor: pointer;
+    position:relative;
+    left: 275px;
+    bottom: 80px;
+    font-size: 1.2rem;
+}
+
+.new-room-line {
+    // @include border (cyan);
+    @include flex(flex-start, row);
+    width: 90%;
+    height: 40px;
+    margin-bottom: 20px;
+    
+    input {
+        width: 100%;
+    }
+    
+    #private {
+        width: initial;
+        margin-right: 10px;
+    }
+    
+    label {
+        margin-right: 25px;
+    }
+}
+
+.new-room-radio {
+    // @include border (orange);
+    @include flex(flex-start, row);
+    width: 90%;
+    height: 40px;
+    margin-bottom: 20px;
+
+    input {
+        margin-right: 10px;
+    }
+
+    label {
+        margin-right: 50px;
+    }
+}
+
+.new-room-upload {
+    // @include border (orange);
+    @include flex(center, row);
+    margin-top: 15px;
+    width: 90%;
+
+    img {
+        height: 100px;
+        margin-right: 25px;
+    }
+}
+
+.dropzone {
+    padding: 40px 20px;
+    width: 90%;
+    border: 2px dashed $btn-color;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#create-room-btn {
+    background-color: $primary-color;
+    width: 600px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba($primary-color, .8);
+    }
+}
+
+#invite-input {
+    margin-right: 10px;
+    width: 520px;
+}
+
+#invite-btn {
+    background-color: $primary-color;
+    width: 60px;
+    margin: 15px 0;
+    margin-left: 10px;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba($primary-color, .8);
+    }
+}
