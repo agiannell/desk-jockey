@@ -1,0 +1,80 @@
+.chat-container {
+    // @include border(red);
+    border: 1px solid $secondary-color;
+    border-radius: 5px;
+    @include flex(space-between, column);
+    width: 100%;
+    height: 90%;
+    margin: 15px 0;
+
+    form {
+        // @include border(yellow);
+        @include flex(center, row);
+        width: 100%;
+        // height: 70px;
+        border-top: 1px solid $secondary-color;
+        padding: 20px;
+
+        input {
+            border: none;
+            border-bottom: 2px solid $secondary-color;
+            background-color: transparent;
+            margin-right: 10px;
+            color: $text-color;
+            outline: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: .5rem 0;
+            width: 100%;
+
+            &::placeholder {
+                color: darken($secondary-color, 10%);
+            }
+        }
+
+        button {
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+    }
+}
+
+.messages-container {
+    // @include border(magenta);
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: scroll;
+}
+
+.chat-message {
+    // @include border(cyan);
+    @include flex(flex-start, column);
+    align-items:flex-start;
+    width: 100%;
+    text-align: left;
+    padding: 0 20px;
+    margin: 20px 0;
+    
+    h3 {
+        width: initial;
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: 2px solid $secondary-color;
+    }
+
+    p {
+        font-size: .7rem;
+        color: $btn-color;
+        margin: 0 10px;
+    }
+}
+
+.local-user {
+    align-items: flex-end;
+
+    h3 {
+        background-color: $secondary-color;
+        border: none;
+    }
+
+}

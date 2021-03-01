@@ -3,22 +3,21 @@ import { connect } from "react-redux";
 import { useState, useEffect } from "react";
 import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
-import { GridLoader } from "react-spinners";
-import Header from "../header/Header";
+import { ScaleLoader } from "react-spinners";
+import { MdClose } from 'react-icons/md'
+import albumDefault from '../../assets/img/default-album.png';
 
 const NewRoom = (props) => {
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
   const [pic, setPic] = useState("");
-  const [isPrivate, setIsPrivate] = useState("");
-  const [isCollaborative, setIsCollaborative] = useState("");
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [isCollaborative, setIsCollaborative] = useState(false);
   const [genre, setGenre] = useState("");
   const [createdBy, setCreatedBy] = useState("");
-  // const [equipment, setEquipment] = useState([]);
-  // const [name, setName] = useState('');
-  // const [description, setDescription] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [imgUrl, setImgUrl] = useState('');
+  const { setIsCreating, setIsLoading } = props;
 
   useEffect(() => {
     setCreatedBy(props.localUser.user_id);
@@ -34,11 +33,10 @@ const NewRoom = (props) => {
         params: {
           "file-name": fileName,
           "file-type": file.type,
-        },
+        }
       })
       .then((res) => {
         const { signedRequest, url } = res.data;
-        setImgUrl(url);
         uploadFile(file, signedRequest, url);
       })
       .catch((err) => {
@@ -72,6 +70,8 @@ const NewRoom = (props) => {
   };
 
   const handleCreateRoom = () => {
+    setIsLoading(true);
+
     axios
       .post("/api/room", {
         roomName,
@@ -83,118 +83,95 @@ const NewRoom = (props) => {
         createdBy,
       })
       .then((res) => {
-        const {room_id} = res.data;
-        
-        axios.post('/api/joinroom', {room_id})
-        .then(() => {
-          props.history.push("/Dash");
-        })
-        .catch((err) => console.log(err));
-        
+        const { room_id } = res.data;
+
+        axios.post('/api/joinroom', { room_id })
+          .then(() => {
+            props.history.push("/Dash");
+            setIsLoading(false);
+          })
+          .catch((err) => console.log(err));
+
       });
   };
 
-  console.log(props);
+  console.log(isCollaborative);
   return (
-    <div>
-      <Header />
-      <input
-        placeholder="Room Name"
-        name="roomName"
-        value={roomName}
-        onChange={(e) => setRoomName(e.target.value)}
-      />
+    <div className='new-room-container'>
       <form>
-        <input
-          type="radio"
-          id="public"
-          name="room type"
-          value='false'
-          onChange={(e) => setIsPrivate(e.target.value)}
-        />
-        <label for="public">Public</label>
-        <br />
-        <input
-          type="radio"
-          id="private"
-          name="room type"
-          value='true'
-          onChange={(e) => setIsPrivate(e.target.value)}
-        />
-        <label for="private">Private</label>
-        <br />
-      </form>
-      <input
-        placeholder="Password for private Room"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input
-        placeholder="Room Image Url"
-        value={imgUrl}
-        onChange={(e) => setPic(e.target.value)}
-      />
-      <form>
-        <input
-          type="radio"
-          id="collaborative"
-          name="room type"
-          value="True"
-          onChange={(e) => setIsCollaborative(e.target.value)}
-        />
-        <label for="collaborative">Collaborative</label>
-        <br />
-        <input
-          type="radio"
-          id="exclusive"
-          name="room type"
-          value="False"
-          onChange={(e) => setIsCollaborative(e.target.value)}
-        />
-        <label for="exclusive">Non-Collaborative</label>
-        <br />
-      </form>
-      <input
-        placeholder="genre"
-        value={genre}
-        onChange={(e) => setGenre(e.target.value)}
-      />
+        <section className='new-room-form'>
+          <h2>Create a Room</h2>
+          <MdClose className='new-room-close' onClick={() => setIsCreating(false)} />
+          <section className='new-room-line'>
+            <input
+              placeholder="Room Name"
+              name="roomName"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+            />
+          </section>
+          <section className='new-room-line'>
+            <input
+              type="checkbox"
+              id="private"
+              name='isPrivate'
+              defaultChecked={isPrivate}
+              value={true}
+              onChange={() => setIsPrivate(!isPrivate)} />
+            <label htmlFor="private">Private</label>
+            <input
+              className={!isPrivate ? 'hidden' : null}
+              placeholder="Code Word"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} />
+          </section>
+          <section className="new-room-radio">
+            <input
+              type="radio"
+              id="collaborative"
+              name="room type"
+              value={true}
+              onChange={(e) => setIsCollaborative(e.target.value)} />
+            <label htmlFor="collaborative">Collaborative</label>
+            <input
+              type="radio"
+              id="exclusive"
+              name="room type"
+              value={false}
+              defaultChecked
+              onChange={(e) => setIsCollaborative(e.target.value)} />
+            <label htmlFor="exclusive">Non-Collaborative</label>
+          </section>
+          <section className="new-room-line">
+            <input
+              placeholder="Genre"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)} />
+          </section>
+          <section className="new-room-upload">
+            <img src={imgUrl ? imgUrl : albumDefault} alt='album art' />
+            <Dropzone
+              onDropAccepted={(file) => getSignedRequest(file)}
+              accept="image/*"
+              multiple={false}>
 
-      <Dropzone
-        onDropAccepted={(file) => getSignedRequest(file)}
-        accept="image/*"
-        multiple={false}
-      >
-        {({ getRootProps, getInputProps }) => (
-          <div
-            style={{
-              position: "relative",
-              width: 160,
-              height: 40,
-              borderWidth: 2,
-              marginTop: 25,
-              borderColor: "gray",
-              borderStyle: "solid",
-              borderRadius: 5,
-              display: "inline-block",
-              fontSize: 10,
-            }}
-            {...getRootProps()}
-          >
-            <input {...getInputProps()} />
-            {isUploading ? (
-              <GridLoader />
-            ) : (
-                <p>Drop files here, or click to select files</p>
+              {({ getRootProps, getInputProps }) => (
+                <div className='dropzone'
+                  {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  { isUploading ? <ScaleLoader color='#246A73' /> : <p>Drop room image here, or click to select a file</p>}
+                </div>
               )}
-          </div>
-        )}
-      </Dropzone>
-
-      <p>Invite your friends to listen!</p>
-      <input placeholder="Enter email address" />
-      <button>Add</button>
-      <button onClick={() => handleCreateRoom()}>Create Room</button>
+            </Dropzone>
+          </section>
+        </section>
+        <button id='create-room-btn' onClick={() => handleCreateRoom()}>Create Room</button>
+      </form>
+      <section className='new-room-invite'>
+        <h2>Invite your friends to listen!</h2>
+        <input id='invite-input' placeholder="Enter email address" />
+        <button id='invite-btn'>Add</button>
+      </section>
     </div>
   );
 };

@@ -14,28 +14,30 @@ const Playlist = (props) => {
     })
       .then((tracks) => tracks.json())
       .then((data) => {
-        setTracks(data)
-        // console.log(data)
+        setTracks(data.items)
+        console.log(data.items)
       });
   }, []);
 
   return (
     <div>
       <section className='playlist-render' onClick={() => setShowTracks(!showTracks)}>
-        <img src={ image?.url } alt={ name } />
+        <img src={image?.url} alt={name} />
         <section className='playlist-info'>
-          <h3>{ name }</h3>
-          <p>{ trackCount } tracks</p>
+          <h3>{name}</h3>
+          <p>{trackCount} tracks</p>
         </section>
       </section>
       {showTracks ? (
         <div>
-          {tracks.items.map(tracks => (
+          {tracks.map(tracks => (
             <Tracks
               trId={tracks.track.id}
               trName={tracks.track.name}
               addTrack={props.addTrack}
               trUri={tracks.track.uri}
+              artist={tracks.track.artists[0].name}
+              trImg={tracks.track.album.images[0].url}
             />
           ))}
         </div>
