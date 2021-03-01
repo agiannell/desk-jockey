@@ -15,9 +15,6 @@ const NewRoom = (props) => {
   const [isCollaborative, setIsCollaborative] = useState(false);
   const [genre, setGenre] = useState("");
   const [createdBy, setCreatedBy] = useState("");
-  // const [equipment, setEquipment] = useState([]);
-  // const [name, setName] = useState('');
-  // const [description, setDescription] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [imgUrl, setImgUrl] = useState('');
   const { setIsCreating, setIsLoading } = props;
