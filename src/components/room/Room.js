@@ -9,27 +9,13 @@ import Chat from '../chat/Chat'
 const Room = (props) => {
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [showPlaylists, setShowPlaylists] = useState(false);
-  const [desktopDjPL, setDesktopDjPL] = useState(null);
+  // const [desktopDjPL, setDesktopDjPL] = useState(null);
   const [roomInfo, setRoomInfo] = useState({});
   const [isRoomAdmin, setIsRoomAdmin] = useState(false);
   const { user_id, playlist_uri, display_name } = props.localUser;
   const { id: room_id } = props.match.params;
   const { accessToken, user, localUser } = props;
-
-  const getDesktopDj = () => {
-    let djPlaylistId = playlist_uri.substr(17,)
-    fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}/tracks`, {
-      headers: { Authorization: "Bearer " + accessToken },
-    })
-      .then((tracks) => tracks.json())
-      .then((data) => {
-        // data.items.map(e => {
-        //   return setDesktopDjPL(uri => [...desktopDjPL, e.track.uri])
-        // })
-        console.log('dj pl data:', data.items)
-        setDesktopDjPL(data.items)
-      });
-  };
+  const [queue, setQueue] = useState([])
 
   const getUserPlaylists = () => {
     fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
@@ -40,7 +26,20 @@ const Room = (props) => {
         // console.log('playlist:', data)
         setUserPlaylists(data);
       });
-  };
+    };
+    
+    const handleAddTrack = (trUri, trId,trName,artist,trImg) => {
+      setQueue([...queue , {trUri, trId,trName,artist,trImg}])
+      console.log(queue)
+    }
+    
+    const handleDeleteRoom = () => {
+      axios.delete(`/api/room/${room_id}`)
+        .then(() => {
+          props.history.push('/Dash')
+        })
+        .catch(err => console.log(err))
+    }
 
   useEffect(() => {
     axios.get(`/api/room/${room_id}`)
@@ -57,59 +56,16 @@ const Room = (props) => {
       .catch((err) => console.log(err));
   }, [])
 
-  const handleDeleteRoom = () => {
-    axios.delete(`/api/room/${room_id}`)
-      .then(() => {
-        props.history.push('/Dash')
-      })
-      .catch(err => console.log(err))
-  }
 
   useEffect(() => {
     if (localUser.hasOwnProperty('user_id')) {
       getUserPlaylists();
-      getDesktopDj();
+      // getDesktopDj();
     }
 
   }, [localUser])
 
-  const handleAddTrack = (uri, trId) => {
-    let djPlaylistId = playlist_uri.substr(17,)
-    fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}/tracks`, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify({
-        "uris": [uri]
-      }),
-      scope: "playlist-modify-public playlist-modify-private"
-    })
-      .then(() => {
-        getDesktopDj()
-        // console.log('hit')
-        // fetch(`https://api.spotify.com/v1/tracks/${trId}`, {
-        //   headers: {
-        //     Authorization: 'Bearer ' + accessToken
-        //   }
-        // })
-        // .then(track => track.json())
-        // .then(data => {
-        //   console.log('add track data', data)
-        //   setDesktopDjPL((uri) =>[...desktopDjPL,{track: {
-        //     uri: data.uri
-        //   }}])
-        // })
-      })
-      .catch(err => console.log(err))
-  }
 
-  // useEffect(() => {
-  //   getDesktopDj()
-  // }, [getDesktopDj])
-
-  // console.log('dj state pl:', desktopDjPL)
   return (
     <div>
       {accessToken ? (
@@ -140,9 +96,9 @@ const Room = (props) => {
               ) : null}
             </section>
             <section className='room-column inner'>
-              {desktopDjPL ? (
+              {queue[0] ? (
                 <section className='room-player'>
-                  <Player desktopDjPL={desktopDjPL} playlistUri={playlist_uri} getDesktopDjFn={getDesktopDj} />
+                  <Player queue={queue} />
                 </section>
               ) : null}
               <Chat
@@ -151,12 +107,12 @@ const Room = (props) => {
             </section>
             <section className='room-column outer'>
               <h3>QUEUE</h3>
-              {desktopDjPL ? (desktopDjPL.map(playlist => (
-                <div key={playlist.id} className='temp_name'>
-                  <img src={playlist.track.album.images[0].url} height='40' />
+              {queue[0] ? (queue.map(tracks => (
+                <div key={tracks.trId} className='temp_name'>
+                  <img src={tracks.trImg} height='40' />
                   <section>
-                    <h5>{playlist.track.name}</h5>
-                    <h6>{playlist.track.album.artists[0].name}</h6>
+                    <h5>{tracks.trName}</h5>
+                    <h6>{tracks.artist}</h6>
                   </section>
                 </div>
 

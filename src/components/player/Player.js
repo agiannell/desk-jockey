@@ -5,9 +5,8 @@ var Spotify = require("spotify-web-api-js");
 var s = new Spotify();
 
 const Player = (props) => {
-  const { accessToken, desktopDjPL, playlistUri, getDesktopDjFn } = props;
-  const [playerUri, setPlayerUri] = useState(playlistUri)
-
+  const { accessToken, queue } = props; 
+  
   useEffect(() => {
     if (accessToken) {
       s.setAccessToken(accessToken)
@@ -17,24 +16,10 @@ const Player = (props) => {
   return (
     <section>
       <SpotifyPlayer
-        callback={(state) => {
-          console.log(state);
-          if (state.progressMs === state.track.durationMs || !state.isPlaying) {
-            let djPlaylistId = playlistUri.substr(17,)
-            fetch(`https://api.spotify.com/v1/playlists/${djPlaylistId}`, {
-              headers: { Authorization: "Bearer " + accessToken },
-            })
-              .then((playList) => playList.json())
-              .then((data) => {
-                console.log(data)
-                setPlayerUri(data.uri);
-              });
-          }
-        }}
         className="player"
         name="Desktop DJ Player"
         token={accessToken}
-        uris={playerUri}
+        uris={queue.map(track => track.trUri )}
         styles={{
           bgColor: "#246A73",
           sliderColor: "#246A73",
