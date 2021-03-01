@@ -136,10 +136,12 @@ const Room = (props) => {
             <section className='room-column inner'>
               {desktopDjPL ? (
                 <section className='room-player'>
-                  <Player desktopDjPL={desktopDjPL} />
+                  <Player desktopDjPL={desktopDjPL} playlistUri={playlist_uri} getDesktopDjFn={getDesktopDj}/>
                 </section>
               ) : null}
-              <Chat username={display_name} />
+              <Chat 
+                username={display_name}
+                userId={ user_id } />
             </section>
             <section className='room-column outer'>
             </section>
