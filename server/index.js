@@ -55,6 +55,9 @@ massive({
       console.log(socket.rooms);
       io.in(roomId).emit("user-joined", { username });
     });
+    socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId }) => {
+      io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username })
+    })
   });
 });
 
