@@ -47,7 +47,8 @@ const Room = (props) => {
       artist, 
       trImg, 
       username: display_name, 
-      roomId: room_id 
+      roomId: room_id,
+      queue 
     })
 
     // if(!queue[0]) {
@@ -158,24 +159,18 @@ const Room = (props) => {
       socket.on('user-joined', ({ username }) => {
         console.log(`${username} has joined the chat`)
       })
-      socket.on('queue', ({ trUri, trId, trName, artist, trImg, username }) => {
-        if(!queue[0]) {
+      socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, queue }) => {
+        setQueue(q => {
+          return [...q, {trUri, trId, trName, artist, trImg, username}]
+        })
+        s.queue(trUri)
+        console.log(`${trName} was added to the queue by ${ username }`)
+        console.log('queue length', queue.length)
+        console.log('queue content', queue)
+        if(queue.length === 0) {
           setInitialTrUri(trUri)
-          setQueue(q => {
-            return [...q, {trUri, trId, trName, artist, trImg, username}]
-          })
-          s.queue(trUri)
-          console.log(`${trName} was added to the queue by ${ username }`)
-        } else {
-          setQueue(q => {
-            return [...q, {trUri, trId, trName, artist, trImg, username}]
-          })
-          s.queue(trUri)
-          console.log(`${trName} was added to the queue by ${ username }`)
         }
-
-
-    })
+      })
   }
 
     return () => {
