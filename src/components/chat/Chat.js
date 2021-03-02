@@ -1,4 +1,3 @@
-import io from "socket.io-client";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { RiSendPlaneFill } from 'react-icons/ri';
@@ -6,11 +5,10 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import Messages from '../Messages/Messages';
 
 const Chat = (props) => {
-  const [socket, setSocket] = useState(null)
   const [messages, setMessages] = useState([])
   const { id } = useParams()
   const [message, setMessage] = useState('')
-  const { username, userId } = props
+  const { username, userId, socket } = props
 
   const sendMessage = e => {
     e.preventDefault()
@@ -20,29 +18,19 @@ const Chat = (props) => {
   }
 
   useEffect(() => {
-    if (!socket) {
-      setSocket(io.connect('http://localhost:4000'))
-    } else {
-      socket.on('user-joined', ({ username }) => {
-        console.log(`${username} has joined the chat`)
-      })
+    if (socket) {
       socket.on('message', ({ socketUserId, username, message }) => {
         setMessages(m => {
           return [...m, { socketUserId, username, message }]
         })
       })
     }
-    return () => {
-      if (socket) { socket.disconnect() }
-    }
-
-
   }, [socket])
 
-  useEffect(() => {
-    if (socket) { socket.emit('join-room', { roomId: id, username }) }
+  // useEffect(() => {
+  //   if (socket) { socket.emit('join-room', { roomId: id, username }) }
 
-  }, [id, socket])
+  // }, [id, socket])
 
   console.log(messages);
   return (

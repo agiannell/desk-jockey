@@ -39,10 +39,10 @@ const Player = (props) => {
         className="player"
         name="Desktop DJ Player"
         token={accessToken}
-        uris={ localUser.playlist_uri }
+        uris={ initialTrUri }
         syncExternalDevice='true'
         persistDeviceSelection='true'
-        autoPlay='false'
+        // autoPlay={ false }
         initialVolume={0.5}
         styles={{
           bgColor: "#246A73",

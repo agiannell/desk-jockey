@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { connect } from "react-redux";
+import { useParams } from 'react-router-dom';
+import io from 'socket.io-client';
 import Spotify from 'spotify-web-api-js';
 import Player from '../player/Player';
 import Playlist from '../playlist/playlist'
@@ -20,9 +22,11 @@ const Room = (props) => {
   const { accessToken, user, localUser } = props;
   const [queue, setQueue] = useState([]);
   const [email, setEmail] = useState('');
-  const [roomUrl, setRoomUrl] = useState(``);
+  const [roomUrl, setRoomUrl] = useState('');
   const [deviceId, setDeviceId] = useState('');
-  const [initialTrUri, setInitialTrUri] = useState()
+  const [initialTrUri, setInitialTrUri] = useState('');
+  const [socket, setSocket] = useState(null)
+  const { id } = useParams()
 
   const getUserPlaylists = () => {
     fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
@@ -35,36 +39,91 @@ const Room = (props) => {
       });
     };
     
-    const handleAddTrack = (trUri, trId,trName,artist,trImg) => {
-      setQueue([...queue , {trUri, trId,trName,artist,trImg}])
-      fetch('https://api.spotify.com/v1/me/player', {
-        headers: { Authorization: "Bearer " + accessToken },
-      })
-        .then(device => device.json())
-        .then(data => {
-          console.log('playback data', data)
-        })
+  const handleAddTrack = (trUri, trId,trName,artist,trImg) => {
+    socket.emit('queue', { 
+      trUri, 
+      trId, 
+      trName, 
+      artist, 
+      trImg, 
+      username: display_name, 
+      roomId: room_id 
+    })
 
-      s.getMyCurrentPlaybackState()
-      .then(data => {
-          console.log('plybck state data', data.device);
-      })
-      
-      // if(queue.length === 1) {
-      //   console.log('queue test', queue);
-      //   setInitialTrUri(trUri);
-      // }
-    //     s.queue(trUri)
-    //   }
-    }
+    // if(!queue[0]) {
+    //   setInitialTrUri(trUri)
+    //   // setQueue([...queue , {trUri, trId,trName,artist,trImg}])
+    //   // s.queue(trUri)
+    //   socket.emit('queue', { 
+    //     trUri, 
+    //     trId, 
+    //     trName, 
+    //     artist, 
+    //     trImg, 
+    //     username: display_name, 
+    //     roomId: room_id 
+    //   })
+    // } else {
+    //   // setQueue([...queue , {trUri, trId,trName,artist,trImg}])
+    //   // s.queue(trUri)
+    //   socket.emit('queue', { 
+    //     trUri, 
+    //     trId, 
+    //     trName, 
+    //     artist, 
+    //     trImg, 
+    //     username: display_name, 
+    //     roomId: room_id 
+    //   })
+    // }
     
-    const handleDeleteRoom = () => {
-      axios.delete(`/api/room/${room_id}`)
-        .then(() => {
-          props.history.push('/Dash')
-        })
-        .catch(err => console.log(err))
-    }
+
+    // fetch('https://api.spotify.com/v1/me/player/play', {
+    //   headers: { Authorization: "Bearer " + accessToken },
+    //   method: 'PUT',
+    //   body: JSON.stringify({ uris: trUri })
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //   console.log(data)
+    // })
+    // .catch(err => console.log('play error:', err))
+
+    // fetch('https://api.spotify.com/v1/me/player', {
+    //   headers: { Authorization: "Bearer " + accessToken },
+    // })
+    //   .then(device => device.json())
+    //   .then(data => {
+    //     console.log('playback data', data)
+    //   })
+
+    // s.getMyCurrentPlaybackState()
+    // .then(data => {
+    //     console.log('plybck state data', data.device);
+    // })
+    
+    // if(queue.length === 1) {
+    //   console.log('queue test', queue);
+    //   setInitialTrUri(trUri);
+    // }
+  //     s.queue(trUri)
+  //   }
+  }
+    
+  const handleDeleteRoom = () => {
+    axios.delete(`/api/room/${room_id}`)
+      .then(() => {
+        props.history.push('/Dash')
+      })
+      .catch(err => console.log(err))
+  }
+
+  // const sendMessage = e => {
+  //   e.preventDefault()
+
+  //   socket.emit('message', { socketUserId: user_id, username: display_name, message, roomId: id })
+  //   setMessage('')    
+  // }
 
   useEffect(() => {
     s.setAccessToken(accessToken)
@@ -89,8 +148,44 @@ const Room = (props) => {
       .then()
       .catch((err) => console.log(err));
 
-      setRoomUrl(`localhost:3000/room/${room_id}`)
+      setRoomUrl(`http://localhost:3000/room/${room_id}`)
   }, [])
+
+  useEffect(() => {
+    if (!socket) {
+      setSocket(io.connect('http://localhost:4000'))
+    } else {
+      socket.on('user-joined', ({ username }) => {
+        console.log(`${username} has joined the chat`)
+      })
+      socket.on('queue', ({ trUri, trId, trName, artist, trImg, username }) => {
+        if(!queue[0]) {
+          setInitialTrUri(trUri)
+          setQueue(q => {
+            return [...q, {trUri, trId, trName, artist, trImg, username}]
+          })
+          s.queue(trUri)
+          console.log(`${trName} was added to the queue by ${ username }`)
+        } else {
+          setQueue(q => {
+            return [...q, {trUri, trId, trName, artist, trImg, username}]
+          })
+          s.queue(trUri)
+          console.log(`${trName} was added to the queue by ${ username }`)
+        }
+
+
+    })
+  }
+
+    return () => {
+      if (socket) { socket.disconnect() }
+    }
+  }, [socket])
+
+  useEffect(() => {
+    if (socket) { socket.emit('join-room', { roomId: id, username: display_name}) }
+  }, [id, socket])
 
   useEffect(() => {
     if (localUser.hasOwnProperty('user_id')) {
@@ -115,7 +210,7 @@ const Room = (props) => {
   };
 
 
-  console.log(deviceId);
+  console.log(initialTrUri);
   return (
     <div>
       <input
@@ -160,7 +255,8 @@ const Room = (props) => {
                 </section>
               <Chat
                 username={display_name}
-                userId={user_id} />
+                userId={user_id}
+                socket={ socket } />
             </section>
             <section className='room-column outer'>
               <h3>QUEUE</h3>
