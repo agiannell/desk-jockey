@@ -18,6 +18,7 @@ const {
 } = process.env;
 const app = express();
 
+app.use(express.static(__dirname + '/../build'))
 app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
 app.use(
@@ -55,8 +56,8 @@ massive({
       console.log(socket.rooms);
       io.in(roomId).emit("user-joined", { username });
     });
-    socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
-      io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username, queue })
+    socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId }) => {
+      io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username })
     })
   });
 });
