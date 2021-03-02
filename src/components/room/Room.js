@@ -19,6 +19,8 @@ const Room = (props) => {
   const { id: room_id } = props.match.params;
   const { accessToken, user, localUser } = props;
   const [queue, setQueue] = useState([]);
+  const [email, setEmail] = useState('');
+  const [roomUrl, setRoomUrl] = useState(``);
   const [deviceId, setDeviceId] = useState('');
   const [initialTrUri, setInitialTrUri] = useState()
 
@@ -86,6 +88,8 @@ const Room = (props) => {
     axios.post(`/api/joinroom/`, { room_id })
       .then()
       .catch((err) => console.log(err));
+
+      setRoomUrl(`localhost:3000/room/${room_id}`)
   }, [])
 
   useEffect(() => {
@@ -96,9 +100,31 @@ const Room = (props) => {
 
   }, [localUser])
 
+  const sendInvite = () => {
+    if (email === '') {
+      alert("Please enter an email address!");
+    } else {
+      axios
+        .post("/api/invite", {email, roomUrl})
+        .then(() => {
+          window.alert("Message Sent!");
+          setEmail('');
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+
   console.log(deviceId);
   return (
     <div>
+      <input
+        value={email}
+        type="text"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button onClick={() => sendInvite()}>Send Invite</button>
+      {console.log(props)}
       {accessToken ? (
         <>
           <Header />
