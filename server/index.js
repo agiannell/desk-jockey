@@ -111,3 +111,4 @@ app.delete('/api/room/:room_id', roomCtrl.delete);
 
 //Email endpoint
 app.post("/api/email", emailCtrl.sendEmail);
+app.post('/api/invite', emailCtrl.sendInvite);
