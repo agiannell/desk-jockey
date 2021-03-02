@@ -238,7 +238,6 @@
 }
 
 .rooms-map {
-  border: 2px dotted red;
   width: 80%;
   margin: 0 auto;
   display: -webkit-box;
