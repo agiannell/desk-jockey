@@ -89,7 +89,7 @@ const Room = (props) => {
       .then()
       .catch((err) => console.log(err));
 
-      setRoomUrl(`localhost:3000/room/${room_id}`)
+      setRoomUrl(`http://localhost:3000/room/${room_id}`)
   }, [])
 
   useEffect(() => {
