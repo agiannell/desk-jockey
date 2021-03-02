@@ -7,8 +7,8 @@ const Auth = props => {
       <section className="auth-main">
         <section className="auth-img">
           <section className="auth-login">
-            <img src={ stackedLogo } alt='logo' />
-            <a href="http://localhost:4000/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+            <img src={stackedLogo} alt='logo' />
+            <a href="https://deskjockey.us/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
           </section>
         </section>
       </section>
@@ -16,7 +16,7 @@ const Auth = props => {
       <section className="auth-section lighten">Section 2 Content</section>
       <section className="auth-section">Section 3 Content</section>
       <section className="auth-section lighten">
-        <a href="http://localhost:4000/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+        <a href="https://deskjockey.us/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
       </section>
     </section>
   )
