@@ -18,6 +18,7 @@ const {
 } = process.env;
 const app = express();
 
+app.use(express.static(`${__dirname}/../build`));
 app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
 app.use(
