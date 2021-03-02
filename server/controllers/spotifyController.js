@@ -1,6 +1,6 @@
 const querystring = require('querystring'),
-      request = require('request'),
-      { CLIENT_ID, REDIRECT_URI, CLIENT_SECRET } = process.env;
+  request = require('request'),
+  { CLIENT_ID, REDIRECT_URI, CLIENT_SECRET } = process.env;
 
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
       // console.log(body)
       var access_token = body.access_token
       req.session.token = access_token
-      let uri = 'http://localhost:3000/Dash' || REDIRECT_URI
+      let uri = 'https://deskjockey.us/' || REDIRECT_URI
       res.redirect(uri)
     })
     // console.log(req.session.token)
