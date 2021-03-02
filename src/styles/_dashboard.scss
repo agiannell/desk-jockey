@@ -1,5 +1,5 @@
 .rooms-map {
-    // border: 2px dotted red;
+    border: 2px dotted red;
     width: 80%;
     margin: 0 auto;
     display: flex;
@@ -9,3 +9,15 @@
     align-items: center;
     box-sizing: border-box;
 }
+
+// .map-container {
+//     width: 100%;
+//     border: 2px dotted green;
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// .empty-container {
+//     border: 2px dotted blue;
+//     flex-grow: 2;
+// }

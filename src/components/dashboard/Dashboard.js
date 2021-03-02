@@ -38,70 +38,73 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     axios
-    .get(`/api/myrooms/${localUser.user_id}`)
-    .then((res) => {
-      setMyRooms(res.data);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    })
-    .catch((err) => console.log(err));
+      .get(`/api/myrooms/${localUser.user_id}`)
+      .then((res) => {
+        setMyRooms(res.data);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      })
+      .catch((err) => console.log(err));
   }, [localUser])
 
   return (
     <div>
-      { isCreating ? ( 
-        <NewRoom 
-          setIsCreating={ setIsCreating }
-          setIsLoading={ setIsLoading } /> 
-        ) 
-        : null 
+      { isCreating ? (
+        <NewRoom
+          setIsCreating={setIsCreating}
+          setIsLoading={setIsLoading} />
+      )
+        : null
       }
-      { isLoading ? <Loading /> : null }
-      <Header setIsCreating={ setIsCreating } />
+      { isLoading ? <Loading /> : null}
+      <Header setIsCreating={setIsCreating} />
       <nav>
         <button onClick={() => setRoomView("allrooms")}>All Rooms</button>
         <button onClick={() => setRoomView("myrooms")}>My Rooms</button>
         <button onClick={() => setRoomView("privaterooms")}>Private Rooms</button>
       </nav>
       {accessToken ? (
-        <div>
+        <div className="map-container">
           <section className="rooms-map">
             {roomView === "allrooms" ? (
               <>
                 {publicRooms.map((e) => (
                   <Rooms
-                  key={e.room_id}
-                  roomId={e.room_id}
-                  name={e.room_name}
-                  roomPic={e.room_pic}
+                    key={e.room_id}
+                    roomId={e.room_id}
+                    name={e.room_name}
+                    roomPic={e.room_pic}
                   />
-                  ))}
+
+                ))}
               </>
             ) : roomView === "myrooms" ? (
               <>
                 {myRooms.map((e) => (
                   <Rooms
-                  key={e.room_id}
-                  roomId={e.room_id}
-                  name={e.room_name}
-                  roomPic={e.room_pic}
+                    key={e.room_id}
+                    roomId={e.room_id}
+                    name={e.room_name}
+                    roomPic={e.room_pic}
                   />
-                  ))}
+                ))}
               </>
             ) : roomView === "privaterooms" ? (
               <>
                 {privateRooms.map((e) => (
                   <Rooms
-                  key={e.room_id}
-                  roomId={e.room_id}
-                  name={e.room_name}
-                  roomPic={e.room_pic}
+                    key={e.room_id}
+                    roomId={e.room_id}
+                    name={e.room_name}
+                    roomPic={e.room_pic}
                   />
-                  ))}
+                ))}
               </>
+
             ) : null}
           </section>
+          <div className="empty-container"></div>
         </div>
       ) : null}
     </div>
