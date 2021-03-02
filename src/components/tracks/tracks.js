@@ -5,7 +5,7 @@ const Tracks = (props) => {
 
 
     return (
-        <div className='track-render' onDoubleClick={() => { props.addTrack(trUri, trId) }}>
+        <div className='track-render' onDoubleClick={() => { props.addTrack(trUri, trId,trName,artist,trImg) }}>
             <p>{trName}</p>
             <MdPlaylistAdd onClick={() => { props.addTrack(trUri, trId,trName,artist,trImg) }} />
         </div>

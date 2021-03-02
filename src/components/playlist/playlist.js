@@ -15,7 +15,7 @@ const Playlist = (props) => {
       .then((tracks) => tracks.json())
       .then((data) => {
         setTracks(data.items)
-        console.log(data.items)
+        // console.log(data.items)
       });
   }, []);
 
