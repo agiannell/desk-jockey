@@ -9,7 +9,7 @@ const Loading = props => {
                 radius={ 4 }
                 margin={ 4 }
                 color='#F3DFC1' />
-            <h1>desktop DJ</h1>
+            <h1>deskjokey</h1>
         </section>
     )
 }
