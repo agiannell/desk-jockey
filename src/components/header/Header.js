@@ -10,7 +10,10 @@ import {
   setLocalUser,
   setUser
 } from '../../ducks/reducer/userReducer';
+import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
+
+const s = new Spotify();
 
 const Header = (props) => {
   const {
@@ -29,6 +32,7 @@ const Header = (props) => {
       .then((res) => {
         // console.log('axios-token', res.data);
         setAccessToken(res.data);
+        s.setAccessToken(res.data);
       });
   }, [])
 
