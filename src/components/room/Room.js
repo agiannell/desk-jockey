@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { connect } from "react-redux";
+import Spotify from 'spotify-web-api-js';
 import Player from '../player/Player';
 import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
 import axios from 'axios'
 import Chat from '../chat/Chat'
+
+const s = new Spotify();
 
 const Room = (props) => {
   const [userPlaylists, setUserPlaylists] = useState([]);
@@ -15,7 +18,9 @@ const Room = (props) => {
   const { user_id, playlist_uri, display_name } = props.localUser;
   const { id: room_id } = props.match.params;
   const { accessToken, user, localUser } = props;
-  const [queue, setQueue] = useState([])
+  const [queue, setQueue] = useState([]);
+  const [deviceId, setDeviceId] = useState('');
+  const [initialTrUri, setInitialTrUri] = useState()
 
   const getUserPlaylists = () => {
     fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
@@ -30,7 +35,25 @@ const Room = (props) => {
     
     const handleAddTrack = (trUri, trId,trName,artist,trImg) => {
       setQueue([...queue , {trUri, trId,trName,artist,trImg}])
-      console.log(queue)
+      fetch('https://api.spotify.com/v1/me/player', {
+        headers: { Authorization: "Bearer " + accessToken },
+      })
+        .then(device => device.json())
+        .then(data => {
+          console.log('playback data', data)
+        })
+
+      s.getMyCurrentPlaybackState()
+      .then(data => {
+          console.log('plybck state data', data.device);
+      })
+      
+      // if(queue.length === 1) {
+      //   console.log('queue test', queue);
+      //   setInitialTrUri(trUri);
+      // }
+    //     s.queue(trUri)
+    //   }
     }
     
     const handleDeleteRoom = () => {
@@ -42,6 +65,15 @@ const Room = (props) => {
     }
 
   useEffect(() => {
+    s.setAccessToken(accessToken)
+
+    s.getMyCurrentPlaybackState()
+    .then(data => {
+      if(data) {
+        console.log('plybck state data', data.device);
+      }
+    })
+
     axios.get(`/api/room/${room_id}`)
       .then((res) => {
         setRoomInfo(res.data)
@@ -56,7 +88,6 @@ const Room = (props) => {
       .catch((err) => console.log(err));
   }, [])
 
-
   useEffect(() => {
     if (localUser.hasOwnProperty('user_id')) {
       getUserPlaylists();
@@ -65,7 +96,7 @@ const Room = (props) => {
 
   }, [localUser])
 
-
+  console.log(deviceId);
   return (
     <div>
       {accessToken ? (
@@ -96,11 +127,11 @@ const Room = (props) => {
               ) : null}
             </section>
             <section className='room-column inner'>
-              {queue[0] ? (
                 <section className='room-player'>
-                  <Player queue={queue} />
+                  <Player 
+                    queue={queue}
+                    initialTrUri={initialTrUri} />
                 </section>
-              ) : null}
               <Chat
                 username={display_name}
                 userId={user_id} />
