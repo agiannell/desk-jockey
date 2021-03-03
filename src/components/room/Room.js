@@ -9,6 +9,7 @@ import Header from '../header/Header'
 import axios from 'axios'
 import Chat from '../chat/Chat'
 
+
 const s = new Spotify();
 
 const Room = (props) => {
@@ -154,7 +155,7 @@ const Room = (props) => {
 
   useEffect(() => {
     if (!socket) {
-      setSocket(io.connect('http://localhost:4000'))
+      setSocket(io.connect(process.env.REACT_APP_SOCKET_ENDPOINT))
     } else {
       socket.on('user-joined', ({ username }) => {
         console.log(`${username} has joined the chat`)
