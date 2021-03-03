@@ -34,7 +34,7 @@ module.exports = {
       // console.log(body)
       var access_token = body.access_token
       req.session.token = access_token
-      let uri = 'https://deskjockey.us/Dash' || REDIRECT_URI
+      let uri = 'https://deskjockey.us/' || REDIRECT_URI
       res.redirect(uri)
     })
     // console.log(req.session.token)
