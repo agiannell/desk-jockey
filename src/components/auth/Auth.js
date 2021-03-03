@@ -45,7 +45,9 @@ const Auth = props => {
 }
 
 const mapStateToProps = (reduxState) => {
-  accessToken: reduxState.userReducer.accessToken
+  return {
+    accessToken: reduxState.userReducer.accessToken
+  }
 }
 
 export default connect(mapStateToProps, { setAccessToken })(Auth);
