@@ -37,18 +37,18 @@ const Room = (props) => {
         // console.log('playlist:', data)
         setUserPlaylists(data);
       });
-    };
-    
-  const handleAddTrack = (trUri, trId,trName,artist,trImg) => {
-    socket.emit('queue', { 
-      trUri, 
-      trId, 
-      trName, 
-      artist, 
-      trImg, 
-      username: display_name, 
+  };
+
+  const handleAddTrack = (trUri, trId, trName, artist, trImg) => {
+    socket.emit('queue', {
+      trUri,
+      trId,
+      trName,
+      artist,
+      trImg,
+      username: display_name,
       roomId: room_id,
-      queue 
+      queue
     })
 
     // if(!queue[0]) {
@@ -77,7 +77,7 @@ const Room = (props) => {
     //     roomId: room_id 
     //   })
     // }
-    
+
 
     // fetch('https://api.spotify.com/v1/me/player/play', {
     //   headers: { Authorization: "Bearer " + accessToken },
@@ -102,15 +102,15 @@ const Room = (props) => {
     // .then(data => {
     //     console.log('plybck state data', data.device);
     // })
-    
+
     // if(queue.length === 1) {
     //   console.log('queue test', queue);
     //   setInitialTrUri(trUri);
     // }
-  //     s.queue(trUri)
-  //   }
+    //     s.queue(trUri)
+    //   }
   }
-    
+
   const handleDeleteRoom = () => {
     axios.delete(`/api/room/${room_id}`)
       .then(() => {
@@ -130,11 +130,11 @@ const Room = (props) => {
     s.setAccessToken(accessToken)
 
     s.getMyCurrentPlaybackState()
-    .then(data => {
-      if(data) {
-        console.log('plybck state data', data.device);
-      }
-    })
+      .then(data => {
+        if (data) {
+          console.log('plybck state data', data.device);
+        }
+      })
 
     axios.get(`/api/room/${room_id}`)
       .then((res) => {
@@ -149,7 +149,7 @@ const Room = (props) => {
       .then()
       .catch((err) => console.log(err));
 
-      setRoomUrl(`http://localhost:3000/room/${room_id}`)
+    setRoomUrl(`https://deskjockey.us/room/${room_id}`)
   }, [])
 
   useEffect(() => {
@@ -161,17 +161,17 @@ const Room = (props) => {
       })
       socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, queue }) => {
         setQueue(q => {
-          return [...q, {trUri, trId, trName, artist, trImg, username}]
+          return [...q, { trUri, trId, trName, artist, trImg, username }]
         })
         s.queue(trUri)
-        console.log(`${trName} was added to the queue by ${ username }`)
+        console.log(`${trName} was added to the queue by ${username}`)
         console.log('queue length', queue.length)
         console.log('queue content', queue)
-        if(queue.length === 0) {
+        if (queue.length === 0) {
           setInitialTrUri(trUri)
         }
       })
-  }
+    }
 
     return () => {
       if (socket) { socket.disconnect() }
@@ -179,7 +179,7 @@ const Room = (props) => {
   }, [socket])
 
   useEffect(() => {
-    if (socket) { socket.emit('join-room', { roomId: id, username: display_name}) }
+    if (socket) { socket.emit('join-room', { roomId: id, username: display_name }) }
   }, [id, socket])
 
   useEffect(() => {
@@ -195,7 +195,7 @@ const Room = (props) => {
       alert("Please enter an email address!");
     } else {
       axios
-        .post("/api/invite", {email, roomUrl})
+        .post("/api/invite", { email, roomUrl })
         .then(() => {
           window.alert("Message Sent!");
           setEmail('');
@@ -243,15 +243,15 @@ const Room = (props) => {
               ) : null}
             </section>
             <section className='room-column inner'>
-                <section className='room-player'>
-                  <Player 
-                    queue={queue}
-                    initialTrUri={initialTrUri} />
-                </section>
+              <section className='room-player'>
+                <Player
+                  queue={queue}
+                  initialTrUri={initialTrUri} />
+              </section>
               <Chat
                 username={display_name}
                 userId={user_id}
-                socket={ socket } />
+                socket={socket} />
             </section>
             <section className='room-column outer'>
               <h3>QUEUE</h3>
