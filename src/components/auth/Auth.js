@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import stackedLogo from '../../assets/img/logos/logo-stacked-white.svg';
 import { FaSpotify } from 'react-icons/fa';
 import axios from 'axios';
