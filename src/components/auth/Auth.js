@@ -1,7 +1,16 @@
 import stackedLogo from '../../assets/img/logos/logo-stacked-white.svg';
 import { FaSpotify } from 'react-icons/fa';
+import axios from 'axios';
 
 const Auth = props => {
+
+  useEffect(() => {
+    axios.get('/pizza/')
+      .then(res => {
+        res.data.token ? console.log(res.data) : null
+      })
+  }, [])
+
   return (
     <section>
       <section className="auth-main">

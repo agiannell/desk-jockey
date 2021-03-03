@@ -16,6 +16,7 @@ module.exports = {
   },
   spotifyCallback: (req, res) => {
     let code = req.query.code || null
+    console.log(code)
     let authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
