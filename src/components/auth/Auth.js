@@ -8,7 +8,7 @@ const Auth = props => {
   useEffect(() => {
     axios.get('/pizza/')
       .then(res => {
-        res.data.token ? console.log(res.data) : null
+        if (res.data.token) { console.log(res.data) }
       })
   }, [])
 
