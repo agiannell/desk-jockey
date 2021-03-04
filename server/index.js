@@ -51,10 +51,10 @@ massive({
     socket.on("message", ({ socketUserId, username, message, roomId }) => {
       io.in(roomId).emit("message", { socketUserId, username, message })
     });
-    socket.on("join-room", ({ roomId, username }) => {
+    socket.on("join-room", ({ roomId, username, queue }) => {
       socket.join(roomId);
       console.log(socket.rooms);
-      io.in(roomId).emit("user-joined", { username });
+      io.in(roomId).emit("user-joined", { username, queue });
     });
     socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
       io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username, queue })

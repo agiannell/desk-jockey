@@ -5,10 +5,14 @@ var Spotify = require("spotify-web-api-js");
 var s = new Spotify();
 
 const Player = (props) => {
-  const { accessToken, queue, user, localUser, initialTrUri } = props;
-  const [deviceId, setDeviceId] = useState('');
-  // const [playerQueue, setPlayerQueue] = useState([]);
+  const { accessToken, queue, user, localUser, initialTrUri, socket } = props;
+  const [progress, setProgress] = useState(null);
 
+  const handleAudioSync = (progress) => {
+    console.log(progress)
+    socket.emit('audio-sync', { progress })
+  }
+  
   useEffect(() => {
     if (accessToken) {
       s.setAccessToken(accessToken)
@@ -16,25 +20,17 @@ const Player = (props) => {
   }, [accessToken]);
 
   useEffect(() => {
-    queue.map((e, i) => {
-      if (i === 0) {
-        return s.play({ deviceId, uris: e.trUri })
-      } else {
-        return s.queue(e.trUri);
-      }
-    })
-  }, [deviceId])
+    console.log(progress)
+  }, [progress])
 
   return (
     <section>
       <SpotifyPlayer
-        // callback={state => {
-        //   if(!state.isPlaying) {
-        //     state.nextTracks = queue.map(e => e.trUri)
-        //     console.log(state)
-        //     state.isPlaying = true
-        //   }
-        // }}
+        callback={state => {
+          console.log(state);
+          setProgress(state.progressMs)
+          handleAudioSync(state.progressMs);
+        }}
         className="player"
         name="DeskJockey Player"
         token={accessToken}
@@ -54,6 +50,7 @@ const Player = (props) => {
           sliderColor: "#F3DFC1",
         }}
       />
+      <button onClick={ handleAudioSync }>Sync Audio</button>
     </section>
   );
 };
