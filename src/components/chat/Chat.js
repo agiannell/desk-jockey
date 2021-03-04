@@ -32,7 +32,6 @@ const Chat = (props) => {
 
   // }, [id, socket])
 
-  // console.log(messages);
   return (
     <div className='chat-container'>
       <ScrollToBottom className='messages-container' debug={false}>

@@ -197,6 +197,19 @@
   background-color: #368F8B;
 }
 
+.auth-section h1 {
+  width: 400px;
+  margin: 0 25px;
+}
+
+.auth-section img {
+  height: 70%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
+  margin: 0 25px;
+}
+
 .nav-links {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -211,6 +224,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 75px;
 }
 
 .nav-links p {
@@ -237,6 +251,44 @@
   margin: 5px;
 }
 
+.dash-container {
+  min-height: calc(100vh - 64px);
+}
+
+.dash-container nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 470px;
+  height: 60px;
+  margin: 30px auto;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid #246A73;
+}
+
+.dash-container nav span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-transition: .2s ease-in-out;
+  transition: .2s ease-in-out;
+}
+
+.dash-container nav span:hover {
+  text-decoration: underline;
+  text-underline-offset: 10px;
+}
+
 .rooms-map {
   width: 80%;
   margin: 0 auto;
@@ -258,6 +310,13 @@
           box-sizing: border-box;
 }
 
+.highlight {
+  font-family: 'canada-type-gibson', sans-serif;
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 10px;
+}
+
 .room {
   background: -webkit-gradient(linear, left top, left bottom, from(#160F29), to(#246A73));
   background: linear-gradient(to bottom, #160F29, #246A73);
@@ -273,7 +332,7 @@
 }
 
 .room img {
-  height: 200px;
+  height: 150px;
   margin: 10px;
 }
 
@@ -327,6 +386,16 @@
 
 .room-title h1 {
   margin-right: 1rem;
+}
+
+.room-invite {
+  position: absolute;
+  left: 10px;
+}
+
+.room-invite input {
+  width: 250px;
+  margin: 0 10px;
 }
 
 .room-main {
@@ -401,7 +470,6 @@
           align-items: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  overflow-y: scroll;
 }
 
 .playlist-render {
@@ -805,6 +873,107 @@
   margin-top: 30px;
 }
 
+.contact-container {
+  height: calc(100vh - 62px);
+}
+
+.email-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: calc(100vh - 115px);
+}
+
+.email-form h1 {
+  margin-bottom: 20px;
+}
+
+.form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.form button {
+  margin: 0 auto;
+  width: 200px;
+  height: 40px;
+}
+
+.form-line input {
+  margin: 10px;
+  width: 300px;
+}
+
+.form-line textarea {
+  margin: 10px;
+  outline: none;
+  padding: 10px;
+  width: 620px;
+  height: 150px;
+  background: transparent;
+  border: 2px solid #368F8B;
+  border-radius: 5px;
+  color: #F3DFC1;
+  font-family: 'canada-type-gibson', sans-serif;
+  font-size: 1rem;
+  resize: none;
+  overflow: auto;
+}
+
+.form-line textarea::-webkit-input-placeholder {
+  color: #246A73;
+}
+
+.form-line textarea:-ms-input-placeholder {
+  color: #246A73;
+}
+
+.form-line textarea::-ms-input-placeholder {
+  color: #246A73;
+}
+
+.form-line textarea::placeholder {
+  color: #246A73;
+}
+
+.profile-container {
+  min-height: calc(100vh - 62px);
+}
+
+.profile-info {
+  margin: 30px 0;
+}
+
+.profile-info img {
+  height: 200px;
+  border-radius: 50%;
+  margin: 20px 0;
+}
+
 .App {
   text-align: center;
   color: #F3DFC1;
@@ -816,6 +985,10 @@
 .App a {
   text-decoration: none;
   color: #F3DFC1;
+}
+
+.App span {
+  font-family: 'canada-type-gibson', sans-serif;
 }
 
 .lighten {
@@ -835,6 +1008,7 @@ button {
   border-radius: 5px;
   -webkit-transition: .2s;
   transition: .2s;
+  outline: none;
 }
 
 button:hover {

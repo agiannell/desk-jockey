@@ -1,0 +1,14 @@
+.profile-container {
+    min-height: calc(100vh - 62px);
+}
+
+.profile-info {
+    // @include border(red);
+    margin: 30px 0;
+
+    img {
+        height: 200px;
+        border-radius: 50%;
+        margin: 20px 0;
+    }
+}
