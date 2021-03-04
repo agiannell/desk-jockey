@@ -96,14 +96,13 @@ const Header = (props) => {
     const url = 'https://www.spotify.com/logout'
     const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
     setTimeout(() => spotifyLogoutWindow.close(), 2000)
+    clearAccessToken()
+    clearLocalUser()
+    clearUser()
     axios.get('/api/logout')
       .then(() => {
-        clearAccessToken()
-        clearLocalUser()
-        clearUser()
-      }).then(() =>
         props.history.push('/')
-      )
+      })
       .catch(err => console.log(err));
 
   }
