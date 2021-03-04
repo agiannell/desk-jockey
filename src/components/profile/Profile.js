@@ -27,12 +27,14 @@ const Profile = (props) => {
 
   // console.log(props)
   return (
-    <div>
+    <div className='profile-container'>
       <Header />
-      <h3> Welcome {name} </h3>
-      <img src={profilePic ? profilePic : profile} alt='Default Profile Picture' />
+      <section className='profile-info'>
+        <h1> Welcome {name} </h1>
+        <img src={profilePic ? profilePic : profile} alt='Default Profile Picture' />
+      </section>
       <h1>My Rooms</h1>
-      <>
+      <section className='rooms-map'>
         {myRooms.map((e) => (
           <Rooms
             key={e.room_id}
@@ -41,7 +43,7 @@ const Profile = (props) => {
             roomPic={e.room_pic}
           />
         ))}
-      </>
+      </section>
     </div>
   )
 }

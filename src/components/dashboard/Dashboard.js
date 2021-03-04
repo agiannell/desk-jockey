@@ -49,7 +49,7 @@ const Dashboard = (props) => {
   }, [localUser])
 
   return (
-    <div>
+    <div className='dash-container'>
       { isCreating ? (
         <NewRoom
           setIsCreating={setIsCreating}
@@ -57,12 +57,12 @@ const Dashboard = (props) => {
       )
         : null
       }
-      { isLoading ? <Loading /> : null}
+      {/* { isLoading ? <Loading /> : null} */}
       <Header setIsCreating={setIsCreating} />
       <nav>
-        <button onClick={() => setRoomView("allrooms")}>All Rooms</button>
-        <button onClick={() => setRoomView("myrooms")}>My Rooms</button>
-        <button onClick={() => setRoomView("privaterooms")}>Private Rooms</button>
+        <span className={ roomView === 'allrooms' ? 'highlight' : null } onClick={() => setRoomView("allrooms")}>All Rooms</span>
+        <span className={ roomView === 'myrooms' ? 'highlight' : null } onClick={() => setRoomView("myrooms")}>My Rooms</span>
+        <span className={ roomView === 'privaterooms' ? 'highlight' : null } onClick={() => setRoomView("privaterooms")}>Private Rooms</span>
       </nav>
       {accessToken ? (
         <div className="map-container">

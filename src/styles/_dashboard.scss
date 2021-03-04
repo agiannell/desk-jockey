@@ -1,3 +1,30 @@
+.dash-container {
+    min-height: calc(100vh - 64px);
+
+    nav {
+        // @include border(red);
+        @include flex(space-around, row);
+        width: 470px;
+        height: 60px;
+        margin: 30px auto;
+        background: rgba(0,0,0,0.3);
+        border-radius: 10px;
+        border: 1px solid $secondary-color;
+
+        span {
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: .2s ease-in-out;
+
+            &:hover {
+                text-decoration: underline;
+                text-underline-offset: 10px;
+            }
+        }
+    }
+}
+
 .rooms-map {
     // border: 2px dotted red;
     width: 80%;
@@ -21,3 +48,10 @@
 //     border: 2px dotted blue;
 //     flex-grow: 2;
 // }
+
+.highlight {
+    font-family: 'canada-type-gibson', sans-serif;
+    font-weight: 900;
+    text-decoration: underline;
+    text-underline-offset: 10px;
+}

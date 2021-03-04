@@ -209,17 +209,20 @@ const Room = (props) => {
   console.log(initialTrUri);
   return (
     <div>
-      <input
-        value={email}
-        type="text"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={() => sendInvite()}>Send Invite</button>
       {console.log(props)}
       {accessToken ? (
         <>
           <Header />
           <section className='room-title'>
+            <section className='room-invite'>
+              <input
+                placeholder='Invite a Friend'
+                value={email}
+                type="text"
+                onChange={(e) => setEmail(e.target.value)}
+                />
+              <button onClick={() => sendInvite()}>Send Invite</button>
+            </section>
             <h1>{roomInfo.room_name}</h1>
             {isRoomAdmin ? <button onClick={handleDeleteRoom}>Delete Room</button> : null}
             {/* <button className='delete'>Delete Room</button> */}
@@ -256,6 +259,7 @@ const Room = (props) => {
             </section>
             <section className='room-column outer'>
               <h3>QUEUE</h3>
+              <section className='room-item-list'>
               {queue[0] ? (queue.map(tracks => (
                 <div key={tracks.trId} className='temp_name'>
                   <img src={tracks.trImg} height='40' />
@@ -264,9 +268,8 @@ const Room = (props) => {
                     <h6>{tracks.artist}</h6>
                   </section>
                 </div>
-
-
               ))) : null}
+              </section>
             </section>
           </section>
         </>

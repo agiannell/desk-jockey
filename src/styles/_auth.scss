@@ -74,4 +74,16 @@
             background-color: $btn-color;
         }
     }
+
+    h1 {
+        width: 400px;
+        margin: 0 25px;
+    }
+
+    img {
+        height: 70%;
+        border-radius: 10px;
+        box-shadow: 0 0 20px 5px rgba(0,0,0,0.5);
+        margin: 0 25px;
+    }
 }
