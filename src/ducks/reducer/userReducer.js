@@ -56,10 +56,10 @@ export function clearAccessToken() {
     }
 }
 
-export function setRoomUsers() {
+export function setRoomUsers(userObj) {
     return {
         type: SET_ROOM_USERS,
-        pyload: userObj
+        payload: userObj
     }
 }
 
