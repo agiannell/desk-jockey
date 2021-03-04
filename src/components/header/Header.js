@@ -98,11 +98,12 @@ const Header = (props) => {
     setTimeout(() => spotifyLogoutWindow.close(), 2000)
     axios.get('/api/logout')
       .then(() => {
+        clearAccessToken()
         clearLocalUser()
         clearUser()
-        clearAccessToken()
+      }).then(() =>
         props.history.push('/')
-      })
+      )
       .catch(err => console.log(err));
 
   }
