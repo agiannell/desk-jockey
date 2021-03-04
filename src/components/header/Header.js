@@ -50,35 +50,35 @@ const Header = (props) => {
               // console.log('axios-session-user', foundUser.data)
               return setLocalUser(foundUser.data);
             }
-            fetch(`https://api.spotify.com/v1/users/${data.id}/playlists`, {
-              headers: {
-                Authorization: "Bearer " + accessToken,
-                "Content-Type": "application/json",
-              },
-              method: "POST",
-              body: JSON.stringify({
-                name: "Desktop-Dj",
-                description:
-                  "This is the playlist where the songs you're listening to with friends will show up. Don't delete this playlist or we will have to make a new one for you to listen through!",
-                public: false,
-              }),
-              scope: "playlist-modify-public playlist-modify-private",
-            })
-              .then((res) => res.json())
-              .then((info) => {
-                // console.log(info);
-                axios
-                  .post("/api/user", {
-                    displayName: data.display_name,
-                    email: data.email,
-                    profilePic: data.images[0].url,
-                    playlist_uri: info.uri,
-                  })
-                  .then((response) => {
-                    setLocalUser(response.data);
-                  })
-                  .catch((err) => console.log(err));
-              });
+            // fetch(`https://api.spotify.com/v1/users/${data.id}/playlists`, {
+            //   headers: {
+            //     Authorization: "Bearer " + accessToken,
+            //     "Content-Type": "application/json",
+            //   },
+            //   method: "POST",
+            //   body: JSON.stringify({
+            //     name: "Desktop-Dj",
+            //     description:
+            //       "This is the playlist where the songs you're listening to with friends will show up. Don't delete this playlist or we will have to make a new one for you to listen through!",
+            //     public: false,
+            //   }),
+            //   scope: "playlist-modify-public playlist-modify-private",
+            // })
+            //   .then((res) => res.json())
+            //   .then((info) => {
+            //     // console.log(info);
+            axios
+              .post("/api/user", {
+                displayName: data.display_name,
+                email: data.email,
+                profilePic: data.images[0].url,
+                // playlist_uri: info.uri,
+              })
+              .then((response) => {
+                setLocalUser(response.data);
+              })
+              .catch((err) => console.log(err));
+            // });
           });
         });
     }

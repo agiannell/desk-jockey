@@ -15,10 +15,9 @@ const s = new Spotify();
 const Room = (props) => {
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [showPlaylists, setShowPlaylists] = useState(false);
-  // const [desktopDjPL, setDesktopDjPL] = useState(null);
   const [roomInfo, setRoomInfo] = useState({});
   const [isRoomAdmin, setIsRoomAdmin] = useState(false);
-  const { user_id, playlist_uri, display_name } = props.localUser;
+  const { user_id, display_name } = props.localUser;
   const { id: room_id } = props.match.params;
   const { accessToken, user, localUser } = props;
   const [queue, setQueue] = useState([]);
@@ -51,65 +50,6 @@ const Room = (props) => {
       roomId: room_id,
       queue
     })
-
-    // if(!queue[0]) {
-    //   setInitialTrUri(trUri)
-    //   // setQueue([...queue , {trUri, trId,trName,artist,trImg}])
-    //   // s.queue(trUri)
-    //   socket.emit('queue', { 
-    //     trUri, 
-    //     trId, 
-    //     trName, 
-    //     artist, 
-    //     trImg, 
-    //     username: display_name, 
-    //     roomId: room_id 
-    //   })
-    // } else {
-    //   // setQueue([...queue , {trUri, trId,trName,artist,trImg}])
-    //   // s.queue(trUri)
-    //   socket.emit('queue', { 
-    //     trUri, 
-    //     trId, 
-    //     trName, 
-    //     artist, 
-    //     trImg, 
-    //     username: display_name, 
-    //     roomId: room_id 
-    //   })
-    // }
-
-
-    // fetch('https://api.spotify.com/v1/me/player/play', {
-    //   headers: { Authorization: "Bearer " + accessToken },
-    //   method: 'PUT',
-    //   body: JSON.stringify({ uris: trUri })
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //   console.log(data)
-    // })
-    // .catch(err => console.log('play error:', err))
-
-    // fetch('https://api.spotify.com/v1/me/player', {
-    //   headers: { Authorization: "Bearer " + accessToken },
-    // })
-    //   .then(device => device.json())
-    //   .then(data => {
-    //     console.log('playback data', data)
-    //   })
-
-    // s.getMyCurrentPlaybackState()
-    // .then(data => {
-    //     console.log('plybck state data', data.device);
-    // })
-
-    // if(queue.length === 1) {
-    //   console.log('queue test', queue);
-    //   setInitialTrUri(trUri);
-    // }
-    //     s.queue(trUri)
-    //   }
   }
 
   const handleDeleteRoom = () => {
@@ -119,13 +59,6 @@ const Room = (props) => {
       })
       .catch(err => console.log(err))
   }
-
-  // const sendMessage = e => {
-  //   e.preventDefault()
-
-  //   socket.emit('message', { socketUserId: user_id, username: display_name, message, roomId: id })
-  //   setMessage('')    
-  // }
 
   useEffect(() => {
     s.setAccessToken(accessToken)
@@ -165,12 +98,8 @@ const Room = (props) => {
           return [...q, { trUri, trId, trName, artist, trImg, username }]
         })
         s.queue(trUri)
-        console.log(`${trName} was added to the queue by ${username}`)
-        console.log('queue length', queue.length)
-        console.log('queue content', queue)
         if (queue.length === 0) {
           setInitialTrUri(trUri)
-          // console.log(tr)
         }
       })
     }
@@ -206,8 +135,6 @@ const Room = (props) => {
     }
   };
 
-
-  console.log(initialTrUri);
   return (
     <div>
       {accessToken ? (
@@ -225,7 +152,6 @@ const Room = (props) => {
             </section>
             <h1>{roomInfo.room_name}</h1>
             {isRoomAdmin ? <button onClick={handleDeleteRoom}>Delete Room</button> : null}
-            {/* <button className='delete'>Delete Room</button> */}
           </section>
           <section className='room-main'>
             <section className='room-column outer'>
