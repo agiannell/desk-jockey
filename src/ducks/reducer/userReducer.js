@@ -2,7 +2,7 @@ const initialState = {
     user: {},
     accessToken: null,
     localUser: {},
-    roomUsers: []
+    roomUsers: null
 }
 
 const SET_USER = 'SET_USER';

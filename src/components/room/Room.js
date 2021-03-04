@@ -8,7 +8,7 @@ import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
 import axios from 'axios'
 import Chat from '../chat/Chat'
-import { setRoomUsers } from '../../ducks/reducer/userReducer';
+// import { setRoomUsers } from '../../ducks/reducer/userReducer';
 
 const s = new Spotify();
 
@@ -27,7 +27,7 @@ const Room = (props) => {
   const [initialTrUri, setInitialTrUri] = useState('');
   const [socket, setSocket] = useState(null)
   const { id } = useParams()
-  // const [playbackInfo, setPlaybackInfo]
+  const [roomUsers, setRoomUsers] = useState([]);
 
   const getUserPlaylists = () => {
     fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
@@ -219,8 +219,8 @@ const mapStateToProps = (reduxState) => {
     user: reduxState.userReducer.user,
     accessToken: reduxState.userReducer.accessToken,
     localUser: reduxState.userReducer.localUser,
-    roomUsers: reduxState.userReducer.roomUsers
+    // roomUsers: reduxState.userReducer.roomUsers
   };
 };
 
-export default connect(mapStateToProps, { setRoomUsers })(Room);
+export default connect(mapStateToProps)(Room);
