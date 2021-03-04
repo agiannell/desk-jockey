@@ -108,7 +108,7 @@ const Header = (props) => {
   }
 
   // console.log('accessToken:', accessToken)
-  console.log('header-props:', props)
+  // console.log('header-props:', props)
   return (
     <div className='header-container'>
       {localUser ? (

@@ -8,7 +8,7 @@ import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
 import axios from 'axios'
 import Chat from '../chat/Chat'
-
+import { setRoomUsers } from '../../ducks/reducer/userReducer';
 
 const s = new Spotify();
 
@@ -19,7 +19,7 @@ const Room = (props) => {
   const [isRoomAdmin, setIsRoomAdmin] = useState(false);
   const { user_id, display_name } = props.localUser;
   const { id: room_id } = props.match.params;
-  const { accessToken, user, localUser } = props;
+  const { accessToken, user, localUser, roomUsers } = props;
   const [queue, setQueue] = useState([]);
   const [email, setEmail] = useState('');
   const [roomUrl, setRoomUrl] = useState('');
@@ -64,13 +64,6 @@ const Room = (props) => {
   useEffect(() => {
     s.setAccessToken(accessToken)
 
-    s.getMyCurrentPlaybackState()
-      .then(data => {
-        if (data) {
-          console.log('plybck state data', data.device);
-        }
-      })
-
     axios.get(`/api/room/${room_id}`)
       .then((res) => {
         setRoomInfo(res.data)
@@ -93,7 +86,8 @@ const Room = (props) => {
     } else {
       socket.on('user-joined', ({ username }) => {
         console.log(`${username} has joined the chat`)
-        // console.log(queue)
+        setRoomUsers({ username, accessToken })
+        console.log('Room Users:', roomUsers)
         // setQueue(q => [...q, queue])
       })
       socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, queue }) => {
@@ -113,7 +107,7 @@ const Room = (props) => {
   }, [socket])
 
   useEffect(() => {
-    if (socket) { socket.emit('join-room', { roomId: id, username: display_name }) }
+    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken }) }
   }, [id, socket])
 
   useEffect(() => {
@@ -142,6 +136,7 @@ const Room = (props) => {
     s.getMyCurrentPlaybackState()
       .then(data => {
         console.log(data)
+        socket.emit('playback-info', { progress: data.progress_ms, trUri: data.item.uri })
       })
   }
 
@@ -221,11 +216,9 @@ const mapStateToProps = (reduxState) => {
   return {
     user: reduxState.userReducer.user,
     accessToken: reduxState.userReducer.accessToken,
-    localUser: reduxState.userReducer.localUser
+    localUser: reduxState.userReducer.localUser,
+    roomUsers: reduxState.userReducer.roomUsers
   };
 };
 
-
-
-
-export default connect(mapStateToProps)(Room);
+export default connect(mapStateToProps, { setRoomUsers })(Room);
