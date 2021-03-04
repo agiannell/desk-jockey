@@ -27,6 +27,7 @@ const Room = (props) => {
   const [initialTrUri, setInitialTrUri] = useState('');
   const [socket, setSocket] = useState(null)
   const { id } = useParams()
+  // const [playbackInfo, setPlaybackInfo]
 
   const getUserPlaylists = () => {
     fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
@@ -90,8 +91,10 @@ const Room = (props) => {
     if (!socket) {
       setSocket(io.connect(process.env.REACT_APP_SOCKET_ENDPOINT))
     } else {
-      socket.on('user-joined', ({ username }) => {
+      socket.on('user-joined', ({ username, queue }) => {
         console.log(`${username} has joined the chat`)
+        console.log(queue)
+        setQueue(q => [...q, queue])
       })
       socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, queue }) => {
         setQueue(q => {
@@ -110,7 +113,7 @@ const Room = (props) => {
   }, [socket])
 
   useEffect(() => {
-    if (socket) { socket.emit('join-room', { roomId: id, username: display_name }) }
+    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, queue }) }
   }, [id, socket])
 
   useEffect(() => {
@@ -134,6 +137,13 @@ const Room = (props) => {
         .catch((err) => console.log(err));
     }
   };
+
+  const getInfo = () => {
+    s.getMyCurrentPlaybackState()
+      .then(data => {
+        console.log(data)
+      })
+  }
 
   return (
     <div>
@@ -174,9 +184,11 @@ const Room = (props) => {
             </section>
             <section className='room-column inner'>
               <section className='room-player'>
+                <button onClick={ getInfo }>Get Info</button>
                 <Player
                   queue={queue}
-                  initialTrUri={initialTrUri} />
+                  initialTrUri={initialTrUri}
+                  socket={ socket } />
               </section>
               <Chat
                 username={display_name}
