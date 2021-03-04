@@ -85,11 +85,12 @@ const Room = (props) => {
       setSocket(io.connect(process.env.REACT_APP_SOCKET_ENDPOINT))
     } else {
       socket.on('user-joined', ({ username, accessToken, roomUsers }) => {
+        console.log('in socket', socket);
         console.log(`${username} has joined the chat`)
+        console.log('socket access token', accessToken)
         setRoomUsers(r => {
           return [...r, { username, accessToken }]
         })
-        console.log('Room Users:', roomUsers)
         // setQueue(q => [...q, queue])
       })
       socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, queue }) => {
@@ -141,7 +142,8 @@ const Room = (props) => {
         socket.emit('playback-info', { progress: data.progress_ms, trUri: data.item.uri })
       })
   }
-
+  console.log('Room Users:', roomUsers)
+  console.log('pre-return socket', socket);
   return (
     <div>
       {accessToken ? (
