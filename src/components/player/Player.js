@@ -5,10 +5,10 @@ var Spotify = require("spotify-web-api-js");
 var s = new Spotify();
 
 const Player = (props) => {
-  const { accessToken, queue, user, localUser, initialTrUri } = props; 
+  const { accessToken, queue, user, localUser, initialTrUri } = props;
   const [deviceId, setDeviceId] = useState('');
   // const [playerQueue, setPlayerQueue] = useState([]);
-  
+
   useEffect(() => {
     if (accessToken) {
       s.setAccessToken(accessToken)
@@ -17,15 +17,14 @@ const Player = (props) => {
 
   useEffect(() => {
     queue.map((e, i) => {
-      if(i === 0) {
-        return s.play({deviceId, uris: e.trUri})
+      if (i === 0) {
+        return s.play({ deviceId, uris: e.trUri })
       } else {
         return s.queue(e.trUri);
       }
     })
   }, [deviceId])
 
-  console.log(queue)
   return (
     <section>
       <SpotifyPlayer
@@ -37,9 +36,9 @@ const Player = (props) => {
         //   }
         // }}
         className="player"
-        name="Desktop DJ Player"
+        name="DeskJockey Player"
         token={accessToken}
-        uris={ initialTrUri }
+        uris={initialTrUri}
         syncExternalDevice='true'
         persistDeviceSelection='true'
         // autoPlay={ false }
