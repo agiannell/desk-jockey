@@ -167,11 +167,6 @@ const NewRoom = (props) => {
         </section>
         <button id='create-room-btn' onClick={() => handleCreateRoom()}>Create Room</button>
       </form>
-      <section className='new-room-invite'>
-        <h2>Invite your friends to listen!</h2>
-        <input id='invite-input' placeholder="Enter email address" />
-        <button id='invite-btn'>Add</button>
-      </section>
     </div>
   );
 };

@@ -170,6 +170,7 @@ const Room = (props) => {
         console.log('queue content', queue)
         if (queue.length === 0) {
           setInitialTrUri(trUri)
+          // console.log(tr)
         }
       })
     }
@@ -209,7 +210,6 @@ const Room = (props) => {
   console.log(initialTrUri);
   return (
     <div>
-      {console.log(props)}
       {accessToken ? (
         <>
           <Header />
@@ -220,7 +220,7 @@ const Room = (props) => {
                 value={email}
                 type="text"
                 onChange={(e) => setEmail(e.target.value)}
-                />
+              />
               <button onClick={() => sendInvite()}>Send Invite</button>
             </section>
             <h1>{roomInfo.room_name}</h1>
@@ -260,15 +260,15 @@ const Room = (props) => {
             <section className='room-column outer'>
               <h3>QUEUE</h3>
               <section className='room-item-list'>
-              {queue[0] ? (queue.map(tracks => (
-                <div key={tracks.trId} className='temp_name'>
-                  <img src={tracks.trImg} height='40' />
-                  <section>
-                    <h5>{tracks.trName}</h5>
-                    <h6>{tracks.artist}</h6>
-                  </section>
-                </div>
-              ))) : null}
+                {queue[0] ? (queue.map(tracks => (
+                  <div key={tracks.trId} className='temp_name'>
+                    <img src={tracks.trImg} height='40' />
+                    <section>
+                      <h5>{tracks.trName}</h5>
+                      <h6>{tracks.artist}</h6>
+                    </section>
+                  </div>
+                ))) : null}
               </section>
             </section>
           </section>

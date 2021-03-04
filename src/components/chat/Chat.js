@@ -14,7 +14,7 @@ const Chat = (props) => {
     e.preventDefault()
 
     socket.emit('message', { socketUserId: userId, username, message, roomId: id })
-    setMessage('')    
+    setMessage('')
   }
 
   useEffect(() => {
@@ -32,18 +32,17 @@ const Chat = (props) => {
 
   // }, [id, socket])
 
-  console.log(messages);
   return (
     <div className='chat-container'>
-      <ScrollToBottom className='messages-container' debug={ false }>
+      <ScrollToBottom className='messages-container' debug={false}>
         {messages.map((el, id) => (
           <Messages
-            key={ id }
-            socketUserId={ el.socketUserId }
-            userId={ userId }
-            message={ el.message }
-            username={ el.username }
-             />
+            key={id}
+            socketUserId={el.socketUserId}
+            userId={userId}
+            message={el.message}
+            username={el.username}
+          />
 
           // <section className={el.socketUserId === userId ? 'chat-message local-user' : 'chat-message'} key={ id }>
           //   <h3>{ReactEmoji.emojify(el.message)}</h3>
@@ -52,11 +51,11 @@ const Chat = (props) => {
         ))}
       </ScrollToBottom>
       <form>
-        <input 
-          onChange={ e => setMessage(e.target.value) } 
+        <input
+          onChange={e => setMessage(e.target.value)}
           value={message}
           placeholder='Your Message...' />
-        <button onClick={ e => sendMessage(e) }><RiSendPlaneFill size='1.5rem' /></button>
+        <button onClick={e => sendMessage(e)}><RiSendPlaneFill size='1.5rem' /></button>
       </form>
     </div>
   )
