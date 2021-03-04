@@ -1,10 +1,20 @@
 .room-title {
-    // @include border(red);
-    @include flex(center, row);
+// @include border(red);
+@include flex(center, row);
     padding: 2rem 0;
 
     h1 {
         margin-right: 1rem;
+    }
+}
+
+.room-invite {
+    position: absolute;
+    left: 10px;
+    
+    input {
+        width: 250px;
+        margin: 0 10px;
     }
 }
 
@@ -62,5 +72,4 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    overflow-y: scroll;
 }

@@ -36,52 +36,48 @@ const Contact = (props) => {
   };
 
   return (
-    <div>
+    <div className='contact-container'>
       <Header />
       <section className="email-form">
+        <h1>Contact Us</h1>
         <form className="form">
-          <section id="name-input">
-            <label for="firstname">First Name: </label>
+          <section className="form-line">
             <input
+              placeholder='First Name'
               value={firstName}
               type="text"
               onChange={(e) => setFirstName(e.target.value)}
             />
-            <label for="lastname">Last Name: </label>
             <input
+              placeholder='Last Name'
               value={lastName}
               type="text"
               onChange={(e) => setLastName(e.target.value)}
             />
           </section>
-          <section id="email-subject">
-            <label for="email">Email: </label>
+          <section className="form-line">
             <input
+              placeholder='Email Address'
               value={email}
               type="text"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label id="subject" for="subject">
-              Subject:{" "}
-            </label>
             <input
+              placeholder='Subject'
               value={subject}
               type="text"
               onChange={(e) => setSubject(e.target.value)}
             />
           </section>
-          <section id="message-area">
-            <label for="message" id="message-header">
-              Message:{" "}
-            </label>
+          <section className="form-line">
             <textarea
+              placeholder="What's on your mind?"
               value={message}
-              id="message"
               type="text"
               onChange={(e) => setMessage(e.target.value)}
             ></textarea>
-            <button onClick={() => sendEmail()}>Send Message</button>
           </section>
+          <button onClick={() => sendEmail()}>Send Message</button>
         </form>
       </section>
     </div>

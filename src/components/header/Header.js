@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { Link, withRouter } from "react-router-dom";
-import './Header.css'
 import { connect } from 'react-redux';
 import {
   clearUser,
@@ -109,21 +108,20 @@ const Header = (props) => {
   }
 
   // console.log('accessToken:', accessToken)
-  // console.log('header-props:', props)
+  console.log('header-props:', props)
   return (
     <div className='header-container'>
       {localUser ? (
         <div className='nav-links'>
-          <p onClick={() => setIsCreating(true)}>+ Create Room</p>
-          <Link to='/Dash' >Dashboard</Link>
-          <Link to='/Contact' >Contact</Link>
+          { props.location.pathname === '/Dash' ? <button onClick={() => setIsCreating(true)}>+ Create Room</button> : null }
+          { props.location.pathname !== '/Dash' ? <Link to='/Dash' >Dashboard</Link> : null }
+          { props.location.pathname !== '/Contact' ? <Link to='/Contact' >Contact</Link> : null }
           <Link to='/Profile' >
             <div className='profile'>
               <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />
               <h6>{localUser.display_name}</h6>
             </div>
           </Link>
-          <Link to='/' >Sign In</Link>
           <button onClick={handleLogout}>Logout</button>
 
         </div>

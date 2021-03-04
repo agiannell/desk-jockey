@@ -1,8 +1,10 @@
 .nav-links {
+  // @include border(red);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    height: 75px;
 
     p {
       cursor: pointer;

@@ -4,6 +4,8 @@ import stackedLogo from '../../assets/img/logos/logo-stacked-white.svg';
 import { FaSpotify } from 'react-icons/fa';
 import axios from 'axios';
 import { setAccessToken } from '../../ducks/reducer/userReducer'
+import roomView from '../../assets/img/room-view.png';
+import createRoom from '../../assets/img/create-room.png';
 
 const Auth = props => {
 
@@ -34,9 +36,14 @@ const Auth = props => {
           </section>
         </section>
       </section>
-      <section className="auth-section">Section 1 Content</section>
-      <section className="auth-section lighten">Section 2 Content</section>
-      <section className="auth-section">Section 3 Content</section>
+      <section className="auth-section lighten">
+        <h1>Listen to music with your Friends!</h1>
+        <img src={ roomView } alt='room view' />
+      </section>
+      <section className="auth-section">
+        <img src={ createRoom } alt='create view' />
+        <h1>Create rooms to customize your experience!</h1>
+      </section>
       <section className="auth-section lighten">
         <a href="https://deskjockey.us/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
       </section>
