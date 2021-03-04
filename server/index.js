@@ -53,7 +53,7 @@ massive({
     });
     socket.on("join-room", ({ roomId, username, accessToken, roomUsers }) => {
       socket.join(roomId);
-      console.log(socket.rooms);
+      console.log('socket rooms', socket.rooms);
       io.in(roomId).emit("user-joined", { username, accessToken, roomUsers });
     });
     socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
