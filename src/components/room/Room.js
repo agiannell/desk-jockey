@@ -170,6 +170,7 @@ const Room = (props) => {
         console.log('queue content', queue)
         if (queue.length === 0) {
           setInitialTrUri(trUri)
+          // console.log(tr)
         }
       })
     }
@@ -215,7 +216,7 @@ const Room = (props) => {
         onChange={(e) => setEmail(e.target.value)}
       />
       <button onClick={() => sendInvite()}>Send Invite</button>
-      {console.log(props)}
+      {/* {console.log(props)} */}
       {accessToken ? (
         <>
           <Header />
