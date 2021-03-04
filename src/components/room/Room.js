@@ -107,7 +107,7 @@ const Room = (props) => {
     return () => {
       if (socket) { socket.disconnect() }
     }
-  }, [socket])
+  }, [socket, roomUsers])
 
   useEffect(() => {
     if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken, roomUsers }) }
