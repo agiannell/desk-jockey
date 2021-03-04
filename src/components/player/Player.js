@@ -9,7 +9,7 @@ const Player = (props) => {
   const [progress, setProgress] = useState(null);
 
   const handleAudioSync = (progress) => {
-    console.log(progress)
+    // console.log(progress)
     socket.emit('audio-sync', { progress })
   }
   
@@ -20,17 +20,17 @@ const Player = (props) => {
   }, [accessToken]);
 
   useEffect(() => {
-    console.log(progress)
+    // console.log(progress)
   }, [progress])
 
   return (
     <section>
       <SpotifyPlayer
-        callback={state => {
-          console.log(state);
-          setProgress(state.progressMs)
-          handleAudioSync(state.progressMs);
-        }}
+        // callback={state => {
+        //   console.log(state);
+        //   setProgress(state.progressMs)
+        //   handleAudioSync(state.progressMs);
+        // }}
         className="player"
         name="DeskJockey Player"
         token={accessToken}

@@ -2,6 +2,7 @@ const initialState = {
     user: {},
     accessToken: null,
     localUser: {},
+    roomUsers: []
 }
 
 const SET_USER = 'SET_USER';
@@ -10,6 +11,7 @@ const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 const CLEAR_ACCESS_TOKEN = 'CLEAR_ACCESS_TOKEN';
 const SET_LOCAL_USER = 'SET_LOCAL_USER';
 const CLEAR_LOCAL_USER = 'CLEAR_LOCAL_USER';
+const SET_ROOM_USERS = 'SET_ROOM_USERS';
 
 
 export function setUser(userObj) {
@@ -54,6 +56,13 @@ export function clearAccessToken() {
     }
 }
 
+export function setRoomUsers() {
+    return {
+        type: SET_ROOM_USERS,
+        pyload: userObj
+    }
+}
+
 export default function reducer(state = initialState, action) {
     const { type, payload } = action;
     // console.log('payload:',payload)
@@ -71,6 +80,8 @@ export default function reducer(state = initialState, action) {
             return { ...state, user: payload }
         case CLEAR_LOCAL_USER:
             return { ...state, localUser: payload }
+        case SET_ROOM_USERS:
+            return { ...state, roomUsers: payload }
         default:
             return state
     }
