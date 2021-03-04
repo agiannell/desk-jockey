@@ -101,10 +101,10 @@ const Header = (props) => {
         clearLocalUser()
         clearUser()
         clearAccessToken()
+        props.history.push('/')
       })
       .catch(err => console.log(err));
 
-    props.history.push('/')
   }
 
   // console.log('accessToken:', accessToken)
@@ -113,9 +113,9 @@ const Header = (props) => {
     <div className='header-container'>
       {localUser ? (
         <div className='nav-links'>
-          { props.location.pathname === '/Dash' ? <button onClick={() => setIsCreating(true)}>+ Create Room</button> : null }
-          { props.location.pathname !== '/Dash' ? <Link to='/Dash' >Dashboard</Link> : null }
-          { props.location.pathname !== '/Contact' ? <Link to='/Contact' >Contact</Link> : null }
+          { props.location.pathname === '/Dash' ? <button onClick={() => setIsCreating(true)}>+ Create Room</button> : null}
+          { props.location.pathname !== '/Dash' ? <Link to='/Dash' >Dashboard</Link> : null}
+          { props.location.pathname !== '/Contact' ? <Link to='/Contact' >Contact</Link> : null}
           <Link to='/Profile' >
             <div className='profile'>
               <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />
