@@ -30,12 +30,12 @@ module.exports = {
         res.status(200).send(req.session.user)
     },
     getUser: (req, res) => {
-        if(!req.session.user) {
+        if (!req.session.user) {
             return res.status(404).redirect('/')
         }
         return res.status(200).send(req.session.user)
     },
-    logout: (req, res) => {
+    logout: async (req, res) => {
         req.session.destroy()
         res.sendStatus(200);
     }
