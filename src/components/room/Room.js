@@ -19,7 +19,7 @@ const Room = (props) => {
   const [isRoomAdmin, setIsRoomAdmin] = useState(false);
   const { user_id, display_name } = props.localUser;
   const { id: room_id } = props.match.params;
-  const { accessToken, user, localUser, roomUsers } = props;
+  const { accessToken, user, localUser } = props;
   const [queue, setQueue] = useState([]);
   const [email, setEmail] = useState('');
   const [roomUrl, setRoomUrl] = useState('');
