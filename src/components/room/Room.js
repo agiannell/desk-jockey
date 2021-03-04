@@ -84,9 +84,11 @@ const Room = (props) => {
     if (!socket) {
       setSocket(io.connect(process.env.REACT_APP_SOCKET_ENDPOINT))
     } else {
-      socket.on('user-joined', ({ username }) => {
+      socket.on('user-joined', ({ username, accessToken, roomUsers }) => {
         console.log(`${username} has joined the chat`)
-        setRoomUsers({ username, accessToken })
+        setRoomUsers(r => {
+          return [...r, { username, accessToken }]
+        })
         console.log('Room Users:', roomUsers)
         // setQueue(q => [...q, queue])
       })
@@ -107,7 +109,7 @@ const Room = (props) => {
   }, [socket])
 
   useEffect(() => {
-    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken }) }
+    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken, roomUsers }) }
   }, [id, socket])
 
   useEffect(() => {
