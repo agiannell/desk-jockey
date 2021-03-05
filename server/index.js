@@ -7,6 +7,7 @@ const userCtrl = require("./controllers/userController");
 const roomCtrl = require("./controllers/roomController");
 const spotifyCtrl = require("./controllers/spotifyController");
 const emailCtrl = require("./controllers/emailController");
+const socketCtrl = require("./controllers/socketController");
 const aws = require("aws-sdk");
 const {
   SERVER_PORT,
