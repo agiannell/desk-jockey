@@ -54,7 +54,7 @@ massive({
       io.in(roomId).emit("message", { socketUserId, username, message })
     });
 
-    socket.on("join-room", ({ roomId, username, accessToken, roomUsers }) => {
+    socket.on("join-room", ({ roomId, username, accessToken }) => {
       socket.join(roomId);
       console.log('socket rooms', socket.rooms);
       const roomUser = socketCtrl.addUser({ socketId: socket.id, roomId, username, accessToken })
