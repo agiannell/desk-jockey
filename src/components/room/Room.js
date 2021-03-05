@@ -116,7 +116,7 @@ const Room = (props) => {
         console.log('sync data:', data)
         s.play({
           uris: data.item.uri,
-          progress_ms: data.progress_ms
+          position_ms: data.progress_ms
         })
       })
     }
