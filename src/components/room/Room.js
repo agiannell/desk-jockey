@@ -222,9 +222,13 @@ const Room = (props) => {
                 {queue[0] ? (queue.map(tracks => (
                   <div key={tracks.trId} className='temp_name'>
                     <img src={tracks.trImg} height='40' />
-                    <section>
+                    <section className='room-track-titles'>
                       <h5>{tracks.trName}</h5>
                       <h6>{tracks.artist}</h6>
+                    </section>
+                    <section className='added-by'>
+                      <h6>Added by:</h6>
+                      <h6>{ tracks.username }</h6>
                     </section>
                   </div>
                 ))) : null}
