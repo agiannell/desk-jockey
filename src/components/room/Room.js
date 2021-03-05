@@ -86,12 +86,12 @@ const Room = (props) => {
       socket.on('user-joined', ({ username, roomUsers, roomQueue }) => {
         console.log(`${username} has joined the chat`)
         setRoomUsers(r => [...r, roomUsers])
-        setQueue(q => [...q, roomQueue])
+        setQueue(roomQueue)
       })
       socket.on('queue', ({track, roomQueue}) => {
         console.log('track', track)
         console.log('room queue', roomQueue)
-        setQueue(q => [...q, roomQueue])
+        setQueue(roomQueue)
         s.queue(track.trUri)
         if (queue.length === 0) {
           setInitialTrUri(track.trUri)
