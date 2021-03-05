@@ -160,7 +160,7 @@ const Room = (props) => {
   }
 
   const handleSync = () => {
-    socket.emit('request', { receiver: roomUsers[0][0].socketId, roomId, sender: socket.id })
+    socket.emit('request', { receiver: roomUsers[0][0].socketId, sender: socket.id })
   }
 
   console.log('Room Users:', roomUsers)

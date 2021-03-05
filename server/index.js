@@ -67,9 +67,9 @@ massive({
       io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username, queue })
     })
 
-    socket.on('request', ({ receiver, roomId, sender }) => {
+    socket.on('request', ({ receiver, sender }) => {
 
-      io.to(receiver).emit('request', { sender })
+      io.to(receiver).emit('request', sender)
     })
 
     socket.on('sync', ({ data, sender }) => {
