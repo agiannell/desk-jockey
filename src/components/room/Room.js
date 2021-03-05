@@ -48,8 +48,7 @@ const Room = (props) => {
       artist,
       trImg,
       username: display_name,
-      roomId: room_id,
-      queue
+      roomId: room_id
     })
   }
 
@@ -84,22 +83,16 @@ const Room = (props) => {
     if (!socket) {
       setSocket(io.connect(process.env.REACT_APP_SOCKET_ENDPOINT))
     } else {
-      socket.on('user-joined', ({ username, accessToken, roomUsers }) => {
-        console.log('in socket', socket);
+      socket.on('user-joined', ({ username, roomUsers, roomQueue }) => {
         console.log(`${username} has joined the chat`)
-        console.log('socket access token', accessToken)
-        setRoomUsers(r => {
-          return [...r, roomUsers]
-        })
-        // setQueue(q => [...q, queue])
+        setRoomUsers(r => [...r, roomUsers])
+        setQueue(q => [...q, roomQueue])
       })
-      socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, queue }) => {
-        setQueue(q => {
-          return [...q, { trUri, trId, trName, artist, trImg, username }]
-        })
-        s.queue(trUri)
+      socket.on('queue', ({track, roomQueue}) => {
+        setQueue(q => [...q, roomQueue])
+        s.queue(track.trUri)
         if (queue.length === 0) {
-          setInitialTrUri(trUri)
+          setInitialTrUri(track.trUri)
         }
       })
 
@@ -127,7 +120,7 @@ const Room = (props) => {
   }, [socket])
 
   useEffect(() => {
-    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken, roomUsers }) }
+    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken }) }
   }, [id, socket])
 
   useEffect(() => {

@@ -1,4 +1,6 @@
-const users = [];
+const users = [],
+      queue = [];
+
 
 module.exports = {
   addUser: ({ socketId, roomId, username, accessToken }) => {
@@ -25,5 +27,12 @@ module.exports = {
   },
   getRoomUsers: (roomId) => {
     return users.filter(user => user.roomId === roomId)
-  }
+  },
+  addToQueue: ({ trUri, trId, trName, artist, trImg, username, roomId }) => {
+      const track = { trUri, trId, trName, artist, trImg, username, roomId }
+      queue.push(queue)
+
+      return { track }
+  },
+  getRoomQueue: (roomId) => queue.filter(q => q.roomId === roomId)
 } 
