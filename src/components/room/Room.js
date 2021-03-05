@@ -132,7 +132,7 @@ const Room = (props) => {
   }, [localUser])
 
   useEffect(() => {
-    if(queue) {
+    if(queue[0]) {
       setInitialTrUri(queue[0].trUri)
     }
   }, [queue])
