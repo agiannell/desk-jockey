@@ -50,7 +50,6 @@ const Player = (props) => {
           sliderColor: "#F3DFC1",
         }}
       />
-      <button onClick={ handleAudioSync }>Sync Audio</button>
     </section>
   );
 };
