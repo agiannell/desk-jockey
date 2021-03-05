@@ -47,9 +47,6 @@ massive({
 
   io.on("connection", (socket) => {
     console.log(`Socket ${socket.id} connected`);
-    socket.on("disconnect", () => {
-      console.log(`Socket ${socket.id} disconnected`);
-    });
     socket.on("message", ({ socketUserId, username, message, roomId }) => {
       io.in(roomId).emit("message", { socketUserId, username, message })
     });
@@ -60,6 +57,11 @@ massive({
       const roomUser = socketCtrl.addUser({ socketId: socket.id, roomId, username, accessToken })
       const roomUsers = socketCtrl.getRoomUsers(roomId)
       io.in(roomId).emit("user-joined", { username, accessToken, roomUsers });
+    });
+
+    socket.on("disconnect", () => {
+      socketCtrl.removeUser(roomId)
+      console.log(`Socket ${socket.id} disconnected`);
     });
 
     socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
