@@ -32,7 +32,7 @@ module.exports = {
       const track = { trUri, trId, trName, artist, trImg, username, roomId }
       queue.push(track)
 
-      return { track }
+      return track
   },
   getRoomQueue: (roomId) => {
       return queue.filter(q => q.roomId === roomId)
