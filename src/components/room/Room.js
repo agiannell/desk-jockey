@@ -90,7 +90,7 @@ const Room = (props) => {
         setQueue(roomQueue)
       })
       socket.on('queue', ({track, roomQueue, queue}) => {
-        console.log('track uri', track.trUri)
+        console.log('track uri', track.track.trUri)
         console.log('room queue', roomQueue)
         setQueue(roomQueue)
         s.queue({ uri: track.trUri })
