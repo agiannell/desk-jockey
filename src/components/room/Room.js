@@ -104,7 +104,7 @@ const Room = (props) => {
       })
 
       socket.on('request', (sender) => {
-        // console.log(pizza)
+        console.log('request sender:', sender)
         s.getMyCurrentPlaybackState()
           .then(data => {
             console.log(data)
@@ -113,6 +113,7 @@ const Room = (props) => {
       })
 
       socket.on('sync', (data) => {
+        console.log('sync data:', data)
         s.play({
           uris: data.item.uri,
           progress_ms: data.progress_ms
@@ -151,19 +152,20 @@ const Room = (props) => {
     }
   };
 
-  const getInfo = () => {
-    s.getMyCurrentPlaybackState()
-      .then(data => {
-        console.log(data)
-        socket.emit('playback-info', { progress: data.progress_ms, trUri: data.item.uri })
-      })
-  }
+  // const getInfo = () => {
+  //   s.getMyCurrentPlaybackState()
+  //     .then(data => {
+  //       console.log(data)
+  //       socket.emit('playback-info', { progress: data.progress_ms, trUri: data.item.uri })
+  //     })
+  // }
 
   const handleSync = () => {
     socket.emit('request', { receiver: roomUsers[0][0].socketId, sender: socket.id })
+    console.log('receiver', roomUsers[0][0].socketId, 'sender:', socket.id)
   }
 
-  console.log('Room Users:', roomUsers)
+  // console.log('Room Users:', roomUsers)
   // console.log('pre-return socket', socket);
   return (
     <div>
