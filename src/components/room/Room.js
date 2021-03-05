@@ -102,13 +102,14 @@ const Room = (props) => {
           setInitialTrUri(trUri)
         }
       })
-      socket.on('request', (pizza) => {
-        console.log(pizza)
-        // s.getMyCurrentPlaybackState()
-        //   .then(data => {
-        //     console.log(data)
-        //     io.to(socketId).emit('sync', { data })
-        //   })
+
+      socket.on('request', (sender) => {
+        // console.log(pizza)
+        s.getMyCurrentPlaybackState()
+          .then(data => {
+            console.log(data)
+            socket.emit('sync', { data, sender })
+          })
       })
 
       socket.on('sync', (data) => {
@@ -159,7 +160,7 @@ const Room = (props) => {
   }
 
   const handleSync = () => {
-    io.to(roomUsers[0][0].socketId).emit('request', 'this hits')
+    socket.emit('request', { receiver: roomUsers[0][0].socketId, roomId, sender: socket.id })
   }
 
   console.log('Room Users:', roomUsers)
