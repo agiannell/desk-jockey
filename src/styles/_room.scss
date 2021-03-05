@@ -73,5 +73,9 @@
 }
 
 .room-player {
-    @include flex(space-between, row);
+    @include flex(flex-start, row);
+
+    button {
+        margin-right: 10px;
+    }
 }

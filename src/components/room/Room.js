@@ -94,16 +94,13 @@ const Room = (props) => {
         console.log('room queue', roomQueue)
         setQueue(roomQueue)
         s.queue(track.trUri)
-        if (queue.length === 0) {
-          setInitialTrUri(track.trUri)
-        }
       })
 
       socket.on('request', (sender) => {
-        console.log('request sender:', sender)
+        // console.log('request sender:', sender)
         s.getMyCurrentPlaybackState()
           .then(data => {
-            console.log(data)
+            // console.log(data)
             socket.emit('sync', { data, sender })
           })
       })
@@ -133,6 +130,12 @@ const Room = (props) => {
     }
 
   }, [localUser])
+
+  useEffect(() => {
+    if(queue) {
+      setInitialTrUri(queue[0].trUri)
+    }
+  }, [queue])
 
   const sendInvite = () => {
     if (email === '') {
