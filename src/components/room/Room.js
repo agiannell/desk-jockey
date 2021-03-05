@@ -115,7 +115,7 @@ const Room = (props) => {
       socket.on('sync', (data) => {
         console.log('sync data:', data)
         s.play({
-          uris: data.item.uri,
+          uris: [data.item.uri],
           position_ms: data.progress_ms
         })
       })
