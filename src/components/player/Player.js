@@ -47,8 +47,7 @@ const Player = (props) => {
           loaderColor: "#246A73",
           activeColor: "red",
           sliderHandleColor: "#F3DFC1",
-          sliderColor: "#F3DFC1",
-          width: '100%'
+          sliderColor: "#F3DFC1"
         }}
       />
     </section>
