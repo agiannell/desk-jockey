@@ -89,6 +89,8 @@ const Room = (props) => {
         setQueue(q => [...q, roomQueue])
       })
       socket.on('queue', ({track, roomQueue}) => {
+        console.log('track', track)
+        console.log('room queue', roomQueue)
         setQueue(q => [...q, roomQueue])
         s.queue(track.trUri)
         if (queue.length === 0) {
@@ -159,7 +161,7 @@ const Room = (props) => {
   }
 
   // console.log('Room Users:', roomUsers)
-  // console.log('pre-return socket', socket);
+  console.log('local queue', queue);
   return (
     <div>
       {accessToken ? (
