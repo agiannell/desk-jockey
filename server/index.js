@@ -7,7 +7,6 @@ const userCtrl = require("./controllers/userController");
 const roomCtrl = require("./controllers/roomController");
 const spotifyCtrl = require("./controllers/spotifyController");
 const emailCtrl = require("./controllers/emailController");
-const socketCtrl = require('./controllers/socketController');
 const aws = require("aws-sdk");
 const {
   SERVER_PORT,
@@ -47,9 +46,7 @@ massive({
   io.on("connection", (socket) => {
     console.log(`Socket ${socket.id} connected`);
     socket.on("disconnect", () => {
-    console.log(`Socket ${socket.id} disconnected`);
-    const roomUsersArr = [];
-
+      console.log(`Socket ${socket.id} disconnected`);
     });
     socket.on("message", ({ socketUserId, username, message, roomId }) => {
       io.in(roomId).emit("message", { socketUserId, username, message })
