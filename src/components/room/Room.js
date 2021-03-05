@@ -102,6 +102,20 @@ const Room = (props) => {
           setInitialTrUri(trUri)
         }
       })
+      socket.on('request', ({ socketId }) => {
+        s.getMyCurrentPlaybackState()
+          .then(data => {
+            console.log(data)
+            io.to(socketId).emit('sync', { data })
+          })
+      })
+
+      socket.on('sync', (data) => {
+        s.play({
+          uris: data.item.uri,
+          progress_ms: data.progress_ms
+        })
+      })
     }
 
     return () => {
@@ -142,8 +156,13 @@ const Room = (props) => {
         socket.emit('playback-info', { progress: data.progress_ms, trUri: data.item.uri })
       })
   }
+
+  const handleSync = () => {
+    io.to(roomUsers[0][0].socketId).emit('request', { socketId: socket.id })
+  }
+
   console.log('Room Users:', roomUsers)
-  console.log('pre-return socket', socket);
+  // console.log('pre-return socket', socket);
   return (
     <div>
       {accessToken ? (
@@ -183,7 +202,7 @@ const Room = (props) => {
             </section>
             <section className='room-column inner'>
               <section className='room-player'>
-                <button onClick={getInfo}>Get Info</button>
+                <button onClick={handleSync}>Get Info</button>
                 <Player
                   queue={queue}
                   initialTrUri={initialTrUri}
