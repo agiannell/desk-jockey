@@ -367,6 +367,10 @@
   margin: 0 10px;
 }
 
+.room-container {
+  height: calc(100vh - 62px);
+}
+
 .room-title {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -479,17 +483,13 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-}
-
-.room-player button {
-  margin-right: 10px;
 }
 
 .playlist-render {
@@ -1002,6 +1002,10 @@
   height: 200px;
   border-radius: 50%;
   margin: 20px 0;
+}
+
+.player-container {
+  width: 75%;
 }
 
 .App {

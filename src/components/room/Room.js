@@ -167,7 +167,7 @@ const Room = (props) => {
   console.log('init uri', initialTrUri);
   console.log('local queue', queue);
   return (
-    <div>
+    <div className='room-container'>
       {accessToken ? (
         <>
           <Header />

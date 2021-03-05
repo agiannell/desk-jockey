@@ -1,3 +1,7 @@
+.room-container {
+    height: calc(100vh - 62px);
+}
+
 .room-title {
 // @include border(red);
 @include flex(center, row);
@@ -73,9 +77,5 @@
 }
 
 .room-player {
-    @include flex(flex-start, row);
-
-    button {
-        margin-right: 10px;
-    }
+    @include flex(space-between, row);
 }
