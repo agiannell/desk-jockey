@@ -17,7 +17,7 @@ module.exports = {
 
     return { user }
   },
-  removeUser: (socketId) => {
+  removeUser: ({ socketId }) => {
     const index = users.findIndex(user => user.socketId === socketId)
     if (index !== -1) {
       return users.splice(index, 1)[0];
