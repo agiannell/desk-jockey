@@ -24,7 +24,7 @@ const Player = (props) => {
   }, [progress])
 
   return (
-    <section>
+    <section className='player-container'>
       <SpotifyPlayer
         // callback={state => {
         //   console.log(state);
@@ -48,6 +48,7 @@ const Player = (props) => {
           activeColor: "red",
           sliderHandleColor: "#F3DFC1",
           sliderColor: "#F3DFC1",
+          width: '100%'
         }}
       />
     </section>
