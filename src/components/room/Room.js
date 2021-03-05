@@ -105,11 +105,7 @@ const Room = (props) => {
     }
 
     return () => {
-      if (socket) {
-        socket.emit('disconnect', { roomId: id })
-        // socket.disconnect
-        //   ()
-      }
+      if (socket) { socket.disconnect() }
     }
   }, [socket])
 
