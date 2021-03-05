@@ -44,6 +44,7 @@ massive({
     { cors: { origin: true } }
   );
   app.set("io", io);
+
   io.on("connection", (socket) => {
     console.log(`Socket ${socket.id} connected`);
     socket.on("disconnect", () => {
@@ -52,11 +53,15 @@ massive({
     socket.on("message", ({ socketUserId, username, message, roomId }) => {
       io.in(roomId).emit("message", { socketUserId, username, message })
     });
+
     socket.on("join-room", ({ roomId, username, accessToken, roomUsers }) => {
       socket.join(roomId);
       console.log('socket rooms', socket.rooms);
+      const roomUser = socketCtrl.addUser({ socketId: socket.id, roomId, username, accessToken })
+      const roomUsers = socketCtrl.getRoomUsers(roomId)
       io.in(roomId).emit("user-joined", { username, accessToken, roomUsers });
     });
+
     socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
       io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username, queue })
     })
