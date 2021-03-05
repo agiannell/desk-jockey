@@ -101,13 +101,11 @@ const Header = (props) => {
     setTimeout(() => spotifyLogoutWindow.close(), 1000)
     axios.get('/api/logout')
       .then(() => {
-        // (accessToken ? props.history.push('/') : props.history.push('/'))
+        (accessToken ? props.history.push('/') : props.history.push('/'))
       })
       .catch(err => console.log(err));
       
-      if(!accessToken) {
-        props.history.push('/');
-      }
+      
   }
 
   // console.log('accessToken:', accessToken)
