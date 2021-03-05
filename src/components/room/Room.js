@@ -93,7 +93,7 @@ const Room = (props) => {
         console.log('track uri', track.track.trUri)
         console.log('room queue', roomQueue)
         setQueue(roomQueue)
-        s.queue({ uri: track.trUri })
+        s.queue({ uri: track.track.trUri })
         if (queue.length === 0) {
           setInitialTrUri(track.trUri)
         }
