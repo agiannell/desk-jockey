@@ -1,3 +1,7 @@
+.room-container {
+    height: calc(100vh - 62px);
+}
+
 .room-title {
 // @include border(red);
 @include flex(center, row);
@@ -20,7 +24,7 @@
 
 .room-main {
     // @include border(cyan);
-    height: calc(100vh - 14.2rem);
+    height: calc(100vh - 15rem);
     @include flex(space-between, row);
 }
 
@@ -51,8 +55,6 @@
     }
 }
 
-
-
 .outer {
     width: 25%;
 }
@@ -67,9 +69,20 @@
 }
 
 .temp_name {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    @include flex(space-between, row)
+}
+
+.room-track-titles {
+    text-align: left;
+    margin: 0 10px;
+    width: 70%
+}
+
+.added-by {
+    text-align: right;
+    width: 20%;
+}
+
+.room-player {
+    @include flex(space-between, row);
 }

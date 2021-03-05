@@ -55,16 +55,19 @@ massive({
       io.in(roomId).emit("message", { socketUserId, username, message })
     });
 
-    socket.on("join-room", ({ roomId, username, accessToken }) => {
+    socket.on("join-room", ({ roomId, username, accessToken, queue }) => {
       socket.join(roomId);
       console.log('socket rooms', socket.rooms);
-      const roomUser = socketCtrl.addUser({ socketId: socket.id, roomId, username, accessToken })
+      socketCtrl.addUser({ socketId: socket.id, roomId, username, accessToken })
       const roomUsers = socketCtrl.getRoomUsers(roomId)
-      io.in(roomId).emit("user-joined", { username, accessToken, roomUsers });
+      const roomQueue = socketCtrl.getRoomQueue(roomId);
+      io.in(roomId).emit("user-joined", { username, roomUsers, roomQueue });
     });
 
     socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
-      io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username, queue })
+      const track = socketCtrl.addToQueue({ trUri, trId, trName, artist, trImg, username, roomId });
+      const roomQueue = socketCtrl.getRoomQueue(roomId);
+      io.in(roomId).emit('queue', {track, roomQueue, queue})
     })
 
     socket.on('request', ({ receiver, sender }) => {

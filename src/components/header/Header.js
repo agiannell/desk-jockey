@@ -100,15 +100,17 @@ const Header = (props) => {
       clearUser()
       const url = 'https://www.spotify.com/logout'
       const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
-      setTimeout(() => spotifyLogoutWindow.close(), 2000)
+      setTimeout(() => spotifyLogoutWindow.close(), 1000)
       axios.get('/api/logout')
         .then(() => {
-          (accessToken ? props.history.push('/') : props.history.push('/'))
+          // (accessToken ? props.history.push('/') : props.history.push('/'))
         })
         .catch(err => console.log(err));
-      count++
-    }
 
+      if (!accessToken) {
+        props.history.push('/');
+      }
+    }
   }
 
   // console.log('accessToken:', accessToken) 

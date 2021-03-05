@@ -367,6 +367,10 @@
   margin: 0 10px;
 }
 
+.room-container {
+  height: calc(100vh - 62px);
+}
+
 .room-title {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -399,7 +403,7 @@
 }
 
 .room-main {
-  height: calc(100vh - 14.2rem);
+  height: calc(100vh - 15rem);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -458,18 +462,43 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+}
+
+.room-track-titles {
+  text-align: left;
+  margin: 0 10px;
+  width: 70%;
+}
+
+.added-by {
+  text-align: right;
+  width: 20%;
+}
+
+.room-player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 .playlist-render {
@@ -616,7 +645,17 @@
 .messages-container {
   width: 100%;
   height: calc(100% - 50px);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 3px;
+  background: transparent;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: #246A73;
 }
 
 .chat-message {
@@ -972,6 +1011,10 @@
   height: 200px;
   border-radius: 50%;
   margin: 20px 0;
+}
+
+.player-container {
+  width: 85%;
 }
 
 .App {

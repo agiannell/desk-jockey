@@ -24,7 +24,7 @@ const Player = (props) => {
   }, [progress])
 
   return (
-    <section>
+    <section className='player-container'>
       <SpotifyPlayer
         // callback={state => {
         //   console.log(state);
@@ -47,10 +47,9 @@ const Player = (props) => {
           loaderColor: "#246A73",
           activeColor: "red",
           sliderHandleColor: "#F3DFC1",
-          sliderColor: "#F3DFC1",
+          sliderColor: "#F3DFC1"
         }}
       />
-      <button onClick={ handleAudioSync }>Sync Audio</button>
     </section>
   );
 };

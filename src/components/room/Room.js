@@ -84,30 +84,23 @@ const Room = (props) => {
     if (!socket) {
       setSocket(io.connect(process.env.REACT_APP_SOCKET_ENDPOINT))
     } else {
-      socket.on('user-joined', ({ username, accessToken, roomUsers }) => {
-        console.log('in socket', socket);
+      socket.on('user-joined', ({ username, roomUsers, roomQueue }) => {
         console.log(`${username} has joined the chat`)
-        console.log('socket access token', accessToken)
-        setRoomUsers(r => {
-          return [...r, roomUsers]
-        })
-        // setQueue(q => [...q, queue])
+        setRoomUsers(r => [...r, roomUsers])
+        setQueue(roomQueue)
       })
-      socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, queue }) => {
-        setQueue(q => {
-          return [...q, { trUri, trId, trName, artist, trImg, username }]
-        })
-        s.queue(trUri)
-        if (queue.length === 0) {
-          setInitialTrUri(trUri)
-        }
+      socket.on('queue', ({track, roomQueue, queue}) => {
+        console.log('track uri', track.trUri)
+        console.log('room queue', roomQueue)
+        setQueue(roomQueue)
+        s.queue(track.trUri)
       })
 
       socket.on('request', (sender) => {
-        console.log('request sender:', sender)
+        // console.log('request sender:', sender)
         s.getMyCurrentPlaybackState()
           .then(data => {
-            console.log(data)
+            // console.log(data)
             socket.emit('sync', { data, sender })
           })
       })
@@ -127,7 +120,7 @@ const Room = (props) => {
   }, [socket])
 
   useEffect(() => {
-    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken, roomUsers }) }
+    if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken }) }
   }, [id, socket])
 
   useEffect(() => {
@@ -137,6 +130,12 @@ const Room = (props) => {
     }
 
   }, [localUser])
+
+  useEffect(() => {
+    if(queue[0]) {
+      setInitialTrUri(queue[0].trUri)
+    }
+  }, [queue])
 
   const sendInvite = () => {
     if (email === '') {
@@ -165,10 +164,10 @@ const Room = (props) => {
     console.log('receiver', roomUsers[0][0].socketId, 'sender:', socket.id)
   }
 
-  // console.log('Room Users:', roomUsers)
-  // console.log('pre-return socket', socket);
+  console.log('init uri', initialTrUri);
+  console.log('local queue', queue);
   return (
-    <div>
+    <div className='room-container'>
       {accessToken ? (
         <>
           <Header />
@@ -206,7 +205,7 @@ const Room = (props) => {
             </section>
             <section className='room-column inner'>
               <section className='room-player'>
-                <button onClick={handleSync}>Get Info</button>
+                <button onClick={handleSync}>Sync Audio</button>
                 <Player
                   queue={queue}
                   initialTrUri={initialTrUri}
@@ -223,9 +222,13 @@ const Room = (props) => {
                 {queue[0] ? (queue.map(tracks => (
                   <div key={tracks.trId} className='temp_name'>
                     <img src={tracks.trImg} height='40' />
-                    <section>
+                    <section className='room-track-titles'>
                       <h5>{tracks.trName}</h5>
                       <h6>{tracks.artist}</h6>
+                    </section>
+                    <section className='added-by'>
+                      <h6>Added by:</h6>
+                      <h6>{ tracks.username }</h6>
                     </section>
                   </div>
                 ))) : null}
