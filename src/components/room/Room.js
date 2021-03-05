@@ -48,7 +48,8 @@ const Room = (props) => {
       artist,
       trImg,
       username: display_name,
-      roomId: room_id
+      roomId: room_id,
+      queue
     })
   }
 
@@ -88,7 +89,7 @@ const Room = (props) => {
         setRoomUsers(r => [...r, roomUsers])
         setQueue(roomQueue)
       })
-      socket.on('queue', ({track, roomQueue}) => {
+      socket.on('queue', ({track, roomQueue, queue}) => {
         console.log('track', track)
         console.log('room queue', roomQueue)
         setQueue(roomQueue)

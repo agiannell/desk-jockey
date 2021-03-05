@@ -55,7 +55,7 @@ massive({
       io.in(roomId).emit("message", { socketUserId, username, message })
     });
 
-    socket.on("join-room", ({ roomId, username, accessToken }) => {
+    socket.on("join-room", ({ roomId, username, accessToken, queue }) => {
       socket.join(roomId);
       console.log('socket rooms', socket.rooms);
       socketCtrl.addUser({ socketId: socket.id, roomId, username, accessToken })
@@ -64,10 +64,10 @@ massive({
       io.in(roomId).emit("user-joined", { username, roomUsers, roomQueue });
     });
 
-    socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId }) => {
+    socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
       const track = socketCtrl.addToQueue({ trUri, trId, trName, artist, trImg, username, roomId });
       const roomQueue = socketCtrl.getRoomQueue(roomId);
-      io.in(roomId).emit('queue', {track, roomQueue})
+      io.in(roomId).emit('queue', {track, roomQueue, queue})
     })
 
     socket.on('request', ({ receiver, sender }) => {
