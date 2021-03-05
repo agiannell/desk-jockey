@@ -47,8 +47,8 @@ massive({
   io.on("connection", (socket) => {
     console.log(`Socket ${socket.id} connected`);
     socket.on("disconnect", () => {
-    console.log(`Socket ${socket.id} disconnected`);
-    const roomUsersArr = [];
+      console.log(`Socket ${socket.id} disconnected`);
+      // const roomUsersArr = [];
 
     });
     socket.on("message", ({ socketUserId, username, message, roomId }) => {
