@@ -89,7 +89,7 @@ const Room = (props) => {
         console.log(`${username} has joined the chat`)
         console.log('socket access token', accessToken)
         setRoomUsers(r => {
-          return [...r, { username, accessToken }]
+          return [...r, roomUsers]
         })
         // setQueue(q => [...q, queue])
       })
@@ -183,11 +183,11 @@ const Room = (props) => {
             </section>
             <section className='room-column inner'>
               <section className='room-player'>
-                <button onClick={ getInfo }>Get Info</button>
+                <button onClick={getInfo}>Get Info</button>
                 <Player
                   queue={queue}
                   initialTrUri={initialTrUri}
-                  socket={ socket } />
+                  socket={socket} />
               </section>
               <Chat
                 username={display_name}
