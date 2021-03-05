@@ -66,6 +66,12 @@ massive({
     socket.on('queue', ({ trUri, trId, trName, artist, trImg, username, roomId, queue }) => {
       io.in(roomId).emit('queue', { trUri, trId, trName, artist, trImg, username, queue })
     })
+
+    // socket.on('sync', () => {
+
+    //   io.in(roomId).emit('sync', {})
+    // })
+
   });
 });
 
