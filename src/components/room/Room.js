@@ -111,7 +111,7 @@ const Room = (props) => {
 
   useEffect(() => {
     if (socket) { socket.emit('join-room', { roomId: id, username: display_name, accessToken, roomUsers }) }
-  }, [id, socket])
+  }, [id])
 
   useEffect(() => {
     if (localUser.hasOwnProperty('user_id')) {
@@ -183,11 +183,11 @@ const Room = (props) => {
             </section>
             <section className='room-column inner'>
               <section className='room-player'>
-                <button onClick={ getInfo }>Get Info</button>
+                <button onClick={getInfo}>Get Info</button>
                 <Player
                   queue={queue}
                   initialTrUri={initialTrUri}
-                  socket={ socket } />
+                  socket={socket} />
               </section>
               <Chat
                 username={display_name}
