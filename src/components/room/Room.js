@@ -20,7 +20,7 @@ const Room = (props) => {
   const { user_id, display_name } = props.localUser;
   const { id: room_id } = props.match.params;
   const { accessToken, user, localUser } = props;
-  const [queue, setQueue] = useState([]);
+  const [queue, setQueue] = useState(null);
   const [email, setEmail] = useState('');
   const [roomUrl, setRoomUrl] = useState('');
   const [deviceId, setDeviceId] = useState('');
