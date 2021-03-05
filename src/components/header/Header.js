@@ -110,7 +110,6 @@ const Header = (props) => {
       if (!accessToken) {
         props.history.push('/');
       }
-      count++
     }
   }
 
