@@ -93,21 +93,25 @@ const Header = (props) => {
   }, [])
 
   const handleLogout = () => {
-    clearAccessToken()
-    clearLocalUser()
-    clearUser()
-    const url = 'https://www.spotify.com/logout'
-    const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
-    setTimeout(() => spotifyLogoutWindow.close(), 2000)
-    axios.get('/api/logout')
-      .then(() => {
-        (accessToken ? props.history.push('/') : props.history.push('/'))
-      })
-      .catch(err => console.log(err));
+    let count = 0
+    while (count < 1) {
+      clearAccessToken()
+      clearLocalUser()
+      clearUser()
+      const url = 'https://www.spotify.com/logout'
+      const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')
+      setTimeout(() => spotifyLogoutWindow.close(), 2000)
+      axios.get('/api/logout')
+        .then(() => {
+          (accessToken ? props.history.push('/') : props.history.push('/'))
+        })
+        .catch(err => console.log(err));
+      count++
+    }
 
   }
 
-  // console.log('accessToken:', accessToken)
+  // console.log('accessToken:', accessToken) 
   // console.log('header-props:', props)
   return (
     <div className='header-container'>
