@@ -90,10 +90,10 @@ const Room = (props) => {
         setQueue(roomQueue)
       })
       socket.on('queue', ({track, roomQueue, queue}) => {
-        console.log('track uri', track.track.trUri)
+        console.log('track uri', track.trUri)
         console.log('room queue', roomQueue)
         setQueue(roomQueue)
-        s.queue({ uri: track.track.trUri })
+        s.queue(track.trUri)
         if (queue.length === 0) {
           setInitialTrUri(track.trUri)
         }
@@ -161,7 +161,7 @@ const Room = (props) => {
     console.log('receiver', roomUsers[0][0].socketId, 'sender:', socket.id)
   }
 
-  // console.log('Room Users:', roomUsers)
+  console.log('init uri', initialTrUri);
   console.log('local queue', queue);
   return (
     <div>
@@ -202,7 +202,7 @@ const Room = (props) => {
             </section>
             <section className='room-column inner'>
               <section className='room-player'>
-                <button onClick={handleSync}>Get Info</button>
+                <button onClick={handleSync}>Sync Audio</button>
                 <Player
                   queue={queue}
                   initialTrUri={initialTrUri}
