@@ -87,7 +87,7 @@ const NewRoom = (props) => {
 
         axios.post('/api/joinroom', { room_id })
           .then(() => {
-            props.history.push("/Dash");
+            props.history.push('/');
             setIsLoading(false);
           })
           .catch((err) => console.log(err));
