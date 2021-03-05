@@ -320,6 +320,19 @@
 .room {
   background: -webkit-gradient(linear, left top, left bottom, from(#160F29), to(#246A73));
   background: linear-gradient(to bottom, #160F29, #246A73);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   height: 300px;
   width: 270px;
   padding: 10px;
@@ -333,6 +346,7 @@
 
 .room img {
   height: 150px;
+  width: 150px;
   margin: 10px;
 }
 
@@ -477,12 +491,12 @@
 .room-track-titles {
   text-align: left;
   margin: 0 10px;
-  width: 70%;
+  width: 65%;
 }
 
 .added-by {
   text-align: right;
-  width: 20%;
+  width: 25%;
 }
 
 .room-player {
@@ -640,6 +654,15 @@
 .chat-container form button {
   border-radius: 50%;
   margin-left: 10px;
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 3px;
+  background: transparent;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #246A73;
 }
 
 .messages-container {
@@ -849,6 +872,7 @@
   border: 2px dashed #368F8B;
   border-radius: 5px;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 #create-room-btn {
