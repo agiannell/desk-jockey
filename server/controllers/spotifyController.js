@@ -1,6 +1,6 @@
 require('dotenv').config();
 const request = require('request');
-const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, BASE_URL_DEV, REACT_APP_BASE_URL_PROD, REACT_APP_BASE_URL_DEV } = process.env;
+const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, REACT_APP_BASE_URL_PROD } = process.env;
 
 module.exports = {
   spotifyLogin: (_req, res) => {
