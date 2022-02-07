@@ -77,7 +77,7 @@ const Room = (props) => {
       .then()
       .catch((err) => console.log(err));
 
-    setRoomUrl(`https://deskjockey.us/room/${room_id}`)
+    setRoomUrl(`${process.env.REACT_APP_BASE_URL}/room/${room_id}`)
   }, [])
 
   useEffect(() => {
