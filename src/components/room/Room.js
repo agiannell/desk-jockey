@@ -77,12 +77,12 @@ const Room = (props) => {
       .then()
       .catch((err) => console.log(err));
 
-    setRoomUrl(`${process.env.REACT_APP_BASE_URL}/room/${room_id}`)
+    setRoomUrl(process.env.NODE_ENV !== 'production' ? process.env.REACT_APP_BASE_URL_DEV : process.env.REACT_APP_BASE_URL_PROD + `/room/${room_id}`)
   }, [])
 
   useEffect(() => {
     if (!socket) {
-      setSocket(io.connect(process.env.REACT_APP_SOCKET_ENDPOINT))
+      setSocket(io.connect(process.env.NODE_ENV !== 'production' ? `${process.env.REACT_APP_BASE_URL_DEV}/` : `${process.env.REACT_APP_BASE_URL_PROD}:4004/`))
     } else {
       socket.on('user-joined', ({ username, roomUsers, roomQueue }) => {
         console.log(`${username} has joined the chat`)
