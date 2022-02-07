@@ -1,7 +1,9 @@
 require('dotenv').config();
 const request = require('request');
+const express = require('express');
+const app = express();
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, BASE_URL_DEV, REACT_APP_BASE_URL_PROD, REACT_APP_BASE_URL_DEV } = process.env;
-const env = process.env.NODE_ENV || 'development';
+const env = app.settings.env
 
 
 module.exports = {
