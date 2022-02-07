@@ -82,7 +82,7 @@ const Room = (props) => {
 
   useEffect(() => {
     if (!socket) {
-      setSocket(io.connect(process.env.NODE_ENV !== 'production' ? `${process.env.REACT_APP_BASE_URL_DEV}/` : `${process.env.REACT_APP_BASE_URL_PROD}:4004/`))
+      setSocket(io.connect(`${process.env.REACT_APP_BASE_URL_PROD}:4004/`))
     } else {
       socket.on('user-joined', ({ username, roomUsers, roomQueue }) => {
         console.log(`${username} has joined the chat`)
