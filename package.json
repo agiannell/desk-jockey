@@ -1,7 +1,7 @@
 {
-  "name": "group-project",
+  "name": "desk-jockey",
   "version": "0.1.0",
-  "proxy": "http://localhost:4000/",
+  "proxy": "http://localhost:4004/",
   "main": "server/index.js",
   "private": true,
   "dependencies": {

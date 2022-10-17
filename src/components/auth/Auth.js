@@ -25,14 +25,14 @@ const Auth = props => {
     if (props.accessToken) { props.history.push('/Dash') }
 
   }, [props.accessToken])
-
+  
   return (
     <section>
       <section className="auth-main">
         <section className="auth-img">
           <section className="auth-login">
             <img src={stackedLogo} alt='logo' />
-            <a href="https://deskjockey.us/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+            <a href={process.env.NODE_ENV !== 'production' ? `${process.env.REACT_APP_BASE_URL_DEV}/login` : `${process.env.REACT_APP_BASE_URL_PROD}/login`}>login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
           </section>
         </section>
       </section>
@@ -45,7 +45,7 @@ const Auth = props => {
         <h1>Create rooms to customize your experience!</h1>
       </section>
       <section className="auth-section lighten">
-        <a href="https://deskjockey.us/login">login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+        <a href={`${process.env.REACT_APP_BASE_URL_DEV}/login`}>login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
       </section>
     </section>
   )
