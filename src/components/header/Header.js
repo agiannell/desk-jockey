@@ -30,8 +30,8 @@ const Header = (props) => {
     axios.get("/pizza")
       .then((res) => {
         // console.log('axios-token', res.data);
-        setAccessToken(res.data);
-        s.setAccessToken(res.data);
+        setAccessToken(res.data.token);
+        s.setAccessToken(res.data.token);
       });
   }, [])
 

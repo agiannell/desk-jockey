@@ -13,7 +13,7 @@ const Auth = props => {
     axios.get('/pizza/')
       .then(res => {
         // console.log(res.data)
-        props.setAccessToken(res.data)
+        props.setAccessToken(res.data.token)
         // send res.data to user reducer * attach import connect into auth and bring in function, fire update redux, attach access token prop to reducer as prop so that re render is triggered and check for if accessToken is truthy turn redirect to /dash.
         // if(res.data){
         //   props.history.push('/Dash')
