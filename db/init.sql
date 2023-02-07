@@ -22,15 +22,15 @@ CREATE TABLE room(
     created_by uuid REFERENCES users(user_id) on delete cascade
 );
 
-alter table room_junction add constraint room_junction_uq unique (room_id,user_id);
+ALTER TABLE room_junction add constraint room_junction_uq unique (room_id,user_id);
 
-create table room_junction (
+CREATE TABLE room_junction (
     junction_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     room_id uuid REFERENCES room(room_id) on delete cascade,
     user_id uuid REFERENCES users(user_id) on delete cascade
 );
 
-create table chat (
+CREATE TABLE chat (
     chat_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     content text,
     room_id uuid REFERENCES room(room_id) on delete cascade
