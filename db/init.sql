@@ -5,7 +5,7 @@ CREATE TABLE users (
     display_name text NOT NULL,
     email text NOT NULL,
     profile_pic text NOT NULL,
-    date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     playlist_uri text,
     UNIQUE (email)
 );
@@ -15,8 +15,8 @@ CREATE TABLE room(
     room_name text NOT NULL,
     room_pic text,
     password text,
-    is_private boolean NOT NULL DEFAULT false,
-    is_collaborative boolean NOT NULL DEFAULT false,
+    is_private boolean DEFAULT false NOT NULL,
+    is_collaborative boolean DEFAULT false NOT NULL,
     genre text,
     description text,
     created_by uuid REFERENCES users(user_id) on delete cascade
