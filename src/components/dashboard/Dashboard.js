@@ -9,7 +9,6 @@ import {
 import axios from "axios";
 import Header from "../header/Header";
 import NewRoom from "../newRoom/NewRoom";
-import Loading from '../Loading/Loading';
 
 const Dashboard = (props) => {
   const { accessToken, localUser } = props;

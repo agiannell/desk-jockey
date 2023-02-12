@@ -6,11 +6,13 @@ import axios from 'axios';
 import { setAccessToken } from '../../ducks/reducer/userReducer'
 import roomView from '../../assets/img/room-view.png';
 import createRoom from '../../assets/img/create-room.png';
+import { useNavigate } from 'react-router';
 
 const Auth = props => {
+  const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get('/pizza/')
+    axios.get('/pizza')
       .then(res => {
         // console.log(res.data)
         props.setAccessToken(res.data.token)
@@ -19,12 +21,12 @@ const Auth = props => {
         //   props.history.push('/Dash')
         // }
       })
-  }, [])
+  }, [props])
 
   useEffect(() => {
-    if (props.accessToken) { props.history.push('/Dash') }
+    if (props.accessToken) { navigate('/Dash') }
 
-  }, [props.accessToken])
+  }, [props.accessToken, navigate])
   
   return (
     <section>
@@ -32,7 +34,7 @@ const Auth = props => {
         <section className="auth-img">
           <section className="auth-login">
             <img src={stackedLogo} alt='logo' />
-            <a href={process.env.NODE_ENV !== 'production' ? `${process.env.REACT_APP_BASE_URL_DEV}/login` : `${process.env.REACT_APP_BASE_URL_PROD}/login`}>login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+            <a href={`${process.env.REACT_APP_BASE_URL}/login`}>login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
           </section>
         </section>
       </section>
@@ -45,7 +47,7 @@ const Auth = props => {
         <h1>Create rooms to customize your experience!</h1>
       </section>
       <section className="auth-section lighten">
-        <a href={`${process.env.REACT_APP_BASE_URL_DEV}/login`}>login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
+        <a href={`${process.env.REACT_APP_BASE_URL}/login`}>login with Spotify&nbsp;&nbsp;&nbsp;<FaSpotify /></a>
       </section>
     </section>
   )

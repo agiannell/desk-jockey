@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { SpotifyApiContext } from "react-spotify-api";
 import { Provider } from "react-redux";
 import store from "../src/ducks/Store";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -13,9 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        {/* <SpotifyApiContext.Provider value={token}> */}
         <App />
-        {/* </SpotifyApiContext.Provider> */}
       </Router>
     </Provider>
   </React.StrictMode>,

@@ -23,7 +23,7 @@ const Profile = (props) => {
         }, 1000);
       })
       .catch((err) => console.log(err));
-  }, [localUser])
+  }, [localUser, userId])
 
   // console.log(props)
   return (
@@ -31,7 +31,7 @@ const Profile = (props) => {
       <Header />
       <section className='profile-info'>
         <h1> Welcome {name} </h1>
-        <img src={profilePic ? profilePic : profile} alt='Default Profile Picture' />
+        <img src={profilePic ? profilePic : profile} alt='Default Profile' />
       </section>
       <h1>My Rooms</h1>
       <section className='rooms-map'>

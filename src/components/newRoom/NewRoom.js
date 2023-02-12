@@ -10,7 +10,6 @@ import albumDefault from '../../assets/img/default-album.png';
 const NewRoom = (props) => {
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
-  const [pic, setPic] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [isCollaborative, setIsCollaborative] = useState(false);
   const [genre, setGenre] = useState("");
@@ -21,7 +20,7 @@ const NewRoom = (props) => {
 
   useEffect(() => {
     setCreatedBy(props.localUser.user_id);
-  }, []);
+  }, [props.localUser.user_id]);
 
   const getSignedRequest = ([file]) => {
     console.log(file);

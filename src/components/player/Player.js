@@ -1,27 +1,17 @@
 import SpotifyPlayer from "react-spotify-web-playback";
 import { connect } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 var Spotify = require("spotify-web-api-js");
 var s = new Spotify();
 
 const Player = (props) => {
-  const { accessToken, queue, user, localUser, initialTrUri, socket } = props;
-  const [progress, setProgress] = useState(null);
-
-  const handleAudioSync = (progress) => {
-    // console.log(progress)
-    socket.emit('audio-sync', { progress })
-  }
+  const { accessToken, initialTrUri } = props;
   
   useEffect(() => {
     if (accessToken) {
       s.setAccessToken(accessToken)
     }
   }, [accessToken]);
-
-  useEffect(() => {
-    // console.log(progress)
-  }, [progress])
 
   return (
     <section className='player-container'>
@@ -46,8 +36,7 @@ const Player = (props) => {
           trackNameColor: "#F3DFC1",
           loaderColor: "#246A73",
           activeColor: "red",
-          sliderHandleColor: "#F3DFC1",
-          sliderColor: "#F3DFC1"
+          sliderHandleColor: "#F3DFC1"
         }}
       />
     </section>

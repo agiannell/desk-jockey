@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import io from 'socket.io-client'
@@ -27,15 +27,16 @@ const Room = (props) => {
   const { id } = useParams()
   const [roomUsers, setRoomUsers] = useState([])
 
-  const getUserPlaylists = () => {
-    fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
-      headers: { Authorization: 'Bearer ' + accessToken }
-    })
-      .then((playList) => playList.json())
-      .then((data) => {
-        setUserPlaylists(data)
+  const getUserPlaylists = useCallback(() => {
+      fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
+        headers: { Authorization: 'Bearer ' + accessToken }
       })
-  }
+        .then((playList) => playList.json())
+        .then((data) => {
+          setUserPlaylists(data)
+        })
+  }, [accessToken, user.id])
+
 
   const handleAddTrack = (trUri, trId, trName, artist, trImg) => {
     socket.emit('queue', {
@@ -78,15 +79,13 @@ const Room = (props) => {
       .catch((err) => console.log(err))
 
     setRoomUrl(
-      process.env.NODE_ENV !== 'production'
-        ? process.env.REACT_APP_BASE_URL_DEV
-        : process.env.REACT_APP_BASE_URL_PROD + `/room/${room_id}`
+      process.env.REACT_APP_BASE_URL + `/room/${room_id}`
     )
-  }, [])
+  }, [accessToken, room_id, user_id])
 
   useEffect(() => {
     if (!socket) {
-      setSocket(io.connect(`${process.env.REACT_APP_BASE_URL_PROD}:4004/`))
+      setSocket(io.connect(`${process.env.REACT_APP_BASE_URL}:4004/`))
     } else {
       socket.on('user-joined', ({ username, roomUsers, roomQueue }) => {
         console.log(`${username} has joined the chat`)
@@ -130,13 +129,13 @@ const Room = (props) => {
         accessToken
       })
     }
-  }, [id, socket])
+  }, [id, socket, accessToken, display_name])
 
   useEffect(() => {
     if (localUser.hasOwnProperty('user_id')) {
       getUserPlaylists()
     }
-  }, [localUser])
+  }, [localUser, getUserPlaylists])
 
   useEffect(() => {
     if (queue[0]) {
@@ -234,7 +233,7 @@ const Room = (props) => {
                 {queue[0]
                   ? queue.map((tracks) => (
                       <div key={tracks.trId} className='temp_name'>
-                        <img src={tracks.trImg} height='40' />
+                        <img src={tracks.trImg} alt={tracks.trNAme} height='40' />
                         <section className='room-track-titles'>
                           <h5>{tracks.trName}</h5>
                           <h6>{tracks.artist}</h6>

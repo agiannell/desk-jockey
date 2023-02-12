@@ -17,7 +17,7 @@ const Playlist = (props) => {
         setTracks(data.items)
         // console.log(data.items)
       });
-  }, []);
+  }, [accessToken, id]);
 
   return (
     <div>

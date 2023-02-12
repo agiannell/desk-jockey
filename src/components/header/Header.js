@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link, withRouter } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import {
   clearUser,
@@ -15,6 +15,8 @@ import axios from 'axios';
 const s = new Spotify();
 
 const Header = (props) => {
+  const location = useLocation()
+  const navigate = useNavigate()
   const {
     localUser,
     clearUser,
@@ -33,7 +35,7 @@ const Header = (props) => {
         setAccessToken(res.data.token);
         s.setAccessToken(res.data.token);
       });
-  }, [])
+  }, [setAccessToken])
 
   useEffect(() => {
     if (accessToken) {
@@ -82,7 +84,7 @@ const Header = (props) => {
           });
         });
     }
-  }, [accessToken]);
+  }, [accessToken, setLocalUser, setUser]);
 
   useEffect(() => {
     axios.get('/api/user')
@@ -90,7 +92,7 @@ const Header = (props) => {
         // console.log('session user', res.data)
         setLocalUser(res.data);
       }).catch(err => console.log(err));
-  }, [])
+  }, [setLocalUser])
 
   const handleLogout = () => {
     clearAccessToken()
@@ -101,7 +103,7 @@ const Header = (props) => {
     setTimeout(() => spotifyLogoutWindow.close(), 1000)
     axios.get('/api/logout')
       .then(() => {
-        (accessToken ? props.history.push('/') : props.history.push('/'))
+        (accessToken ? navigate('/') : navigate('/'))
       })
       .catch(err => console.log(err));
       
@@ -114,9 +116,9 @@ const Header = (props) => {
     <div className='header-container'>
       {localUser ? (
         <div className='nav-links'>
-          { props.location.pathname === '/Dash' ? <button onClick={() => setIsCreating(true)}>+ Create Room</button> : null}
-          { props.location.pathname !== '/Dash' ? <Link to='/Dash' >Dashboard</Link> : null}
-          { props.location.pathname !== '/Contact' ? <Link to='/Contact' >Contact</Link> : null}
+          { location.pathname === '/Dash' ? <button onClick={() => setIsCreating(true)}>+ Create Room</button> : null}
+          { location.pathname !== '/Dash' ? <Link to='/Dash' >Dashboard</Link> : null}
+          { location.pathname !== '/Contact' ? <Link to='/Contact' >Contact</Link> : null}
           <Link to='/Profile' >
             <div className='profile'>
               <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />
@@ -139,11 +141,11 @@ const mapStateToProps = (reduxState) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   clearUser,
   clearLocalUser,
   clearAccessToken,
   setAccessToken,
   setLocalUser,
   setUser
-})(Header));
+})(Header);
