@@ -5,10 +5,11 @@
   "main": "server/index.js",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "react-scripts start",
+    "start:dev-server": "nodemon",
+    "test": "react-scripts test"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
@@ -65,5 +66,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
