@@ -1,16 +1,14 @@
-require('dotenv').config()
 const request = require('request')
-const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, REACT_APP_BASE_URL, CALLBACK_BASE_URL } =
-  process.env
+const config = require('../config')
 
 module.exports = {
   spotifyLogin: (_req, res) => {
     const params = {
       response_type: 'code',
-      client_id: SPOTIFY_CLIENT_ID,
+      client_id: config.spotify.clientId,
       scope:
         'streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-library-modify playlist-read-private playlist-modify-public playlist-modify-private',
-      redirect_uri: REACT_APP_BASE_URL + '/callback'
+      redirect_uri: config.spotify.redirectUri
     }
     let spotifyAuthParams = new URLSearchParams(params)
     res.redirect(
@@ -23,14 +21,14 @@ module.exports = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: REACT_APP_BASE_URL + '/callback',
+        redirect_uri: config.spotify.redirectUri,
         grant_type: 'authorization_code'
       },
       headers: {
         Authorization:
           'Basic ' +
           new Buffer.from(
-            SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET
+            config.spotify.clientId + ':' + config.spotify.clientSecret
           ).toString('base64')
       },
       json: true
@@ -39,9 +37,7 @@ module.exports = {
       request.post(authOptions, (_error, _response, body) => {
         var access_token = body.access_token
         req.session.token = access_token
-        let uri =
-          `${CALLBACK_BASE_URL}/` || CALLBACK_BASE_URL + '/callback'
-        res.redirect(uri)
+        res.redirect(`${config.callbackBaseUrl}/`)
       })
     } catch (error) {
       if (error instanceof Error) {

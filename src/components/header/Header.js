@@ -11,6 +11,7 @@ import {
 } from '../../ducks/reducer/userReducer';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
+import Avatar from '../avatar/Avatar';
 
 const s = new Spotify();
 
@@ -21,6 +22,7 @@ const Header = (props) => {
     localUser,
     clearUser,
     clearLocalUser,
+    clearAccessToken,
     setLocalUser,
     setAccessToken,
     accessToken,
@@ -31,10 +33,10 @@ const Header = (props) => {
   useEffect(() => {
     axios.get("/pizza")
       .then((res) => {
-        // console.log('axios-token', res.data);
         setAccessToken(res.data.token);
         s.setAccessToken(res.data.token);
-      });
+      })
+      .catch((err) => console.log(err));
   }, [setAccessToken])
 
   useEffect(() => {
@@ -44,43 +46,34 @@ const Header = (props) => {
       })
         .then((results) => results.json())
         .then((data) => {
-          // console.log('axios-spotify-user', data)
           setUser(data);
+          const spotifyProfilePic = data.images?.[0]?.url;
+
           axios.get(`/api/check-user/${data.email}`).then((foundUser) => {
-            // console.log(foundUser.data);
             if (foundUser.data) {
-              // console.log('axios-session-user', foundUser.data)
-              return setLocalUser(foundUser.data);
+              if (spotifyProfilePic && spotifyProfilePic !== foundUser.data.profile_pic) {
+                axios
+                  .patch(`/api/user/${foundUser.data.user_id}/profile-pic`, {
+                    profilePic: spotifyProfilePic
+                  })
+                  .then((updated) => setLocalUser(updated.data))
+                  .catch((err) => console.log(err));
+              } else {
+                setLocalUser(foundUser.data);
+              }
+              return;
             }
-            // fetch(`https://api.spotify.com/v1/users/${data.id}/playlists`, {
-            //   headers: {
-            //     Authorization: "Bearer " + accessToken,
-            //     "Content-Type": "application/json",
-            //   },
-            //   method: "POST",
-            //   body: JSON.stringify({
-            //     name: "Desktop-Dj",
-            //     description:
-            //       "This is the playlist where the songs you're listening to with friends will show up. Don't delete this playlist or we will have to make a new one for you to listen through!",
-            //     public: false,
-            //   }),
-            //   scope: "playlist-modify-public playlist-modify-private",
-            // })
-            //   .then((res) => res.json())
-            //   .then((info) => {
-            //     // console.log(info);
+
             axios
               .post("/api/user", {
                 displayName: data.display_name,
                 email: data.email,
-                profilePic: data.images[0].url,
-                // playlist_uri: info.uri,
+                profilePic: spotifyProfilePic,
               })
               .then((response) => {
                 setLocalUser(response.data);
               })
               .catch((err) => console.log(err));
-            // });
           });
         });
     }
@@ -103,25 +96,23 @@ const Header = (props) => {
     setTimeout(() => spotifyLogoutWindow.close(), 1000)
     axios.get('/api/logout')
       .then(() => {
-        (accessToken ? navigate('/') : navigate('/'))
+        navigate('/')
       })
       .catch(err => console.log(err));
-      
-      
   }
 
   // console.log('accessToken:', accessToken)
   // console.log('header-props:', props)
   return (
     <div className='header-container'>
-      {localUser ? (
+      {localUser.user_id ? (
         <div className='nav-links'>
           { location.pathname === '/Dash' ? <button onClick={() => setIsCreating(true)}>+ Create Room</button> : null}
           { location.pathname !== '/Dash' ? <Link to='/Dash' >Dashboard</Link> : null}
           { location.pathname !== '/Contact' ? <Link to='/Contact' >Contact</Link> : null}
           <Link to='/Profile' >
             <div className='profile'>
-              <img className='profile-pic' src={`${localUser?.profile_pic}`} alt='profile' />
+              <Avatar className='profile-pic' src={localUser?.profile_pic} displayName={localUser?.display_name} />
               <h6>{localUser.display_name}</h6>
             </div>
           </Link>

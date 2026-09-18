@@ -30,16 +30,18 @@ module.exports = {
             .catch(err => res.status(500).send(err));
     },
 
-    joinRoom: (req, res) => {
+    joinRoom: async (req, res) => {
         const db = req.app.get('db'),
         {room_id} = req.body,
         {user_id} = req.session.user;
 
-        db.rooms.add_to_my_rooms([room_id, user_id])
-            .then(() => {
-                res.sendStatus(200)
-            })
-            .catch(err => res.status(500).send())
+        const [existingRelationship] = await db.rooms.check_my_room([room_id, user_id])
+
+        if (!existingRelationship) {
+            await db.rooms.add_to_my_rooms([room_id, user_id])
+        }
+
+        res.sendStatus(200)
     },
 
     newRoom: async (req, res) => {

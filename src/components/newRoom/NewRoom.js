@@ -1,6 +1,7 @@
 import axios from "axios";
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { ScaleLoader } from "react-spinners";
@@ -8,6 +9,7 @@ import { MdClose } from 'react-icons/md'
 import albumDefault from '../../assets/img/default-album.png';
 
 const NewRoom = (props) => {
+  const navigate = useNavigate()
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
@@ -86,7 +88,7 @@ const NewRoom = (props) => {
 
         axios.post('/api/joinroom', { room_id })
           .then(() => {
-            props.history.push('/');
+            navigate('/');
             setIsLoading(false);
           })
           .catch((err) => console.log(err));

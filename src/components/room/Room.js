@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import io from 'socket.io-client'
 import Spotify from 'spotify-web-api-js'
 import Player from '../player/Player'
@@ -8,23 +8,24 @@ import Playlist from '../playlist/playlist'
 import Header from '../header/Header'
 import axios from 'axios'
 import Chat from '../chat/Chat'
+import config from '../../config'
 
 const s = new Spotify()
 
 const Room = (props) => {
+  const navigate = useNavigate()
   const [userPlaylists, setUserPlaylists] = useState([])
   const [showPlaylists, setShowPlaylists] = useState(false)
   const [roomInfo, setRoomInfo] = useState({})
   const [isRoomAdmin, setIsRoomAdmin] = useState(false)
   const { user_id, display_name } = props.localUser
-  const { id: room_id } = props.match.params
+  const { id: room_id } = useParams()
   const { accessToken, user, localUser } = props
   const [queue, setQueue] = useState([])
   const [email, setEmail] = useState('')
   const [roomUrl, setRoomUrl] = useState('')
   const [initialTrUri, setInitialTrUri] = useState('')
   const [socket, setSocket] = useState(null)
-  const { id } = useParams()
   const [roomUsers, setRoomUsers] = useState([])
 
   const getUserPlaylists = useCallback(() => {
@@ -55,7 +56,7 @@ const Room = (props) => {
     axios
       .delete(`/api/room/${room_id}`)
       .then(() => {
-        props.history.push('/Dash')
+        navigate('/Dash')
       })
       .catch((err) => console.log(err))
   }
@@ -79,13 +80,13 @@ const Room = (props) => {
       .catch((err) => console.log(err))
 
     setRoomUrl(
-      process.env.REACT_APP_BASE_URL + `/room/${room_id}`
+      config.baseUrl + `/room/${room_id}`
     )
   }, [accessToken, room_id, user_id])
 
   useEffect(() => {
     if (!socket) {
-      setSocket(io.connect(`${process.env.REACT_APP_BASE_URL}:4004/`))
+      setSocket(io.connect(config.socketUrl))
     } else {
       socket.on('user-joined', ({ username, roomUsers, roomQueue }) => {
         console.log(`${username} has joined the chat`)
@@ -124,12 +125,12 @@ const Room = (props) => {
   useEffect(() => {
     if (socket) {
       socket.emit('join-room', {
-        roomId: id,
+        roomId: room_id,
         username: display_name,
         accessToken
       })
     }
-  }, [id, socket, accessToken, display_name])
+  }, [room_id, socket, accessToken, display_name])
 
   useEffect(() => {
     if (localUser.hasOwnProperty('user_id')) {
@@ -207,7 +208,7 @@ const Room = (props) => {
                       key={playlist.id}
                       id={playlist.id}
                       name={playlist.name}
-                      image={playlist.images[0]}
+                      image={playlist.images?.[0]}
                       trackCount={playlist.tracks.total}
                       accessToken={accessToken}
                       addTrack={handleAddTrack}
@@ -249,9 +250,7 @@ const Room = (props) => {
             </section>
           </section>
         </>
-      ) : (
-        props.history.push('/')
-      )}
+      ) : null}
     </div>
   )
 }

@@ -36,6 +36,8 @@ const Dashboard = (props) => {
   }, []);
 
   useEffect(() => {
+    if (!localUser.user_id) return;
+
     axios
       .get(`/api/myrooms/${localUser.user_id}`)
       .then((res) => {

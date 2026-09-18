@@ -1,4 +1,3 @@
-require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const massive = require("massive");
@@ -9,14 +8,7 @@ const spotifyCtrl = require("./controllers/spotifyController");
 const emailCtrl = require("./controllers/emailController");
 const socketCtrl = require("./controllers/socketController");
 const aws = require("aws-sdk");
-const {
-  SERVER_PORT,
-  CONNECTION_STRING,
-  SESSION_SECRET,
-  S3_BUCKET,
-  AMAZON_ACCESS_KEY_ID,
-  AMAZON_SECRET_ACCESS_KEY,
-} = process.env;
+const config = require("./config");
 const app = express();
 
 app.use(express.static(__dirname + '/../build'))
@@ -26,20 +18,21 @@ app.use(
   session({
     resave: false,
     saveUninitialized: true,
-    secret: SESSION_SECRET,
+    secret: config.sessionSecret,
     cookie: { maxAge: 1000 * 60 * 60 * 24 * 365 },
   })
 );
 
 massive({
-  connectionString: CONNECTION_STRING,
+  connectionString: config.connectionString,
   ssl: { rejectUnauthorized: false },
+  idleTimeoutMillis: 0,
 }).then((db) => {
   app.set("db", db);
   console.log("DB is Connected");
   const io = require("socket.io")(
-    app.listen(SERVER_PORT, () =>
-      console.log(`Listening on Port: ${SERVER_PORT}`)
+    app.listen(config.port, () =>
+      console.log(`Listening on Port: ${config.port}`)
     ),
     { cors: { origin: true } }
   );
@@ -86,15 +79,15 @@ massive({
 app.get("/api/signs3", (req, res) => {
   aws.config = {
     region: "us-west-1",
-    accessKeyId: AMAZON_ACCESS_KEY_ID,
-    secretAccessKey: AMAZON_SECRET_ACCESS_KEY,
+    accessKeyId: config.aws.accessKeyId,
+    secretAccessKey: config.aws.secretAccessKey,
   };
 
   const s3 = new aws.S3(),
     fileName = req.query["file-name"],
     fileType = req.query["file-type"],
     s3Params = {
-      Bucket: S3_BUCKET,
+      Bucket: config.aws.bucket,
       Key: fileName,
       Expires: 60,
       ContentType: fileType,
@@ -108,7 +101,7 @@ app.get("/api/signs3", (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://${S3_BUCKET}.s3-us-west-1.amazonaws.com/${fileName}`,
+      url: `https://${config.aws.bucket}.s3-us-west-1.amazonaws.com/${fileName}`,
     };
     return res.send(returnData);
   });
@@ -124,6 +117,7 @@ app.get("/api/check-user/:email", userCtrl.checkUser);
 app.post("/api/user", userCtrl.createUser);
 app.get("/api/logout", userCtrl.logout);
 app.get("/api/user", userCtrl.getUser);
+app.patch("/api/user/:user_id/profile-pic", userCtrl.updateProfilePic);
 
 // Room Endpoints
 app.get('/api/rooms', roomCtrl.getPublicRooms);

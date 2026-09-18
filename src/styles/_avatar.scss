@@ -1,0 +1,12 @@
+.avatar-monogram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid $text-color;
+    background: $secondary-color;
+    color: $text-color;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+}

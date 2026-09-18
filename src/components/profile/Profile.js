@@ -1,7 +1,7 @@
-import profile from './defaultprofile.webp'
 import Header from '../header/Header'
 import { connect } from 'react-redux'
 import Rooms from "../rooms/Rooms";
+import Avatar from '../avatar/Avatar'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -31,7 +31,7 @@ const Profile = (props) => {
       <Header />
       <section className='profile-info'>
         <h1> Welcome {name} </h1>
-        <img src={profilePic ? profilePic : profile} alt='Default Profile' />
+        <Avatar className='profile-photo' src={profilePic} displayName={name} alt='profile' />
       </section>
       <h1>My Rooms</h1>
       <section className='rooms-map'>
